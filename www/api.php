@@ -23,7 +23,7 @@ function poslanci($params) {
     }
 }
 function get_poslanci_list() {
-    $result = mysql_query("SELECT * FROM poslanci");
+    $result = mysql_query("SELECT * FROM poslanci WHERE poslanec_2010 > 0");
     $r = array();
     while ($row = mysql_fetch_assoc($result)) {
         $r[] = $row;
