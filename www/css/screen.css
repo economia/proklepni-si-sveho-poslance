@@ -1,0 +1,7 @@
+body {
+  margin: 0px;
+  font-family: arial, sans-serif;
+}
+body #wrap {
+  width: 650px;
+}
