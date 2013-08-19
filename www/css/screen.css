@@ -25,8 +25,15 @@ body #wrap .poslanecList li .barchart {
 body #wrap .poslanecList li .barchart .bar {
   position: absolute;
   width: 30px;
+  left: 30px;
   bottom: 0px;
+  background: #f00;
 }
 body #wrap .poslanecList li .barchart .bar.interpelace {
-  background: #a4c400;
+  background: #7fc97f;
+  left: 0px;
+}
+body #wrap .poslanecList li .barchart .bar.zakony {
+  left: 30px;
+  background: #beaed4;
 }

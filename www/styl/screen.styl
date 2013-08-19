@@ -18,10 +18,17 @@ body
                     right 60px
                     width @right
                     height 50px
+                    barCount = 2
                     .bar
                         position absolute
-                        width 30px
+                        width (@width / barCount)
+                        left @width
                         bottom 0px
+                        background red
                         &.interpelace
-                            background HNGreen
+                            background #7FC97F
+                            left 0px
+                        &.zakony
+                            left (@width * 1)
+                            background #BEAED4
 

@@ -1,8 +1,7 @@
 list_barchart_height = 50
-list_barchart_bar_width = 30
 
 class Poslanec
-    ({@titul_pred, @prijmeni, @jmeno, @titul_za, @interpelace_source_count, @interpelace_target_count, @absence_count, @nazor_count, @possible_votes_count}) ->
+    ({@titul_pred, @prijmeni, @jmeno, @titul_za, @interpelace_source_count, @interpelace_target_count, @absence_count, @nazor_count, @possible_votes_count, @zakony_predkladatel_count}) ->
         @interpelace_sum = @interpelace_source_count + @interpelace_target_count
 
     getName: -> "#{@titul_pred} #{@jmeno} #{@prijmeni} #{@titul_za}"
@@ -28,13 +27,23 @@ class PoslanecList
                         ..attr \class "interpelace bar"
                         ..style \height ~>
                             "#{@interpelaceScale it.interpelace_sum}px"
-                        ..style \left list_barchart_bar_width * 0
+                    ..append \div
+                        ..attr \class "zakony bar"
+                        ..style \height ~>
+                            "#{@zakonyScale it.zakony_predkladatel_count}px"
+
 
     getScales: ->
         interpelaceMaximum = Math.max ...@poslanci.map (.interpelace_sum)
         @interpelaceScale = d3.scale.linear!
             ..domain [0 interpelaceMaximum]
             ..range [3 list_barchart_height]
+
+        zakonyMaximum = Math.max ...@poslanci.map (.zakony_predkladatel_count)
+        @zakonyScale = d3.scale.linear!
+            ..domain [0 zakonyMaximum]
+            ..range [3 list_barchart_height]
+        console.log zakonyMaximum
 
 
 
