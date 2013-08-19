@@ -28,7 +28,7 @@
       this.draw();
     }
     prototype.draw = function(){
-      var x$, y$, z$, z1$, z2$, z3$, z4$, this$ = this;
+      var x$, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, z7$, z8$, this$ = this;
       x$ = this.container.selectAll("li").data(this.poslanci).enter().append("li");
       y$ = x$.append("span");
       y$.attr('class', 'name');
@@ -46,31 +46,35 @@
           : "Byl(a) interpelován(a) <strong>" + it.interpelace_sum + "</strong>x";
         return escape(str);
       });
-      z1$.style('height', function(it){
+      z2$ = z1$.append('div');
+      z2$.style('height', function(it){
         return this$.interpelaceScale(it.interpelace_sum) + "px";
       });
-      z2$ = z$.append('div');
-      z2$.attr('class', "zakony bar");
-      z2$.attr('data-tooltip', function(it){
+      z3$ = z$.append('div');
+      z3$.attr('class', "zakony bar");
+      z3$.attr('data-tooltip', function(it){
         return escape("Předložil(a) <strong>" + it.zakony_predkladatel_count + "</strong> zákonů");
       });
-      z2$.style('height', function(it){
+      z4$ = z3$.append('div');
+      z4$.style('height', function(it){
         return this$.zakonyScale(it.zakony_predkladatel_count) + "px";
       });
-      z3$ = z$.append('div');
-      z3$.attr('class', "absence bar");
-      z3$.attr('data-tooltip', function(it){
+      z5$ = z$.append('div');
+      z5$.attr('class', "absence bar");
+      z5$.attr('data-tooltip', function(it){
         return "Byl(a) u <strong>" + Math.round((1 - it.absence_normalized) * 100) + "%</strong> hlasování (" + it.absence_count + " z " + it.possible_votes_count + ")";
       });
-      z3$.style('height', function(it){
+      z6$ = z5$.append('div');
+      z6$.style('height', function(it){
         return this$.percentageInvertedScale(it.absence_normalized) + "px";
       });
-      z4$ = z$.append('div');
-      z4$.attr('class', "nazor bar");
-      z4$.attr('data-tooltip', function(it){
+      z7$ = z$.append('div');
+      z7$.attr('class', "nazor bar");
+      z7$.attr('data-tooltip', function(it){
         return "Vlastní nazor projevil(a) u <strong>" + Math.round(it.nazor_normalized * 100) + "%</strong> hlasování (" + it.nazor_count + " z " + it.possible_votes_count + ")";
       });
-      z4$.style('height', function(it){
+      z8$ = z7$.append('div');
+      z8$.style('height', function(it){
         return this$.percentageScale(it.nazor_normalized) + "px";
       });
       return x$;

@@ -24,24 +24,36 @@ body #wrap .poslanecList li .barchart {
 }
 body #wrap .poslanecList li .barchart .bar {
   position: absolute;
+  height: 50px;
   width: 15px;
   left: 15px;
+}
+body #wrap .poslanecList li .barchart .bar div {
+  position: absolute;
+  width: 15px;
   bottom: 0px;
-  background: #f00;
 }
 body #wrap .poslanecList li .barchart .bar.interpelace {
-  background: #7fc97f;
   left: 0px;
+}
+body #wrap .poslanecList li .barchart .bar.interpelace div {
+  background: #7fc97f;
 }
 body #wrap .poslanecList li .barchart .bar.zakony {
   left: 15px;
+}
+body #wrap .poslanecList li .barchart .bar.zakony div {
   background: #beaed4;
 }
 body #wrap .poslanecList li .barchart .bar.absence {
   left: 30px;
+}
+body #wrap .poslanecList li .barchart .bar.absence div {
   background: #fdc086;
 }
 body #wrap .poslanecList li .barchart .bar.nazor {
   left: 45px;
+}
+body #wrap .poslanecList li .barchart .bar.nazor div {
   background: #ff9;
 }
