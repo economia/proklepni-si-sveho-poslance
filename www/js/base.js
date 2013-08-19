@@ -1,6 +1,7 @@
 (function(){
   var list_barchart_height, Poslanec, PoslanecList, this$ = this;
   list_barchart_height = 50;
+  new Tooltip().watchElements();
   Poslanec = (function(){
     Poslanec.displayName = 'Poslanec';
     var prototype = Poslanec.prototype, constructor = Poslanec;
@@ -38,21 +39,37 @@
       z$.attr('class', 'barchart');
       z1$ = z$.append('div');
       z1$.attr('class', "interpelace bar");
+      z1$.attr('data-tooltip', function(it){
+        var str;
+        str = it.interpelace_source_count
+          ? "Interpeloval(a) <strong>" + it.interpelace_sum + "</strong>x"
+          : "Byl(a) interpelován(a) <strong>" + it.interpelace_sum + "</strong>x";
+        return escape(str);
+      });
       z1$.style('height', function(it){
         return this$.interpelaceScale(it.interpelace_sum) + "px";
       });
       z2$ = z$.append('div');
       z2$.attr('class', "zakony bar");
+      z2$.attr('data-tooltip', function(it){
+        return escape("Předložil(a) <strong>" + it.zakony_predkladatel_count + "</strong> zákonů");
+      });
       z2$.style('height', function(it){
         return this$.zakonyScale(it.zakony_predkladatel_count) + "px";
       });
       z3$ = z$.append('div');
       z3$.attr('class', "absence bar");
+      z3$.attr('data-tooltip', function(it){
+        return "Byl(a) u <strong>" + Math.round((1 - it.absence_normalized) * 100) + "%</strong> hlasování (" + it.absence_count + " z " + it.possible_votes_count + ")";
+      });
       z3$.style('height', function(it){
         return this$.percentageInvertedScale(it.absence_normalized) + "px";
       });
       z4$ = z$.append('div');
       z4$.attr('class', "nazor bar");
+      z4$.attr('data-tooltip', function(it){
+        return "Vlastní nazor projevil(a) u <strong>" + Math.round(it.nazor_normalized * 100) + "%</strong> hlasování (" + it.nazor_count + " z " + it.possible_votes_count + ")";
+      });
       z4$.style('height', function(it){
         return this$.percentageScale(it.nazor_normalized) + "px";
       });
