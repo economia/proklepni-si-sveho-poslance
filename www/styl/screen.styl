@@ -1,5 +1,27 @@
+@import colors
 body
     margin 0px
     font-family arial, sans-serif
     #wrap
         width 650px
+        background #ffe
+        .poslanecList
+            list-style-type none
+            padding 0px
+            margin 0px
+            li
+                position relative
+                height 60px
+                .barchart
+                    position absolute
+                    top 0px
+                    right 60px
+                    width @right
+                    height 50px
+                    .bar
+                        position absolute
+                        width 30px
+                        bottom 0px
+                        &.interpelace
+                            background HNGreen
+

@@ -4,4 +4,29 @@ body {
 }
 body #wrap {
   width: 650px;
+  background: #ffe;
+}
+body #wrap .poslanecList {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+body #wrap .poslanecList li {
+  position: relative;
+  height: 60px;
+}
+body #wrap .poslanecList li .barchart {
+  position: absolute;
+  top: 0px;
+  right: 60px;
+  width: 60px;
+  height: 50px;
+}
+body #wrap .poslanecList li .barchart .bar {
+  position: absolute;
+  width: 30px;
+  bottom: 0px;
+}
+body #wrap .poslanecList li .barchart .bar.interpelace {
+  background: #a4c400;
 }
