@@ -24,8 +24,8 @@ body #wrap .poslanecList li .barchart {
 }
 body #wrap .poslanecList li .barchart .bar {
   position: absolute;
-  width: 30px;
-  left: 30px;
+  width: 15px;
+  left: 15px;
   bottom: 0px;
   background: #f00;
 }
@@ -34,6 +34,14 @@ body #wrap .poslanecList li .barchart .bar.interpelace {
   left: 0px;
 }
 body #wrap .poslanecList li .barchart .bar.zakony {
-  left: 30px;
+  left: 15px;
   background: #beaed4;
+}
+body #wrap .poslanecList li .barchart .bar.absence {
+  left: 30px;
+  background: #fdc086;
+}
+body #wrap .poslanecList li .barchart .bar.nazor {
+  left: 45px;
+  background: #ff9;
 }

@@ -18,7 +18,7 @@ body
                     right 60px
                     width @right
                     height 50px
-                    barCount = 2
+                    barCount = 4
                     .bar
                         position absolute
                         width (@width / barCount)
@@ -31,4 +31,11 @@ body
                         &.zakony
                             left (@width * 1)
                             background scaleQualitativeMedium[1]
+                        &.absence
+                            left (@width * 2)
+                            background scaleQualitativeMedium[2]
+                        &.nazor
+                            left (@width * 3)
+                            background scaleQualitativeMedium[3]
+
 
