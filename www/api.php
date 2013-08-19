@@ -26,6 +26,14 @@ function get_poslanci_list() {
     $result = mysql_query("SELECT * FROM poslanci WHERE poslanec_2010 > 0");
     $r = array();
     while ($row = mysql_fetch_assoc($result)) {
+        $row['poslanec_2010']             = (bool)$row['poslanec_2010'];
+        $row['id']                        = (int)$row['id'];
+        $row['interpelace_target_count']  = (int)$row['interpelace_target_count'];
+        $row['interpelace_source_count']  = (int)$row['interpelace_source_count'];
+        $row['zakony_predkladatel_count'] = (int)$row['zakony_predkladatel_count'];
+        $row['absence_count']             = (int)$row['absence_count'];
+        $row['nazor_count']               = (int)$row['nazor_count'];
+        $row['possible_votes_count']      = (int)$row['possible_votes_count'];
         $r[] = $row;
     }
     return $r;
