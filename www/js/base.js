@@ -176,7 +176,7 @@
         return it.id;
       });
       y$ = x$.transition();
-      y$.delay(400);
+      y$.delay(600);
       y$.duration(800);
       y$.style('top', function(item, index){
         return index * list_item_height + "px";
@@ -198,7 +198,7 @@
       z2$.style('-moz-transform', "scale(0.1)");
       z2$.style('opacity', "0");
       z3$ = z2$.transition();
-      z3$.delay(400);
+      z3$.delay(600);
       z3$.duration(800);
       z3$.style('transform', "scale(1)");
       z3$.style('-ms-transform', "scale(1)");

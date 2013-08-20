@@ -108,7 +108,7 @@ class PoslanecList
         currentData = @poslanci.filter @sorterFilter.filterFunction
         sel = @getRowElements! .data currentData, (.id)
             ..transition!
-                ..delay 400
+                ..delay 600
                 ..duration 800
                 ..style \top (item, index) -> "#{index * list_item_height}px"
             ..exit!
@@ -126,7 +126,7 @@ class PoslanecList
             ..style \-moz-transform "scale(0.1)"
             ..style \opacity "0"
             ..transition!
-                ..delay 400
+                ..delay 600
                 ..duration 800
                 ..style \transform "scale(1)"
                 ..style \-ms-transform "scale(1)"
