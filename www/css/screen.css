@@ -5,8 +5,13 @@ body {
 body #wrap {
   width: 650px;
   background: #fff;
+  position: absolute;
 }
 body #wrap .poslanecList {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 650px;
   list-style-type: none;
   padding: 0px;
   margin: 0px;
