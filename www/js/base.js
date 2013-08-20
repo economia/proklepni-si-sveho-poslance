@@ -154,10 +154,63 @@
       this.sorterFilter.onFilterChangeCb = bind$(this, 'reFilter');
     }
     prototype.draw = function(){
-      var x$, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, z7$, z8$, z9$, z10$, this$ = this;
-      x$ = this.getRowElements().data(this.poslanci, function(it){
+      var newRows;
+      newRows = this.getRowElements().data(this.poslanci, function(it){
         return it.id;
-      }).enter().append('li');
+      }).enter();
+      return this.decorateRows(newRows);
+    };
+    prototype.reSort = function(){
+      var x$;
+      x$ = this.getRowElements().sort(this.sorterFilter.sortFunction).transition();
+      x$.duration(800);
+      x$.style('top', function(item, index){
+        return index * list_item_height + "px";
+      });
+      return x$;
+    };
+    prototype.reFilter = function(){
+      var currentData, x$, sel, y$, z$, z1$, z2$, z3$;
+      currentData = this.poslanci.filter(this.sorterFilter.filterFunction);
+      x$ = sel = this.getRowElements().data(currentData, function(it){
+        return it.id;
+      });
+      y$ = x$.transition();
+      y$.delay(400);
+      y$.duration(800);
+      y$.style('top', function(item, index){
+        return index * list_item_height + "px";
+      });
+      z$ = x$.exit();
+      z$.classed('poslanec', false);
+      z1$ = z$.transition();
+      z1$.delay(function(item, index){
+        return index * 10;
+      });
+      z1$.duration(800);
+      z1$.style('left', "-110%");
+      z1$.remove();
+      z2$ = this.decorateRows(sel.enter());
+      z2$.style('transform', "scale(0.1)");
+      z2$.style('-ms-transform', "scale(0.1)");
+      z2$.style('-o-transform', "scale(0.1)");
+      z2$.style('-webkit-transform', "scale(0.1)");
+      z2$.style('-moz-transform', "scale(0.1)");
+      z2$.style('opacity', "0");
+      z3$ = z2$.transition();
+      z3$.delay(400);
+      z3$.duration(800);
+      z3$.style('transform', "scale(1)");
+      z3$.style('-ms-transform', "scale(1)");
+      z3$.style('-o-transform', "scale(1)");
+      z3$.style('-webkit-transform', "scale(1)");
+      z3$.style('-moz-transform', "scale(1)");
+      z3$.style('opacity', "1");
+      return z2$;
+    };
+    prototype.decorateRows = function(enterSelection){
+      var x$, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, z7$, z8$, z9$, z10$, this$ = this;
+      x$ = enterSelection.append('li');
       x$.attr('class', function(it){
         return "poslanec " + it.strana.zkratka;
       });
@@ -221,38 +274,6 @@
       z10$.style('height', function(it){
         return this$.percentageScale(it.nazor_normalized) + "px";
       });
-      return x$;
-    };
-    prototype.reSort = function(){
-      var x$;
-      x$ = this.getRowElements().sort(this.sorterFilter.sortFunction).transition();
-      x$.duration(800);
-      x$.style('top', function(item, index){
-        return index * list_item_height + "px";
-      });
-      return x$;
-    };
-    prototype.reFilter = function(){
-      var currentData, x$, sel, y$, z$, z1$;
-      currentData = this.poslanci.filter(this.sorterFilter.filterFunction);
-      x$ = sel = this.getRowElements().data(currentData, function(it){
-        return it.id;
-      });
-      y$ = x$.transition();
-      y$.delay(400);
-      y$.duration(800);
-      y$.style('top', function(item, index){
-        return index * list_item_height + "px";
-      });
-      z$ = x$.exit();
-      z$.classed('poslanec', false);
-      z1$ = z$.transition();
-      z1$.delay(function(item, index){
-        return index * 10;
-      });
-      z1$.duration(800);
-      z1$.style('left', "-110%");
-      z1$.remove();
       return x$;
     };
     prototype.getScales = function(){

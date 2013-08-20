@@ -93,55 +93,10 @@ class PoslanecList
         @sorterFilter.onFilterChangeCb = @~reFilter
 
     draw: ->
-        @getRowElements!
+        newRows = @getRowElements!
             .data @poslanci, -> it.id
-            .enter!append \li
-                ..attr \class -> "poslanec #{it.strana.zkratka}"
-                ..style \top (item, index) -> "#{index * list_item_height}px"
-                ..style \left "0%"
-                ..append \span
-                    ..attr \class \name
-                    ..html (.getName!)
-                ..append \span
-                    ..attr \class \party
-                    ..html (.strana.plny)
-                ..append \img
-                    ..attr \src -> "./img/poslanci_thumb/#{it.id}.png"
-                ..append \div
-                    ..attr \class \barchart
-                    ..append \div
-                        ..attr \class "interpelace bar"
-                        ..attr \data-tooltip ->
-                            str = if it.interpelace_source_count
-                                "Interpeloval(a) <strong>#{it.interpelace_sum}</strong>x"
-                            else
-                                "Byl(a) interpelován(a) <strong>#{it.interpelace_sum}</strong>x"
-                            escape str
-
-                        ..append \div
-                            ..style \height ~>
-                                "#{@interpelaceScale it.interpelace_sum}px"
-                    ..append \div
-                        ..attr \class "zakony bar"
-                        ..attr \data-tooltip ->
-                            escape "Předložil(a) <strong>#{it.zakony_predkladatel_count}</strong> zákonů"
-                        ..append \div
-                            ..style \height ~>
-                                "#{@zakonyScale it.zakony_predkladatel_count}px"
-                    ..append \div
-                        ..attr \class "absence bar"
-                        ..attr \data-tooltip ->
-                            "Byl(a) u <strong>#{Math.round (1-it.absence_normalized)*100}%</strong> hlasování (#{it.absence_count} z #{it.possible_votes_count})"
-                        ..append \div
-                            ..style \height ~>
-                                "#{@percentageInvertedScale it.absence_normalized}px"
-                    ..append \div
-                        ..attr \class "nazor bar"
-                        ..attr \data-tooltip ->
-                            "Vlastní nazor projevil(a) u <strong>#{Math.round it.nazor_normalized*100}%</strong> hlasování (#{it.nazor_count} z #{it.possible_votes_count})"
-                        ..append \div
-                            ..style \height ~>
-                                "#{@percentageScale it.nazor_normalized}px"
+            .enter!
+        @decorateRows newRows
 
     reSort: ->
         @getRowElements!
@@ -163,6 +118,71 @@ class PoslanecList
                     ..duration 800
                     ..style \left "-110%"
                     ..remove!
+        @decorateRows sel.enter!
+            ..style \transform "scale(0.1)"
+            ..style \-ms-transform "scale(0.1)"
+            ..style \-o-transform "scale(0.1)"
+            ..style \-webkit-transform "scale(0.1)"
+            ..style \-moz-transform "scale(0.1)"
+            ..style \opacity "0"
+            ..transition!
+                ..delay 400
+                ..duration 800
+                ..style \transform "scale(1)"
+                ..style \-ms-transform "scale(1)"
+                ..style \-o-transform "scale(1)"
+                ..style \-webkit-transform "scale(1)"
+                ..style \-moz-transform "scale(1)"
+                ..style \opacity "1"
+
+    decorateRows: (enterSelection) ->
+        enterSelection.append \li
+            ..attr \class -> "poslanec #{it.strana.zkratka}"
+            ..style \top (item, index) -> "#{index * list_item_height}px"
+            ..style \left "0%"
+            ..append \span
+                ..attr \class \name
+                ..html (.getName!)
+            ..append \span
+                ..attr \class \party
+                ..html (.strana.plny)
+            ..append \img
+                ..attr \src -> "./img/poslanci_thumb/#{it.id}.png"
+            ..append \div
+                ..attr \class \barchart
+                ..append \div
+                    ..attr \class "interpelace bar"
+                    ..attr \data-tooltip ->
+                        str = if it.interpelace_source_count
+                            "Interpeloval(a) <strong>#{it.interpelace_sum}</strong>x"
+                        else
+                            "Byl(a) interpelován(a) <strong>#{it.interpelace_sum}</strong>x"
+                        escape str
+
+                    ..append \div
+                        ..style \height ~>
+                            "#{@interpelaceScale it.interpelace_sum}px"
+                ..append \div
+                    ..attr \class "zakony bar"
+                    ..attr \data-tooltip ->
+                        escape "Předložil(a) <strong>#{it.zakony_predkladatel_count}</strong> zákonů"
+                    ..append \div
+                        ..style \height ~>
+                            "#{@zakonyScale it.zakony_predkladatel_count}px"
+                ..append \div
+                    ..attr \class "absence bar"
+                    ..attr \data-tooltip ->
+                        "Byl(a) u <strong>#{Math.round (1-it.absence_normalized)*100}%</strong> hlasování (#{it.absence_count} z #{it.possible_votes_count})"
+                    ..append \div
+                        ..style \height ~>
+                            "#{@percentageInvertedScale it.absence_normalized}px"
+                ..append \div
+                    ..attr \class "nazor bar"
+                    ..attr \data-tooltip ->
+                        "Vlastní nazor projevil(a) u <strong>#{Math.round it.nazor_normalized*100}%</strong> hlasování (#{it.nazor_count} z #{it.possible_votes_count})"
+                    ..append \div
+                        ..style \height ~>
+                            "#{@percentageScale it.nazor_normalized}px"
 
     getScales: ->
         @interpelaceScale = d3.scale.linear!
