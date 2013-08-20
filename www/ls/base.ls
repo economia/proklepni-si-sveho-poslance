@@ -1,3 +1,4 @@
+list_item_height = 62
 list_barchart_height = 50
 new Tooltip!watchElements!
 class Strana
@@ -25,6 +26,7 @@ class PoslanecList
             .data @poslanci
             .enter!append \li
                 ..attr \class (.strana.zkratka)
+                ..style \top (item, index) -> "#{index * list_item_height}px"
                 ..append \span
                     ..attr \class \name
                     ..html (.getName!)

@@ -1,5 +1,6 @@
 (function(){
-  var list_barchart_height, Strana, Kraj, Poslanec, PoslanecList, this$ = this;
+  var list_item_height, list_barchart_height, Strana, Kraj, Poslanec, PoslanecList, this$ = this;
+  list_item_height = 62;
   list_barchart_height = 50;
   new Tooltip().watchElements();
   Strana = (function(){
@@ -48,6 +49,9 @@
       x$ = this.container.selectAll('li').data(this.poslanci).enter().append('li');
       x$.attr('class', function(it){
         return it.strana.zkratka;
+      });
+      x$.style('top', function(item, index){
+        return index * list_item_height + "px";
       });
       y$ = x$.append('span');
       y$.attr('class', 'name');
