@@ -4,7 +4,7 @@ body {
 }
 body #wrap {
   width: 650px;
-  background: #ffe;
+  background: #fff;
 }
 body #wrap .poslanecList {
   list-style-type: none;
@@ -12,14 +12,37 @@ body #wrap .poslanecList {
   margin: 0px;
 }
 body #wrap .poslanecList li {
+  background: #f6f6ff;
   position: relative;
   height: 60px;
+  margin-bottom: 2px;
+}
+body #wrap .poslanecList li:hover {
+  background: #f0f0ff;
+  cursor: pointer;
+}
+body #wrap .poslanecList li .name,
+body #wrap .poslanecList li .party {
+  display: block;
+  padding-left: 15px;
+}
+body #wrap .poslanecList li .name {
+  font-size: 1.2em;
+  color: #222;
+  padding-top: 9px;
+}
+body #wrap .poslanecList li .party {
+  color: #777;
+  font-style: italic;
+  font-size: 0.9em;
+  padding-top: 2px;
 }
 body #wrap .poslanecList li .barchart {
   position: absolute;
   top: 0px;
-  right: 60px;
+  right: 5px;
   width: 60px;
+  top: 10px;
   height: 50px;
 }
 body #wrap .poslanecList li .barchart .bar {
@@ -55,5 +78,5 @@ body #wrap .poslanecList li .barchart .bar.nazor {
   left: 45px;
 }
 body #wrap .poslanecList li .barchart .bar.nazor div {
-  background: #ff9;
+  background: #386cb0;
 }
