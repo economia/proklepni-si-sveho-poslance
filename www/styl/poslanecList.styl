@@ -3,10 +3,29 @@
     padding 0px
     margin 0px
     li
-        background #f6f6ff
         position relative
         height 60px
         margin-bottom 2px
+        &.ods
+            background lighten(PartyODS, 95%)
+            &:hover
+                background darken(@background, 5%)
+        &.cssd
+            background lighten(PartyCSSD, 91%)
+            &:hover
+                background darken(@background, 5%)
+        &.kscm
+            background lighten(PartyKSCM, 88%)
+            &:hover
+                background darken(@background, 5%)
+        &.top
+            background lighten(PartyTOP, 95%)
+            &:hover
+                background darken(@background, 5%)
+        &.vv
+            background lighten(PartyVV, 90%)
+            &:hover
+                background darken(@background, 5%)
         &:hover
             background #f0f0ff
             cursor pointer

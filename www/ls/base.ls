@@ -1,7 +1,11 @@
 list_barchart_height = 50
 new Tooltip!watchElements!
+class Strana
+    ({@nazev, @plny, @zkratka}) ->
+class Kraj
+    ({@nazev}) ->
 class Poslanec
-    ({@titul_pred, @prijmeni, @jmeno, @titul_za, @interpelace_source_count, @interpelace_target_count, @absence_count, @nazor_count, @possible_votes_count, @zakony_predkladatel_count}) ->
+    ({@titul_pred, @prijmeni, @jmeno, @titul_za, @interpelace_source_count, @interpelace_target_count, @absence_count, @nazor_count, @possible_votes_count, @zakony_predkladatel_count, @kraj, @strana}) ->
         @interpelace_sum    = @interpelace_source_count + @interpelace_target_count
         @absence_normalized = @absence_count / @possible_votes_count
         @nazor_normalized   = @nazor_count / @possible_votes_count
@@ -20,9 +24,13 @@ class PoslanecList
             .selectAll \li
             .data @poslanci
             .enter!append \li
+                ..attr \class (.strana.zkratka)
                 ..append \span
                     ..attr \class \name
                     ..html (.getName!)
+                ..append \span
+                    ..attr \class \party
+                    ..html (.strana.plny)
                 ..append \div
                     ..attr \class \barchart
                     ..append \div
@@ -81,5 +89,10 @@ class PoslanecList
 
 
 (err, data) <~ d3.json "./api.php?get=poslanci"
-poslanci = data.map -> new Poslanec it
+kraje  = data.kraje.map  -> if it then new Kraj it   else null
+strany = data.strany.map -> if it then new Strana it else null
+poslanci = data.poslanci.map ->
+    it.kraj = kraje[it.kraj_id]
+    it.strana = strany[it.strana_id]
+    new Poslanec it
 poslanecList = new PoslanecList \#wrap poslanci
