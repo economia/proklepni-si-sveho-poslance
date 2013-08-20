@@ -3,12 +3,8 @@ require! {
     mysql
     async
     request
+    './config'
 }
-config =
-    host     : \localhost
-    user     : \root
-    password : ''
-    database : 'poslanci'
 
 (err, existing) <~ fs.readdir "./images"
 existing .= map -> parseInt it, 10
