@@ -29,8 +29,8 @@
     }
     prototype.draw = function(){
       var x$, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, z7$, z8$, this$ = this;
-      x$ = this.container.selectAll("li").data(this.poslanci).enter().append("li");
-      y$ = x$.append("span");
+      x$ = this.container.selectAll('li').data(this.poslanci).enter().append('li');
+      y$ = x$.append('span');
       y$.attr('class', 'name');
       y$.html(function(it){
         return it.getName();
@@ -86,19 +86,19 @@
       }));
       x$ = this.interpelaceScale = d3.scale.linear();
       x$.domain([0, interpelaceMaximum]);
-      x$.range([3, list_barchart_height]);
+      x$.range([1, list_barchart_height]);
       zakonyMaximum = Math.max.apply(Math, this.poslanci.map(function(it){
         return it.zakony_predkladatel_count;
       }));
       y$ = this.zakonyScale = d3.scale.linear();
       y$.domain([0, zakonyMaximum]);
-      y$.range([3, list_barchart_height]);
+      y$.range([1, list_barchart_height]);
       z$ = this.percentageScale = d3.scale.linear();
       z$.domain([0, 1]);
-      z$.range([3, list_barchart_height]);
+      z$.range([1, list_barchart_height]);
       z1$ = this.percentageInvertedScale = d3.scale.linear();
       z1$.domain([1, 0]);
-      z1$.range([3, list_barchart_height]);
+      z1$.range([1, list_barchart_height]);
       return z1$;
     };
     return PoslanecList;
