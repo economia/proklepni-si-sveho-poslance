@@ -6,7 +6,7 @@ class Strana
 class Kraj
     ({@nazev}) ->
 class Poslanec
-    ({@titul_pred, @prijmeni, @jmeno, @titul_za, @interpelace_source_count, @interpelace_target_count, @absence_count, @nazor_count, @possible_votes_count, @zakony_predkladatel_count, @kraj, @strana}) ->
+    ({@id, @titul_pred, @prijmeni, @jmeno, @titul_za, @interpelace_source_count, @interpelace_target_count, @absence_count, @nazor_count, @possible_votes_count, @zakony_predkladatel_count, @kraj, @strana}) ->
         @interpelace_sum    = @interpelace_source_count + @interpelace_target_count
         @absence_normalized = @absence_count / @possible_votes_count
         @nazor_normalized   = @nazor_count / @possible_votes_count
@@ -15,7 +15,8 @@ class Poslanec
 class SorterFilter
     sortFunction: null
     filterFunction: null
-    onChangeCb: null
+    onSortChangeCb: null
+    onFilterChangeCb: null
     (parentSelector, @parties) ->
         @$element = $ "<div class='filter'></div>"
             ..appendTo $ parentSelector
@@ -32,7 +33,10 @@ class SorterFilter
             return if party is null
             $ "<option value='#{party.zkratka}'>#{party.nazev}</option>"
                 ..appendTo $element
-        $element.chosen!
+        $element
+            ..chosen!
+            ..on \change ~>
+                @onFilterChange \party $element.val!
 
     createSorter: ->
         $element = $ "<div class='sort'><select class='sort' data-placeholder='Seřadit podle'>
@@ -71,6 +75,12 @@ class SorterFilter
         | otherwise         => null
         @onSortChangeCb?!
 
+    onFilterChange: (filterType, filterValue) ->
+        @filterFunction = switch filterType
+            | \party => (poslanec) -> poslanec.strana.zkratka in filterValue
+            | otherwise => null
+        @onFilterChangeCb?!
+
 
 
 class PoslanecList
@@ -80,14 +90,16 @@ class PoslanecList
         @getScales!
         @draw!
         @sorterFilter.onSortChangeCb = @~reSort
+        @sorterFilter.onFilterChangeCb = @~reFilter
+
 
     draw: ->
-        @listItems = @container
-            .selectAll \li
-            .data @poslanci
+        @getRowElements!
+            .data @poslanci, -> it.id
             .enter!append \li
-                ..attr \class (.strana.zkratka)
+                ..attr \class -> "poslanec #{it.strana.zkratka}"
                 ..style \top (item, index) -> "#{index * list_item_height}px"
+                ..style \left "0%"
                 ..append \span
                     ..attr \class \name
                     ..html (.getName!)
@@ -131,14 +143,27 @@ class PoslanecList
                                 "#{@percentageScale it.nazor_normalized}px"
 
     reSort: ->
-        console.log 'foo'
-        @listItems
+        @getRowElements!
             .sort @sorterFilter.sortFunction
             .transition!
                 ..duration 800
                 ..style \top (item, index) -> "#{index * list_item_height}px"
+    reFilter: ->
+        currentData = @poslanci.filter @sorterFilter.filterFunction
+        sel = @getRowElements!
+            .data currentData, -> it.id
+        sel.transition!
+            ..delay 400
+            ..duration 800
+            ..style \top (item, index) -> "#{index * list_item_height}px"
 
-
+        sel.exit!
+            .classed \poslanec false
+            .transition!
+                ..delay (item, index) -> index * 10
+                ..duration 800
+                ..style \left "-110%"
+                ..remove!
 
     getScales: ->
         @interpelaceScale = d3.scale.linear!
@@ -158,6 +183,8 @@ class PoslanecList
             ..domain [1 0]
             ..range [1 list_barchart_height]
 
+    getRowElements: ->
+        @container.selectAll "li.poslanec"
 
 (err, data) <~ d3.json "./api.php?get=poslanci"
 kraje  = data.kraje.map  -> if it then new Kraj it   else null

@@ -23,7 +23,7 @@
     Poslanec.displayName = 'Poslanec';
     var prototype = Poslanec.prototype, constructor = Poslanec;
     function Poslanec(arg$){
-      this.titul_pred = arg$.titul_pred, this.prijmeni = arg$.prijmeni, this.jmeno = arg$.jmeno, this.titul_za = arg$.titul_za, this.interpelace_source_count = arg$.interpelace_source_count, this.interpelace_target_count = arg$.interpelace_target_count, this.absence_count = arg$.absence_count, this.nazor_count = arg$.nazor_count, this.possible_votes_count = arg$.possible_votes_count, this.zakony_predkladatel_count = arg$.zakony_predkladatel_count, this.kraj = arg$.kraj, this.strana = arg$.strana;
+      this.id = arg$.id, this.titul_pred = arg$.titul_pred, this.prijmeni = arg$.prijmeni, this.jmeno = arg$.jmeno, this.titul_za = arg$.titul_za, this.interpelace_source_count = arg$.interpelace_source_count, this.interpelace_target_count = arg$.interpelace_target_count, this.absence_count = arg$.absence_count, this.nazor_count = arg$.nazor_count, this.possible_votes_count = arg$.possible_votes_count, this.zakony_predkladatel_count = arg$.zakony_predkladatel_count, this.kraj = arg$.kraj, this.strana = arg$.strana;
       this.interpelace_sum = this.interpelace_source_count + this.interpelace_target_count;
       this.absence_normalized = this.absence_count / this.possible_votes_count;
       this.nazor_normalized = this.nazor_count / this.possible_votes_count;
@@ -38,7 +38,8 @@
     var prototype = SorterFilter.prototype, constructor = SorterFilter;
     prototype.sortFunction = null;
     prototype.filterFunction = null;
-    prototype.onChangeCb = null;
+    prototype.onSortChangeCb = null;
+    prototype.onFilterChangeCb = null;
     function SorterFilter(parentSelector, parties){
       var x$;
       this.parties = parties;
@@ -48,7 +49,7 @@
       this.createSorter();
     }
     prototype.createPartySelect = function(){
-      var $element;
+      var $element, x$, this$ = this;
       $element = $("<div class='party'><select class='party' multiple='multiple' data-placeholder='Zobrazit pouze stranu'></select></div>");
       $element.appendTo(this.$element);
       $element = $element.find('select');
@@ -61,7 +62,12 @@
         x$.appendTo($element);
         return x$;
       });
-      return $element.chosen();
+      x$ = $element;
+      x$.chosen();
+      x$.on('change', function(){
+        return this$.onFilterChange('party', $element.val());
+      });
+      return x$;
     };
     prototype.createSorter = function(){
       var $element, x$, y$, this$ = this;
@@ -118,6 +124,19 @@
       }());
       return typeof this.onSortChangeCb === 'function' ? this.onSortChangeCb() : void 8;
     };
+    prototype.onFilterChange = function(filterType, filterValue){
+      this.filterFunction = (function(){
+        switch (filterType) {
+        case 'party':
+          return function(poslanec){
+            return in$(poslanec.strana.zkratka, filterValue);
+          };
+        default:
+          return null;
+        }
+      }());
+      return typeof this.onFilterChangeCb === 'function' ? this.onFilterChangeCb() : void 8;
+    };
     return SorterFilter;
   }());
   PoslanecList = (function(){
@@ -132,16 +151,20 @@
       this.getScales();
       this.draw();
       this.sorterFilter.onSortChangeCb = bind$(this, 'reSort');
+      this.sorterFilter.onFilterChangeCb = bind$(this, 'reFilter');
     }
     prototype.draw = function(){
       var x$, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, z7$, z8$, z9$, this$ = this;
-      x$ = this.listItems = this.container.selectAll('li').data(this.poslanci).enter().append('li');
+      x$ = this.getRowElements().data(this.poslanci, function(it){
+        return it.id;
+      }).enter().append('li');
       x$.attr('class', function(it){
-        return it.strana.zkratka;
+        return "poslanec " + it.strana.zkratka;
       });
       x$.style('top', function(item, index){
         return index * list_item_height + "px";
       });
+      x$.style('left', "0%");
       y$ = x$.append('span');
       y$.attr('class', 'name');
       y$.html(function(it){
@@ -198,13 +221,33 @@
     };
     prototype.reSort = function(){
       var x$;
-      console.log('foo');
-      x$ = this.listItems.sort(this.sorterFilter.sortFunction).transition();
+      x$ = this.getRowElements().sort(this.sorterFilter.sortFunction).transition();
       x$.duration(800);
       x$.style('top', function(item, index){
         return index * list_item_height + "px";
       });
       return x$;
+    };
+    prototype.reFilter = function(){
+      var currentData, sel, x$, y$;
+      currentData = this.poslanci.filter(this.sorterFilter.filterFunction);
+      sel = this.getRowElements().data(currentData, function(it){
+        return it.id;
+      });
+      x$ = sel.transition();
+      x$.delay(400);
+      x$.duration(800);
+      x$.style('top', function(item, index){
+        return index * list_item_height + "px";
+      });
+      y$ = sel.exit().classed('poslanec', false).transition();
+      y$.delay(function(item, index){
+        return index * 10;
+      });
+      y$.duration(800);
+      y$.style('left', "-110%");
+      y$.remove();
+      return y$;
     };
     prototype.getScales = function(){
       var x$, zakonyMaximum, y$, z$, z1$;
@@ -224,6 +267,9 @@
       z1$.domain([1, 0]);
       z1$.range([1, list_barchart_height]);
       return z1$;
+    };
+    prototype.getRowElements = function(){
+      return this.container.selectAll("li.poslanec");
     };
     return PoslanecList;
   }());
@@ -251,6 +297,11 @@
     });
     return poslanecList = new PoslanecList('#wrap', poslanci, sorterFilter);
   });
+  function in$(x, arr){
+    var i = -1, l = arr.length >>> 0;
+    while (++i < l) if (x === arr[i] && i in arr) return true;
+    return false;
+  }
   function bind$(obj, key, target){
     return function(){ return (target || obj)[key].apply(obj, arguments) };
   }
