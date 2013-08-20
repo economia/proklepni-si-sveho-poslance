@@ -92,7 +92,6 @@ class PoslanecList
         @sorterFilter.onSortChangeCb = @~reSort
         @sorterFilter.onFilterChangeCb = @~reFilter
 
-
     draw: ->
         @getRowElements!
             .data @poslanci, -> it.id
@@ -150,20 +149,18 @@ class PoslanecList
                 ..style \top (item, index) -> "#{index * list_item_height}px"
     reFilter: ->
         currentData = @poslanci.filter @sorterFilter.filterFunction
-        sel = @getRowElements!
-            .data currentData, -> it.id
-        sel.transition!
-            ..delay 400
-            ..duration 800
-            ..style \top (item, index) -> "#{index * list_item_height}px"
-
-        sel.exit!
-            .classed \poslanec false
-            .transition!
-                ..delay (item, index) -> index * 10
+        sel = @getRowElements! .data currentData, (.id)
+            ..transition!
+                ..delay 400
                 ..duration 800
-                ..style \left "-110%"
-                ..remove!
+                ..style \top (item, index) -> "#{index * list_item_height}px"
+            ..exit!
+                ..classed \poslanec false
+                ..transition!
+                    ..delay (item, index) -> index * 10
+                    ..duration 800
+                    ..style \left "-110%"
+                    ..remove!
 
     getScales: ->
         @interpelaceScale = d3.scale.linear!

@@ -229,25 +229,27 @@
       return x$;
     };
     prototype.reFilter = function(){
-      var currentData, sel, x$, y$;
+      var currentData, x$, sel, y$, z$, z1$;
       currentData = this.poslanci.filter(this.sorterFilter.filterFunction);
-      sel = this.getRowElements().data(currentData, function(it){
+      x$ = sel = this.getRowElements().data(currentData, function(it){
         return it.id;
       });
-      x$ = sel.transition();
-      x$.delay(400);
-      x$.duration(800);
-      x$.style('top', function(item, index){
+      y$ = x$.transition();
+      y$.delay(400);
+      y$.duration(800);
+      y$.style('top', function(item, index){
         return index * list_item_height + "px";
       });
-      y$ = sel.exit().classed('poslanec', false).transition();
-      y$.delay(function(item, index){
+      z$ = x$.exit();
+      z$.classed('poslanec', false);
+      z1$ = z$.transition();
+      z1$.delay(function(item, index){
         return index * 10;
       });
-      y$.duration(800);
-      y$.style('left', "-110%");
-      y$.remove();
-      return y$;
+      z1$.duration(800);
+      z1$.style('left', "-110%");
+      z1$.remove();
+      return x$;
     };
     prototype.getScales = function(){
       var x$, zakonyMaximum, y$, z$, z1$;
