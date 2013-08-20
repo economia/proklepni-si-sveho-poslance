@@ -29,7 +29,7 @@
       this.nazor_normalized = this.nazor_count / this.possible_votes_count;
     }
     prototype.getName = function(){
-      return this.titul_pred + " " + this.jmeno + " " + this.prijmeni + " " + this.titul_za;
+      return this.jmeno + " " + this.prijmeni;
     };
     return Poslanec;
   }());
@@ -154,7 +154,7 @@
       this.sorterFilter.onFilterChangeCb = bind$(this, 'reFilter');
     }
     prototype.draw = function(){
-      var x$, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, z7$, z8$, z9$, this$ = this;
+      var x$, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, z7$, z8$, z9$, z10$, this$ = this;
       x$ = this.getRowElements().data(this.poslanci, function(it){
         return it.id;
       }).enter().append('li');
@@ -175,46 +175,50 @@
       z$.html(function(it){
         return it.strana.plny;
       });
-      z1$ = x$.append('div');
-      z1$.attr('class', 'barchart');
-      z2$ = z1$.append('div');
-      z2$.attr('class', "interpelace bar");
-      z2$.attr('data-tooltip', function(it){
+      z1$ = x$.append('img');
+      z1$.attr('src', function(it){
+        return "./img/poslanci_thumb/" + it.id + ".png";
+      });
+      z2$ = x$.append('div');
+      z2$.attr('class', 'barchart');
+      z3$ = z2$.append('div');
+      z3$.attr('class', "interpelace bar");
+      z3$.attr('data-tooltip', function(it){
         var str;
         str = it.interpelace_source_count
           ? "Interpeloval(a) <strong>" + it.interpelace_sum + "</strong>x"
           : "Byl(a) interpelován(a) <strong>" + it.interpelace_sum + "</strong>x";
         return escape(str);
       });
-      z3$ = z2$.append('div');
-      z3$.style('height', function(it){
+      z4$ = z3$.append('div');
+      z4$.style('height', function(it){
         return this$.interpelaceScale(it.interpelace_sum) + "px";
       });
-      z4$ = z1$.append('div');
-      z4$.attr('class', "zakony bar");
-      z4$.attr('data-tooltip', function(it){
+      z5$ = z2$.append('div');
+      z5$.attr('class', "zakony bar");
+      z5$.attr('data-tooltip', function(it){
         return escape("Předložil(a) <strong>" + it.zakony_predkladatel_count + "</strong> zákonů");
       });
-      z5$ = z4$.append('div');
-      z5$.style('height', function(it){
+      z6$ = z5$.append('div');
+      z6$.style('height', function(it){
         return this$.zakonyScale(it.zakony_predkladatel_count) + "px";
       });
-      z6$ = z1$.append('div');
-      z6$.attr('class', "absence bar");
-      z6$.attr('data-tooltip', function(it){
+      z7$ = z2$.append('div');
+      z7$.attr('class', "absence bar");
+      z7$.attr('data-tooltip', function(it){
         return "Byl(a) u <strong>" + Math.round((1 - it.absence_normalized) * 100) + "%</strong> hlasování (" + it.absence_count + " z " + it.possible_votes_count + ")";
       });
-      z7$ = z6$.append('div');
-      z7$.style('height', function(it){
+      z8$ = z7$.append('div');
+      z8$.style('height', function(it){
         return this$.percentageInvertedScale(it.absence_normalized) + "px";
       });
-      z8$ = z1$.append('div');
-      z8$.attr('class', "nazor bar");
-      z8$.attr('data-tooltip', function(it){
+      z9$ = z2$.append('div');
+      z9$.attr('class', "nazor bar");
+      z9$.attr('data-tooltip', function(it){
         return "Vlastní nazor projevil(a) u <strong>" + Math.round(it.nazor_normalized * 100) + "%</strong> hlasování (" + it.nazor_count + " z " + it.possible_votes_count + ")";
       });
-      z9$ = z8$.append('div');
-      z9$.style('height', function(it){
+      z10$ = z9$.append('div');
+      z10$.style('height', function(it){
         return this$.percentageScale(it.nazor_normalized) + "px";
       });
       return x$;

@@ -11,7 +11,7 @@ class Poslanec
         @absence_normalized = @absence_count / @possible_votes_count
         @nazor_normalized   = @nazor_count / @possible_votes_count
 
-    getName: -> "#{@titul_pred} #{@jmeno} #{@prijmeni} #{@titul_za}"
+    getName: -> "#{@jmeno} #{@prijmeni}"
 class SorterFilter
     sortFunction: null
     filterFunction: null
@@ -105,6 +105,8 @@ class PoslanecList
                 ..append \span
                     ..attr \class \party
                     ..html (.strana.plny)
+                ..append \img
+                    ..attr \src -> "./img/poslanci_thumb/#{it.id}.png"
                 ..append \div
                     ..attr \class \barchart
                     ..append \div

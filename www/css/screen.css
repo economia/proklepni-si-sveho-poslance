@@ -77,12 +77,17 @@ body #wrap .poslanecList li:hover {
 body #wrap .poslanecList li .name,
 body #wrap .poslanecList li .party {
   display: block;
-  padding-left: 15px;
+  padding-left: 65px;
 }
 body #wrap .poslanecList li .name {
   font-size: 1.2em;
   color: #222;
   padding-top: 9px;
+}
+body #wrap .poslanecList li img {
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 body #wrap .poslanecList li .party {
   color: #777;
