@@ -69,10 +69,9 @@ class PoslanecList
 
 
     getScales: ->
-        interpelaceMaximum = Math.max ...@poslanci.map (.interpelace_sum)
         @interpelaceScale = d3.scale.linear!
-            ..domain [0 interpelaceMaximum]
-            ..range [1 list_barchart_height]
+            ..domain [0 200 718] # deformace, aby Necas tak nevycnival
+            ..range [1 list_barchart_height * 0.85, list_barchart_height ]
 
         zakonyMaximum = Math.max ...@poslanci.map (.zakony_predkladatel_count)
         @zakonyScale = d3.scale.linear!
