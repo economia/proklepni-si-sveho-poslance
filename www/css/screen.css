@@ -7,115 +7,28 @@ body #wrap {
   background: #fff;
   position: absolute;
 }
-body #wrap .poslanecList  body #wrap .poslanecList {
-    list-style-type: none;
-    padding: 0px;
-    margin: 0px;
-  }
-  body #wrap .poslanecList li {
-    position: absolute;
-    width: 100%;
-    height: 60px;
-  }
-  body #wrap .poslanecList li.ods {
-    background: #eef8ff;
-  }
-  body #wrap .poslanecList li.ods:hover {
-    background: #d5eeff;
-  }
-  body #wrap .poslanecList li.cssd {
-    background: #fff6e7;
-  }
-  body #wrap .poslanecList li.cssd:hover {
-    background: #ffedcf;
-  }
-  body #wrap .poslanecList li.kscm {
-    background: #ffdde1;
-  }
-  body #wrap .poslanecList li.kscm:hover {
-    background: #ffc5cc;
-  }
-  body #wrap .poslanecList li.top {
-    background: #ffecf6;
-  }
-  body #wrap .poslanecList li.top:hover {
-    background: #ffd3ea;
-  }
-  body #wrap .poslanecList li.vv {
-    background: #f3fafe;
-  }
-  body #wrap .poslanecList li.vv:hover {
-    background: #dcf0fc;
-  }
-  body #wrap .poslanecList li:hover {
-    background: #f0f0ff;
-    cursor: pointer;
-  }
-  body #wrap .poslanecList li .name,
-  body #wrap .poslanecList li .party {
-    display: block;
-    padding-left: 15px;
-  }
-  body #wrap .poslanecList li .name {
-    font-size: 1.2em;
-    color: #222;
-    padding-top: 9px;
-  }
-  body #wrap .poslanecList li .party {
-    color: #777;
-    font-style: italic;
-    font-size: 0.9em;
-    padding-top: 2px;
-  }
-  body #wrap .poslanecList li .barchart {
-    position: absolute;
-    top: 0px;
-    right: 5px;
-    width: 60px;
-    top: 10px;
-    height: 50px;
-  }
-  body #wrap .poslanecList li .barchart .bar {
-    position: absolute;
-    height: 50px;
-    width: 15px;
-    left: 15px;
-  }
-  body #wrap .poslanecList li .barchart .bar div {
-    position: absolute;
-    width: 15px;
-    bottom: 0px;
-  }
-  body #wrap .poslanecList li .barchart .bar.interpelace {
-    left: 0px;
-  }
-  body #wrap .poslanecList li .barchart .bar.interpelace div {
-    background: #7fc97f;
-  }
-  body #wrap .poslanecList li .barchart .bar.zakony {
-    left: 15px;
-  }
-  body #wrap .poslanecList li .barchart .bar.zakony div {
-    background: #beaed4;
-  }
-  body #wrap .poslanecList li .barchart .bar.absence {
-    left: 30px;
-  }
-  body #wrap .poslanecList li .barchart .bar.absence div {
-    background: #fdc086;
-  }
-  body #wrap .poslanecList li .barchart .bar.nazor {
-    left: 45px;
-  }
-  body #wrap .poslanecList li .barchart .bar.nazor div {
-    background: #386cb0;
-  }
- {
+body #wrap .filter {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+body #wrap .filter div.party {
+  float: left;
+  margin-top: 2px;
+}
+body #wrap .filter div.party select {
+  width: 200px;
+}
+body #wrap .filter div.sort {
+  margin-top: 4px;
+  float: right;
+}
+body #wrap .poslanecList {
   position: absolute;
   left: 0px;
-  top: 0px;
+  top: 35px;
   width: 650px;
-
 }
 body #wrap .poslanecList {
   list-style-type: none;

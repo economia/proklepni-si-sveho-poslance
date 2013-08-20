@@ -1,5 +1,5 @@
 (function(){
-  var list_item_height, list_barchart_height, Strana, Kraj, Poslanec, PoslanecList, this$ = this;
+  var list_item_height, list_barchart_height, Strana, Kraj, Poslanec, SorterFilter, PoslanecList, this$ = this;
   list_item_height = 62;
   list_barchart_height = 50;
   new Tooltip().watchElements();
@@ -32,6 +32,46 @@
       return this.titul_pred + " " + this.jmeno + " " + this.prijmeni + " " + this.titul_za;
     };
     return Poslanec;
+  }());
+  SorterFilter = (function(){
+    SorterFilter.displayName = 'SorterFilter';
+    var prototype = SorterFilter.prototype, constructor = SorterFilter;
+    function SorterFilter(parentSelector, parties){
+      var x$;
+      this.parties = parties;
+      x$ = this.$element = $("<div class='filter'></div>");
+      x$.appendTo($(parentSelector));
+      this.createPartySelect();
+      this.createSorter();
+    }
+    prototype.createPartySelect = function(){
+      var $element;
+      $element = $("<div class='party'><select class='party' multiple='multiple' data-placeholder='Zobrazit pouze stranu'></select></div>");
+      $element.appendTo(this.$element);
+      $element = $element.find('select');
+      this.parties.forEach(function(party){
+        var x$;
+        if (party === null) {
+          return;
+        }
+        x$ = $("<option value='" + party.zkratka + "'>" + party.nazev + "</option>");
+        x$.appendTo($element);
+        return x$;
+      });
+      return $element.chosen();
+    };
+    prototype.createSorter = function(){
+      var $element, x$, y$;
+      $element = $("<div class='sort'><select class='sort' data-placeholder='Seřadit podle'><option value=''></option><option value='interpelace-desc'>Nejvíce interpelující</option><option value='interpelace-asc'>Nejméně interpelují</option><option value='zakony-desc'>Nejvíce předložených zákonů</option><option value='zakony-asc'>Nejméně předložených zákonů</option><option value='absence-desc'>Nejčastěji chybějící</option><option value='absence-asc'>Nejméně chybějící</option><option value='nazor-desc'>Nejčastěji hlasují ano/ne</option><option value='nazor-asc'>Nejméně hlasují ano/ne</option></select></div>");
+      x$ = $element;
+      x$.appendTo(this.$element);
+      y$ = $element = $element.find('select');
+      y$.chosen({
+        allow_single_deselect: true
+      });
+      return y$;
+    };
+    return SorterFilter;
   }());
   PoslanecList = (function(){
     PoslanecList.displayName = 'PoslanecList';
@@ -144,6 +184,7 @@
         return null;
       }
     });
+    new SorterFilter('#wrap', strany);
     poslanci = data.poslanci.map(function(it){
       it.kraj = kraje[it.kraj_id];
       it.strana = strany[it.strana_id];

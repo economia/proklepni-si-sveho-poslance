@@ -12,6 +12,44 @@ class Poslanec
         @nazor_normalized   = @nazor_count / @possible_votes_count
 
     getName: -> "#{@titul_pred} #{@jmeno} #{@prijmeni} #{@titul_za}"
+class SorterFilter
+    (parentSelector, @parties) ->
+        @$element = $ "<div class='filter'></div>"
+            ..appendTo $ parentSelector
+        @createPartySelect!
+        @createSorter!
+
+    createPartySelect: ->
+        $element = $ "<div class='party'>
+                <select class='party' multiple='multiple' data-placeholder='Zobrazit pouze stranu'></select>
+            </div>"
+        $element.appendTo @$element
+        $element .= find 'select'
+        @parties.forEach (party) ->
+            return if party is null
+            $ "<option value='#{party.zkratka}'>#{party.nazev}</option>"
+                ..appendTo $element
+        $element.chosen!
+
+    createSorter: ->
+        $element = $ "<div class='sort'><select class='sort' data-placeholder='Seřadit podle'>
+            <option value=''></option>
+            <option value='interpelace-desc'>Nejvíce interpelující</option>
+            <option value='interpelace-asc'>Nejméně interpelují</option>
+            <option value='zakony-desc'>Nejvíce předložených zákonů</option>
+            <option value='zakony-asc'>Nejméně předložených zákonů</option>
+            <option value='absence-desc'>Nejčastěji chybějící</option>
+            <option value='absence-asc'>Nejméně chybějící</option>
+            <option value='nazor-desc'>Nejčastěji hlasují ano/ne</option>
+            <option value='nazor-asc'>Nejméně hlasují ano/ne</option>
+            </select>
+            </div>
+            "
+        $element
+            ..appendTo @$element
+        $element .= find \select
+            ..chosen allow_single_deselect: yes
+
 
 class PoslanecList
     (parentSelector, @poslanci) ->
@@ -92,6 +130,7 @@ class PoslanecList
 (err, data) <~ d3.json "./api.php?get=poslanci"
 kraje  = data.kraje.map  -> if it then new Kraj it   else null
 strany = data.strany.map -> if it then new Strana it else null
+new SorterFilter \#wrap strany
 poslanci = data.poslanci.map ->
     it.kraj = kraje[it.kraj_id]
     it.strana = strany[it.strana_id]
