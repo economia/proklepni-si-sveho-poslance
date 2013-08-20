@@ -27,20 +27,22 @@ function poslanci($params) {
     }
 }
 function get_strany_list() {
-    $result = mysql_query("SELECT * FROM parties");
+    $result = mysql_query("SELECT * FROM strany");
     $r = array();
+    $r[0] = null;
     while($row = mysql_fetch_assoc($result)) {
         $row['id'] = (int)$row['id'];
-        $r[] = $row;
+        $r[$row['id']] = $row;
     }
     return $r;
 }
 function get_kraje_list() {
     $result = mysql_query("SELECT * FROM kraje");
     $r = array();
+    $r[0] = null;
     while($row = mysql_fetch_assoc($result)) {
         $row['id'] = (int)$row['id'];
-        $r[] = $row;
+        $r[$row['id']] = $row;
     }
     return $r;
 }
@@ -56,6 +58,8 @@ function get_poslanci_list() {
         $row['absence_count']             = (int)$row['absence_count'];
         $row['nazor_count']               = (int)$row['nazor_count'];
         $row['possible_votes_count']      = (int)$row['possible_votes_count'];
+        $row['kraj_id']                   = (int)$row['kraj_id'];
+        $row['strana_id']                 = (int)$row['strana_id'];
         $r[] = $row;
     }
     return $r;
