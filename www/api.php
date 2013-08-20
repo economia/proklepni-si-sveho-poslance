@@ -17,10 +17,32 @@ if(in_array($request[0], $allowed_methods)) {
 }
 function poslanci($params) {
     if(!count($params)) {
-        return get_poslanci_list();
+        return array(
+            'strany'   => get_strany_list(),
+            'kraje'   => get_kraje_list(),
+            'poslanci' => get_poslanci_list(),
+        );
     } else {
         return get_poslanec(array_shift($params), $params);
     }
+}
+function get_strany_list() {
+    $result = mysql_query("SELECT * FROM parties");
+    $r = array();
+    while($row = mysql_fetch_assoc($result)) {
+        $row['id'] = (int)$row['id'];
+        $r[] = $row;
+    }
+    return $r;
+}
+function get_kraje_list() {
+    $result = mysql_query("SELECT * FROM kraje");
+    $r = array();
+    while($row = mysql_fetch_assoc($result)) {
+        $row['id'] = (int)$row['id'];
+        $r[] = $row;
+    }
+    return $r;
 }
 function get_poslanci_list() {
     $result = mysql_query("SELECT * FROM poslanci WHERE poslanec_2010 > 0");
