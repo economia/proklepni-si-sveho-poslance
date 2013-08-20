@@ -7,11 +7,88 @@ body #wrap {
   background: #fff;
   position: absolute;
 }
-body #wrap .poslanecList {
+body #wrap .poslanecList  body #wrap .poslanecList {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+  }
+  body #wrap .poslanecList li {
+    background: #f6f6ff;
+    position: relative;
+    height: 60px;
+    margin-bottom: 2px;
+  }
+  body #wrap .poslanecList li:hover {
+    background: #f0f0ff;
+    cursor: pointer;
+  }
+  body #wrap .poslanecList li .name,
+  body #wrap .poslanecList li .party {
+    display: block;
+    padding-left: 15px;
+  }
+  body #wrap .poslanecList li .name {
+    font-size: 1.2em;
+    color: #222;
+    padding-top: 9px;
+  }
+  body #wrap .poslanecList li .party {
+    color: #777;
+    font-style: italic;
+    font-size: 0.9em;
+    padding-top: 2px;
+  }
+  body #wrap .poslanecList li .barchart {
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    width: 60px;
+    top: 10px;
+    height: 50px;
+  }
+  body #wrap .poslanecList li .barchart .bar {
+    position: absolute;
+    height: 50px;
+    width: 15px;
+    left: 15px;
+  }
+  body #wrap .poslanecList li .barchart .bar div {
+    position: absolute;
+    width: 15px;
+    bottom: 0px;
+  }
+  body #wrap .poslanecList li .barchart .bar.interpelace {
+    left: 0px;
+  }
+  body #wrap .poslanecList li .barchart .bar.interpelace div {
+    background: #7fc97f;
+  }
+  body #wrap .poslanecList li .barchart .bar.zakony {
+    left: 15px;
+  }
+  body #wrap .poslanecList li .barchart .bar.zakony div {
+    background: #beaed4;
+  }
+  body #wrap .poslanecList li .barchart .bar.absence {
+    left: 30px;
+  }
+  body #wrap .poslanecList li .barchart .bar.absence div {
+    background: #fdc086;
+  }
+  body #wrap .poslanecList li .barchart .bar.nazor {
+    left: 45px;
+  }
+  body #wrap .poslanecList li .barchart .bar.nazor div {
+    background: #386cb0;
+  }
+ {
   position: absolute;
   left: 0px;
   top: 0px;
   width: 650px;
+
+}
+body #wrap .poslanecList {
   list-style-type: none;
   padding: 0px;
   margin: 0px;
