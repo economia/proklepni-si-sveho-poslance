@@ -13,6 +13,9 @@ class Poslanec
 
     getName: -> "#{@titul_pred} #{@jmeno} #{@prijmeni} #{@titul_za}"
 class SorterFilter
+    sortFunction: null
+    filterFunction: null
+    onChangeCb: null
     (parentSelector, @parties) ->
         @$element = $ "<div class='filter'></div>"
             ..appendTo $ parentSelector
@@ -38,8 +41,8 @@ class SorterFilter
             <option value='interpelace-asc'>Nejméně interpelují</option>
             <option value='zakony-desc'>Nejvíce předložených zákonů</option>
             <option value='zakony-asc'>Nejméně předložených zákonů</option>
-            <option value='absence-desc'>Nejčastěji chybějící</option>
-            <option value='absence-asc'>Nejméně chybějící</option>
+            <option value='absence-asc'>Nejčastěji přítomní</option>
+            <option value='absence-desc'>Nejméně přítomní</option>
             <option value='nazor-desc'>Nejčastěji hlasují ano/ne</option>
             <option value='nazor-asc'>Nejméně hlasují ano/ne</option>
             </select>
@@ -49,17 +52,37 @@ class SorterFilter
             ..appendTo @$element
         $element .= find \select
             ..chosen allow_single_deselect: yes
+            ..on \change ~>
+                @onSortChange $element.val!
+
+    onSortChange: (sortId) ->
+        @sortFunction = switch sortId
+        | \interpelace-desc => (a, b) -> b.interpelace_sum - a.interpelace_sum
+        | \interpelace-asc  => (a, b) -> a.interpelace_sum - b.interpelace_sum
+
+        | \zakony-desc => (a, b) -> b.zakony_predkladatel_count - a.zakony_predkladatel_count
+        | \zakony-asc  => (a, b) -> a.zakony_predkladatel_count - b.zakony_predkladatel_count
+
+        | \absence-desc => (a, b) -> b.absence_normalized - a.absence_normalized
+        | \absence-asc  => (a, b) -> a.absence_normalized - b.absence_normalized
+
+        | \nazor-desc => (a, b) -> b.nazor_normalized - a.nazor_normalized
+        | \nazor-asc  => (a, b) -> a.nazor_normalized - b.nazor_normalized
+        | otherwise         => null
+        @onSortChangeCb?!
+
 
 
 class PoslanecList
-    (parentSelector, @poslanci) ->
+    (parentSelector, @poslanci, @sorterFilter) ->
         @container = d3.select parentSelector .append "ul"
             ..attr \class \poslanecList
         @getScales!
         @draw!
+        @sorterFilter.onSortChangeCb = @~reSort
 
     draw: ->
-        @container
+        @listItems = @container
             .selectAll \li
             .data @poslanci
             .enter!append \li
@@ -107,6 +130,15 @@ class PoslanecList
                             ..style \height ~>
                                 "#{@percentageScale it.nazor_normalized}px"
 
+    reSort: ->
+        console.log 'foo'
+        @listItems
+            .sort @sorterFilter.sortFunction
+            .transition!
+                ..duration 800
+                ..style \top (item, index) -> "#{index * list_item_height}px"
+
+
 
     getScales: ->
         @interpelaceScale = d3.scale.linear!
@@ -130,9 +162,12 @@ class PoslanecList
 (err, data) <~ d3.json "./api.php?get=poslanci"
 kraje  = data.kraje.map  -> if it then new Kraj it   else null
 strany = data.strany.map -> if it then new Strana it else null
-new SorterFilter \#wrap strany
+sorterFilter = new SorterFilter \#wrap strany
 poslanci = data.poslanci.map ->
     it.kraj = kraje[it.kraj_id]
     it.strana = strany[it.strana_id]
     new Poslanec it
-poslanecList = new PoslanecList \#wrap poslanci
+poslanecList = new PoslanecList do
+    \#wrap
+    poslanci
+    sorterFilter

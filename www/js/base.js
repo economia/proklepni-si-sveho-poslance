@@ -36,6 +36,9 @@
   SorterFilter = (function(){
     SorterFilter.displayName = 'SorterFilter';
     var prototype = SorterFilter.prototype, constructor = SorterFilter;
+    prototype.sortFunction = null;
+    prototype.filterFunction = null;
+    prototype.onChangeCb = null;
     function SorterFilter(parentSelector, parties){
       var x$;
       this.parties = parties;
@@ -61,32 +64,78 @@
       return $element.chosen();
     };
     prototype.createSorter = function(){
-      var $element, x$, y$;
-      $element = $("<div class='sort'><select class='sort' data-placeholder='Seřadit podle'><option value=''></option><option value='interpelace-desc'>Nejvíce interpelující</option><option value='interpelace-asc'>Nejméně interpelují</option><option value='zakony-desc'>Nejvíce předložených zákonů</option><option value='zakony-asc'>Nejméně předložených zákonů</option><option value='absence-desc'>Nejčastěji chybějící</option><option value='absence-asc'>Nejméně chybějící</option><option value='nazor-desc'>Nejčastěji hlasují ano/ne</option><option value='nazor-asc'>Nejméně hlasují ano/ne</option></select></div>");
+      var $element, x$, y$, this$ = this;
+      $element = $("<div class='sort'><select class='sort' data-placeholder='Seřadit podle'><option value=''></option><option value='interpelace-desc'>Nejvíce interpelující</option><option value='interpelace-asc'>Nejméně interpelují</option><option value='zakony-desc'>Nejvíce předložených zákonů</option><option value='zakony-asc'>Nejméně předložených zákonů</option><option value='absence-asc'>Nejčastěji přítomní</option><option value='absence-desc'>Nejméně přítomní</option><option value='nazor-desc'>Nejčastěji hlasují ano/ne</option><option value='nazor-asc'>Nejméně hlasují ano/ne</option></select></div>");
       x$ = $element;
       x$.appendTo(this.$element);
       y$ = $element = $element.find('select');
       y$.chosen({
         allow_single_deselect: true
       });
+      y$.on('change', function(){
+        return this$.onSortChange($element.val());
+      });
       return y$;
+    };
+    prototype.onSortChange = function(sortId){
+      this.sortFunction = (function(){
+        switch (sortId) {
+        case 'interpelace-desc':
+          return function(a, b){
+            return b.interpelace_sum - a.interpelace_sum;
+          };
+        case 'interpelace-asc':
+          return function(a, b){
+            return a.interpelace_sum - b.interpelace_sum;
+          };
+        case 'zakony-desc':
+          return function(a, b){
+            return b.zakony_predkladatel_count - a.zakony_predkladatel_count;
+          };
+        case 'zakony-asc':
+          return function(a, b){
+            return a.zakony_predkladatel_count - b.zakony_predkladatel_count;
+          };
+        case 'absence-desc':
+          return function(a, b){
+            return b.absence_normalized - a.absence_normalized;
+          };
+        case 'absence-asc':
+          return function(a, b){
+            return a.absence_normalized - b.absence_normalized;
+          };
+        case 'nazor-desc':
+          return function(a, b){
+            return b.nazor_normalized - a.nazor_normalized;
+          };
+        case 'nazor-asc':
+          return function(a, b){
+            return a.nazor_normalized - b.nazor_normalized;
+          };
+        default:
+          return null;
+        }
+      }());
+      return typeof this.onSortChangeCb === 'function' ? this.onSortChangeCb() : void 8;
     };
     return SorterFilter;
   }());
   PoslanecList = (function(){
     PoslanecList.displayName = 'PoslanecList';
     var prototype = PoslanecList.prototype, constructor = PoslanecList;
-    function PoslanecList(parentSelector, poslanci){
+    function PoslanecList(parentSelector, poslanci, sorterFilter){
       var x$;
       this.poslanci = poslanci;
+      this.sorterFilter = sorterFilter;
       x$ = this.container = d3.select(parentSelector).append("ul");
       x$.attr('class', 'poslanecList');
       this.getScales();
       this.draw();
+      this.sorterFilter.onSortChangeCb = bind$(this, 'reSort');
     }
     prototype.draw = function(){
       var x$, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, z7$, z8$, z9$, this$ = this;
-      x$ = this.container.selectAll('li').data(this.poslanci).enter().append('li');
+      x$ = this.listItems = this.container.selectAll('li').data(this.poslanci).enter().append('li');
       x$.attr('class', function(it){
         return it.strana.zkratka;
       });
@@ -147,6 +196,16 @@
       });
       return x$;
     };
+    prototype.reSort = function(){
+      var x$;
+      console.log('foo');
+      x$ = this.listItems.sort(this.sorterFilter.sortFunction).transition();
+      x$.duration(800);
+      x$.style('top', function(item, index){
+        return index * list_item_height + "px";
+      });
+      return x$;
+    };
     prototype.getScales = function(){
       var x$, zakonyMaximum, y$, z$, z1$;
       x$ = this.interpelaceScale = d3.scale.linear();
@@ -169,7 +228,7 @@
     return PoslanecList;
   }());
   d3.json("./api.php?get=poslanci", function(err, data){
-    var kraje, strany, poslanci, poslanecList;
+    var kraje, strany, sorterFilter, poslanci, poslanecList;
     kraje = data.kraje.map(function(it){
       if (it) {
         return new Kraj(it);
@@ -184,12 +243,15 @@
         return null;
       }
     });
-    new SorterFilter('#wrap', strany);
+    sorterFilter = new SorterFilter('#wrap', strany);
     poslanci = data.poslanci.map(function(it){
       it.kraj = kraje[it.kraj_id];
       it.strana = strany[it.strana_id];
       return new Poslanec(it);
     });
-    return poslanecList = new PoslanecList('#wrap', poslanci);
+    return poslanecList = new PoslanecList('#wrap', poslanci, sorterFilter);
   });
+  function bind$(obj, key, target){
+    return function(){ return (target || obj)[key].apply(obj, arguments) };
+  }
 }).call(this);
