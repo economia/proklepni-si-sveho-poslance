@@ -12,31 +12,38 @@
       this.parties = parties;
       x$ = this.$element = $("<div class='filter'></div>");
       x$.appendTo($(parentSelector));
-      this.createPartySelect();
+      this.createFilter();
       this.createSorter();
     }
-    prototype.createPartySelect = function(){
-      var $element, x$, this$ = this;
+    prototype.createFilter = function(){
+      var $element, x$, y$, this$ = this;
       $element = $("<div class='party'><select class='party' multiple='multiple' data-placeholder='Zobrazit pouze stranu'></select></div>");
       $element.appendTo(this.$element);
       $element = $element.find('select');
+      x$ = this.createPartySelect();
+      x$.appendTo($element);
+      y$ = $element;
+      y$.chosen({
+        allow_single_deselect: true
+      });
+      y$.on('change', function(){
+        return this$.onFilterChange('party', $element.val());
+      });
+      return y$;
+    };
+    prototype.createPartySelect = function(){
+      var $partyOptgroup;
+      $partyOptgroup = $("<optgroup label='Politické strany'></optgroup>");
       this.parties.forEach(function(party){
         var x$;
         if (party === null) {
           return;
         }
         x$ = $("<option value='" + party.zkratka + "'>" + party.nazev + "</option>");
-        x$.appendTo($element);
+        x$.appendTo($partyOptgroup);
         return x$;
       });
-      x$ = $element;
-      x$.chosen({
-        allow_single_deselect: true
-      });
-      x$.on('change', function(){
-        return this$.onFilterChange('party', $element.val());
-      });
-      return x$;
+      return $partyOptgroup;
     };
     prototype.createSorter = function(){
       var $element, x$, y$, this$ = this;

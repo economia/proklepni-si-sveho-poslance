@@ -6,23 +6,31 @@ window.SorterFilter = class SorterFilter
     (parentSelector, @parties) ->
         @$element = $ "<div class='filter'></div>"
             ..appendTo $ parentSelector
-        @createPartySelect!
+        @createFilter!
         @createSorter!
 
-    createPartySelect: ->
+    createFilter: ->
         $element = $ "<div class='party'>
                 <select class='party' multiple='multiple' data-placeholder='Zobrazit pouze stranu'></select>
             </div>"
         $element.appendTo @$element
         $element .= find 'select'
-        @parties.forEach (party) ->
-            return if party is null
-            $ "<option value='#{party.zkratka}'>#{party.nazev}</option>"
-                ..appendTo $element
+        @createPartySelect!
+            ..appendTo $element
         $element
             ..chosen allow_single_deselect: yes
             ..on \change ~>
                 @onFilterChange \party $element.val!
+
+    createPartySelect: ->
+        $partyOptgroup = $ "<optgroup label='Politické strany'></optgroup>"
+        @parties.forEach (party) ->
+            return if party is null
+            $ "<option value='#{party.zkratka}'>#{party.nazev}</option>"
+                ..appendTo $partyOptgroup
+
+        $partyOptgroup
+
 
     createSorter: ->
         $element = $ "<div class='sort'><select class='sort' data-placeholder='Seřadit podle'>
