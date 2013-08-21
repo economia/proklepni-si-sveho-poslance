@@ -25,6 +25,7 @@
       this.$parent.html("<div class='poslanecDetail " + this.strana.zkratka + "'><img src='img/poslanci/" + this.id + ".jpg' /><h2>" + this.titul_pred + " " + this.jmeno + " " + this.prijmeni + " " + this.titul_za + "</h2><h3 class='party'>" + this.strana.plny + "</h3><span class='loading'>Prosím strpení, načíají se data...</span></div>");
       return this.loadData(function(err, data){
         var x$;
+        this$.$parent.find(".loading").remove();
         console.log(data);
         x$ = new Calendar(data.zakony);
         x$.$element.appendTo(this$.$parent.find(".poslanecDetail"));

@@ -26,6 +26,7 @@ window.Poslanec = class Poslanec
             </div>
         "
         (err, data) <~ @loadData
+        @$parent.find ".loading" .remove!
         console.log data
         new Calendar data.zakony
             ..$element.appendTo @$parent.find ".poslanecDetail"
