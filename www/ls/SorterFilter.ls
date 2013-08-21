@@ -27,6 +27,8 @@ window.SorterFilter = class SorterFilter
     createSorter: ->
         $element = $ "<div class='sort'><select class='sort' data-placeholder='Seřadit podle'>
             <option value=''></option>
+            <option value='activity-index-desc'>Celkově nějaktivnější</option>
+            <option value='activity-index-asc'>Celkově nejméně aktivní</option>
             <option value='interpelace-desc'>Nejvíce interpelující</option>
             <option value='interpelace-asc'>Nejméně interpelují</option>
             <option value='zakony-desc'>Nejvíce předložených zákonů</option>
@@ -58,6 +60,9 @@ window.SorterFilter = class SorterFilter
 
         | \nazor-desc => (a, b) -> b.nazor_normalized - a.nazor_normalized
         | \nazor-asc  => (a, b) -> a.nazor_normalized - b.nazor_normalized
+
+        | \activity-index-desc => (a, b) -> b.activity_index - a.activity_index
+        | \activity-index-asc  => (a, b) -> a.activity_index - b.activity_index
         | otherwise         => null
         @onSortChangeCb?!
 

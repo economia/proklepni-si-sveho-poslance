@@ -20,7 +20,7 @@
     return Kraj;
   }());
   d3.json("./api.php?get=poslanci", function(err, data){
-    var kraje, strany, sorterFilter, poslanci, poslanecList;
+    var kraje, strany, x$, sorterFilter, poslanci, poslanecList;
     kraje = data.kraje.map(function(it){
       if (it) {
         return new Kraj(it);
@@ -35,12 +35,14 @@
         return null;
       }
     });
-    sorterFilter = new SorterFilter('#wrap', strany);
+    x$ = sorterFilter = new SorterFilter('#wrap', strany);
+    x$.onSortChange('activity-index-desc');
     poslanci = data.poslanci.map(function(it){
       it.kraj = kraje[it.kraj_id];
       it.strana = strany[it.strana_id];
       return new Poslanec(it);
     });
+    poslanci.sort(sorterFilter.sortFunction);
     return poslanecList = new PoslanecList('#wrap', poslanci, sorterFilter);
   });
 }).call(this);

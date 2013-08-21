@@ -40,7 +40,7 @@
     };
     prototype.createSorter = function(){
       var $element, x$, y$, this$ = this;
-      $element = $("<div class='sort'><select class='sort' data-placeholder='Seřadit podle'><option value=''></option><option value='interpelace-desc'>Nejvíce interpelující</option><option value='interpelace-asc'>Nejméně interpelují</option><option value='zakony-desc'>Nejvíce předložených zákonů</option><option value='zakony-asc'>Nejméně předložených zákonů</option><option value='absence-asc'>Nejčastěji přítomní</option><option value='absence-desc'>Nejméně přítomní</option><option value='nazor-desc'>Nejčastěji hlasují ano/ne</option><option value='nazor-asc'>Nejméně hlasují ano/ne</option></select></div>");
+      $element = $("<div class='sort'><select class='sort' data-placeholder='Seřadit podle'><option value=''></option><option value='activity-index-desc'>Celkově nějaktivnější</option><option value='activity-index-asc'>Celkově nejméně aktivní</option><option value='interpelace-desc'>Nejvíce interpelující</option><option value='interpelace-asc'>Nejméně interpelují</option><option value='zakony-desc'>Nejvíce předložených zákonů</option><option value='zakony-asc'>Nejméně předložených zákonů</option><option value='absence-asc'>Nejčastěji přítomní</option><option value='absence-desc'>Nejméně přítomní</option><option value='nazor-desc'>Nejčastěji hlasují ano/ne</option><option value='nazor-asc'>Nejméně hlasují ano/ne</option></select></div>");
       x$ = $element;
       x$.appendTo(this.$element);
       y$ = $element = $element.find('select');
@@ -86,6 +86,14 @@
         case 'nazor-asc':
           return function(a, b){
             return a.nazor_normalized - b.nazor_normalized;
+          };
+        case 'activity-index-desc':
+          return function(a, b){
+            return b.activity_index - a.activity_index;
+          };
+        case 'activity-index-asc':
+          return function(a, b){
+            return a.activity_index - b.activity_index;
           };
         default:
           return null;
