@@ -48,13 +48,15 @@ class Calendar
     lastYear: 2013
     zakonyMax: -Infinity
     interpelaceMax: -Infinity
+    vystoupeniMax: -Infinity
     $element: null
 
-    ({@zakony, @interpelace}) ->
+    ({@zakony, @interpelace, @vystoupeni}) ->
         @$element = $ "<div class='calendar'></div>"
         @createMonths!
         @populateZakony!
         @populateInterpelace!
+        @populateVystoupeni!
         d3.select @$element.0 .selectAll ".month"
             .data @months
             .enter!.append \div
@@ -67,6 +69,9 @@ class Calendar
                 ..append \div
                     ..attr \class \interpelace
                     ..style \opacity ~> it.interpelace.length / @interpelaceMax
+                ..append \div
+                    ..attr \class \vystoupeni
+                    ..style \opacity ~> it.vystoupeni.length / @vystoupeniMax
 
     createMonths: ->
         @months = []
@@ -99,9 +104,17 @@ class Calendar
             len = @monthsAssoc[id]?interpelace.push interpelaca
             if len > @interpelaceMax then @interpelaceMax = len
 
+    populateVystoupeni: ->
+        @vystoupeni.forEach (projev) ~>
+            date = new Date projev.datum * 1000
+            id = "#{date.getFullYear!}-#{date.getMonth!}"
+            len = @monthsAssoc[id]?vystoupeni.push projev
+            if len > @vystoupeniMax then @vystoupeniMax = len
+
 
 class Month
     (@year, @month) ->
         @id = "#{@year}-#{@month}"
         @zakony = []
         @interpelace = []
+        @vystoupeni = []

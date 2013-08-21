@@ -55,14 +55,16 @@
     prototype.lastYear = 2013;
     prototype.zakonyMax = -Infinity;
     prototype.interpelaceMax = -Infinity;
+    prototype.vystoupeniMax = -Infinity;
     prototype.$element = null;
     function Calendar(arg$){
-      var x$, y$, z$, this$ = this;
-      this.zakony = arg$.zakony, this.interpelace = arg$.interpelace;
+      var x$, y$, z$, z1$, this$ = this;
+      this.zakony = arg$.zakony, this.interpelace = arg$.interpelace, this.vystoupeni = arg$.vystoupeni;
       this.$element = $("<div class='calendar'></div>");
       this.createMonths();
       this.populateZakony();
       this.populateInterpelace();
+      this.populateVystoupeni();
       x$ = d3.select(this.$element[0]).selectAll(".month").data(this.months).enter().append('div');
       x$.attr('class', 'month');
       x$.style('left', function(it){
@@ -80,6 +82,11 @@
       z$.attr('class', 'interpelace');
       z$.style('opacity', function(it){
         return it.interpelace.length / this$.interpelaceMax;
+      });
+      z1$ = x$.append('div');
+      z1$.attr('class', 'vystoupeni');
+      z1$.style('opacity', function(it){
+        return it.vystoupeni.length / this$.vystoupeniMax;
       });
     }
     prototype.createMonths = function(){
@@ -128,6 +135,18 @@
         }
       });
     };
+    prototype.populateVystoupeni = function(){
+      var this$ = this;
+      return this.vystoupeni.forEach(function(projev){
+        var date, id, len, ref$;
+        date = new Date(projev.datum * 1000);
+        id = date.getFullYear() + "-" + date.getMonth();
+        len = (ref$ = this$.monthsAssoc[id]) != null ? ref$.vystoupeni.push(projev) : void 8;
+        if (len > this$.vystoupeniMax) {
+          return this$.vystoupeniMax = len;
+        }
+      });
+    };
     return Calendar;
   }());
   Month = (function(){
@@ -139,6 +158,7 @@
       this.id = this.year + "-" + this.month;
       this.zakony = [];
       this.interpelace = [];
+      this.vystoupeni = [];
     }
     return Month;
   }());
