@@ -1,5 +1,6 @@
  window.PoslanecList = class PoslanecList
     (parentSelector, @poslanci, @sorterFilter) ->
+        @currentData = @poslanci.slice 0
         @container = d3.select parentSelector .append "ul"
             ..attr \class \poslanecList
         @getScales!
@@ -9,19 +10,20 @@
 
     draw: ->
         newRows = @getRowElements!
-            .data @poslanci, -> it.id
+            .data @currentData, -> it.id
             .enter!
         @decorateRows newRows
 
     reSort: ->
+        @poslanci.sort @sorterFilter.sortFunction
         @getRowElements!
             .sort @sorterFilter.sortFunction
             .transition!
                 ..duration 800
                 ..style \top (item, index) -> "#{index * list_item_height}px"
     reFilter: ->
-        currentData = @poslanci.filter @sorterFilter.filterFunction
-        sel = @getRowElements! .data currentData, (.id)
+        @currentData = @poslanci.filter @sorterFilter.filterFunction
+        sel = @getRowElements! .data @currentData, (.id)
             ..transition!
                 ..delay 600
                 ..duration 800

@@ -7,6 +7,7 @@
       var x$;
       this.poslanci = poslanci;
       this.sorterFilter = sorterFilter;
+      this.currentData = this.poslanci.slice(0);
       x$ = this.container = d3.select(parentSelector).append("ul");
       x$.attr('class', 'poslanecList');
       this.getScales();
@@ -16,13 +17,14 @@
     }
     prototype.draw = function(){
       var newRows;
-      newRows = this.getRowElements().data(this.poslanci, function(it){
+      newRows = this.getRowElements().data(this.currentData, function(it){
         return it.id;
       }).enter();
       return this.decorateRows(newRows);
     };
     prototype.reSort = function(){
       var x$;
+      this.poslanci.sort(this.sorterFilter.sortFunction);
       x$ = this.getRowElements().sort(this.sorterFilter.sortFunction).transition();
       x$.duration(800);
       x$.style('top', function(item, index){
@@ -31,9 +33,9 @@
       return x$;
     };
     prototype.reFilter = function(){
-      var currentData, x$, sel, y$, z$, z1$, z2$, z3$;
-      currentData = this.poslanci.filter(this.sorterFilter.filterFunction);
-      x$ = sel = this.getRowElements().data(currentData, function(it){
+      var x$, sel, y$, z$, z1$, z2$, z3$;
+      this.currentData = this.poslanci.filter(this.sorterFilter.filterFunction);
+      x$ = sel = this.getRowElements().data(this.currentData, function(it){
         return it.id;
       });
       y$ = x$.transition();
