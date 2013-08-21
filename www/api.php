@@ -57,6 +57,7 @@ function get_poslanci_list() {
         $row['zakony_predkladatel_count'] = (int)$row['zakony_predkladatel_count'];
         $row['absence_count']             = (int)$row['absence_count'];
         $row['nazor_count']               = (int)$row['nazor_count'];
+        $row['vystoupeni_count']          = (int)$row['vystoupeni_count'];
         $row['possible_votes_count']      = (int)$row['possible_votes_count'];
         $row['kraj_id']                   = (int)$row['kraj_id'];
         $row['strana_id']                 = (int)$row['strana_id'];

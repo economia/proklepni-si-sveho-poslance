@@ -95,6 +95,13 @@
                     ..append \div
                         ..style \height ~>
                             "#{@percentageScale it.nazor_normalized}px"
+                ..append \div
+                    ..attr \class "vystoupeni bar"
+                    ..attr \data-tooltip ->
+                        "Přednesl(a) projev <strong>#{it.vystoupeni_count}x</strong>"
+                    ..append \div
+                        ..style \height ~>
+                            "#{@vystoupeniScale it.vystoupeni_count}px"
 
     getScales: ->
         interpelaceMaximum = Math.max ...@poslanci.map (.interpelace_source_count)
@@ -105,6 +112,12 @@
         zakonyMaximum = Math.max ...@poslanci.map (.zakony_predkladatel_count)
         @zakonyScale = d3.scale.linear!
             ..domain [0 zakonyMaximum]
+            ..range [1 list_barchart_height]
+
+
+        vystoupeniMaximum = Math.max ...@poslanci.map (.vystoupeni_count)
+        @vystoupeniScale = d3.scale.linear!
+            ..domain [0 vystoupeniMaximum]
             ..range [1 list_barchart_height]
 
         @percentageScale = d3.scale.linear!

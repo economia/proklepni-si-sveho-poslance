@@ -40,7 +40,7 @@
     };
     prototype.createSorter = function(){
       var $element, x$, y$, this$ = this;
-      $element = $("<div class='sort'><select class='sort' data-placeholder='Seřadit podle'><option value=''></option><option value='activity-index-desc'>Celkově nějaktivnější</option><option value='activity-index-asc'>Celkově nejméně aktivní</option><option value='interpelace-desc'>Nejvíce interpelující</option><option value='interpelace-asc'>Nejméně interpelují</option><option value='zakony-desc'>Nejvíce předložených zákonů</option><option value='zakony-asc'>Nejméně předložených zákonů</option><option value='absence-asc'>Nejčastěji přítomní</option><option value='absence-desc'>Nejméně přítomní</option><option value='nazor-desc'>Nejčastěji hlasují ano/ne</option><option value='nazor-asc'>Nejméně hlasují ano/ne</option></select></div>");
+      $element = $("<div class='sort'><select class='sort' data-placeholder='Seřadit podle'><option value=''></option><option value='activity-index-desc'>Celkově nějaktivnější</option><option value='activity-index-asc'>Celkově nejméně aktivní</option><option value='interpelace-desc'>Nejvíce interpelující</option><option value='interpelace-asc'>Nejméně interpelují</option><option value='zakony-desc'>Nejvíce předložených zákonů</option><option value='zakony-asc'>Nejméně předložených zákonů</option><option value='absence-asc'>Nejčastěji přítomní</option><option value='absence-desc'>Nejméně přítomní</option><option value='nazor-desc'>Nejčastěji hlasují ano/ne</option><option value='nazor-asc'>Nejméně hlasují ano/ne</option><option value='vystoupeni-desc'>Pronesli nejvíce projevů</option><option value='vystoupeni-asc'>Pronesli nejméně projevů</option></select></div>");
       x$ = $element;
       x$.appendTo(this.$element);
       y$ = $element = $element.find('select');
@@ -92,6 +92,14 @@
         case 'activity-index-asc':
           return function(a, b){
             return a.activity_index - b.activity_index;
+          };
+        case 'vystoupeni-desc':
+          return function(a, b){
+            return b.vystoupeni_count - a.vystoupeni_count;
+          };
+        case 'vystoupeni-asc':
+          return function(a, b){
+            return a.vystoupeni_count - b.vystoupeni_count;
           };
         default:
           return null;

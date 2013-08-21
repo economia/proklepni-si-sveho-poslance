@@ -72,7 +72,7 @@
       return z2$;
     };
     prototype.decorateRows = function(enterSelection){
-      var x$, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, z7$, z8$, z9$, z10$, this$ = this;
+      var x$, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, z7$, z8$, z9$, z10$, z11$, z12$, this$ = this;
       x$ = enterSelection.append('li');
       x$.attr('class', function(it){
         return "poslanec " + it.strana.zkratka;
@@ -133,10 +133,19 @@
       z10$.style('height', function(it){
         return this$.percentageScale(it.nazor_normalized) + "px";
       });
+      z11$ = z2$.append('div');
+      z11$.attr('class', "vystoupeni bar");
+      z11$.attr('data-tooltip', function(it){
+        return "Přednesl(a) projev <strong>" + it.vystoupeni_count + "x</strong>";
+      });
+      z12$ = z11$.append('div');
+      z12$.style('height', function(it){
+        return this$.vystoupeniScale(it.vystoupeni_count) + "px";
+      });
       return x$;
     };
     prototype.getScales = function(){
-      var interpelaceMaximum, x$, zakonyMaximum, y$, z$, z1$;
+      var interpelaceMaximum, x$, zakonyMaximum, y$, vystoupeniMaximum, z$, z1$, z2$;
       interpelaceMaximum = Math.max.apply(Math, this.poslanci.map(function(it){
         return it.interpelace_source_count;
       }));
@@ -149,13 +158,19 @@
       y$ = this.zakonyScale = d3.scale.linear();
       y$.domain([0, zakonyMaximum]);
       y$.range([1, list_barchart_height]);
-      z$ = this.percentageScale = d3.scale.linear();
-      z$.domain([0, 1]);
+      vystoupeniMaximum = Math.max.apply(Math, this.poslanci.map(function(it){
+        return it.vystoupeni_count;
+      }));
+      z$ = this.vystoupeniScale = d3.scale.linear();
+      z$.domain([0, vystoupeniMaximum]);
       z$.range([1, list_barchart_height]);
-      z1$ = this.percentageInvertedScale = d3.scale.linear();
-      z1$.domain([1, 0]);
+      z1$ = this.percentageScale = d3.scale.linear();
+      z1$.domain([0, 1]);
       z1$.range([1, list_barchart_height]);
-      return z1$;
+      z2$ = this.percentageInvertedScale = d3.scale.linear();
+      z2$.domain([1, 0]);
+      z2$.range([1, list_barchart_height]);
+      return z2$;
     };
     prototype.getRowElements = function(){
       return this.container.selectAll("li.poslanec");

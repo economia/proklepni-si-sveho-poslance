@@ -37,6 +37,8 @@ window.SorterFilter = class SorterFilter
             <option value='absence-desc'>Nejméně přítomní</option>
             <option value='nazor-desc'>Nejčastěji hlasují ano/ne</option>
             <option value='nazor-asc'>Nejméně hlasují ano/ne</option>
+            <option value='vystoupeni-desc'>Pronesli nejvíce projevů</option>
+            <option value='vystoupeni-asc'>Pronesli nejméně projevů</option>
             </select>
             </div>
             "
@@ -63,6 +65,10 @@ window.SorterFilter = class SorterFilter
 
         | \activity-index-desc => (a, b) -> b.activity_index - a.activity_index
         | \activity-index-asc  => (a, b) -> a.activity_index - b.activity_index
+
+        | \vystoupeni-desc => (a, b) -> b.vystoupeni_count - a.vystoupeni_count
+        | \vystoupeni-asc  => (a, b) -> a.vystoupeni_count - b.vystoupeni_count
+
         | otherwise         => null
         @onSortChangeCb?!
 
