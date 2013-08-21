@@ -46,9 +46,9 @@ class Calendar
     firstYear: 2010
     lastMonth: 8
     lastYear: 2013
-    zakonyMax: -Infinity
-    interpelaceMax: -Infinity
-    vystoupeniMax: -Infinity
+    zakonyMax: 1
+    interpelaceMax: 1
+    vystoupeniMax: 1
     $element: null
 
     ({@zakony, @interpelace, @vystoupeni}) ->
@@ -65,13 +65,13 @@ class Calendar
                 ..style \top ~> "#{(it.year - @firstYear) * monthHeight}px"
                 ..append \div
                     ..attr \class \zakony
-                    ..style \opacity ~> it.zakony.length / @zakonyMax
+                    ..style \opacity ~> it.zakony.length / @zakonyMax * it.zakony.length / it.totalEvents
                 ..append \div
                     ..attr \class \interpelace
-                    ..style \opacity ~> it.interpelace.length / @interpelaceMax
+                    ..style \opacity ~> it.interpelace.length / @interpelaceMax * it.interpelace.length / it.totalEvents
                 ..append \div
                     ..attr \class \vystoupeni
-                    ..style \opacity ~> it.vystoupeni.length / @vystoupeniMax
+                    ..style \opacity ~> it.vystoupeni.length / @vystoupeniMax * it.vystoupeni.length / it.totalEvents
 
     createMonths: ->
         @months = []
@@ -95,6 +95,7 @@ class Calendar
             date = new Date zakon.predlozeno * 1000
             id = "#{date.getFullYear!}-#{date.getMonth!}"
             len = @monthsAssoc[id]?zakony.push zakon
+            @monthsAssoc[id]?totalEvents++
             if len > @zakonyMax then @zakonyMax = len
 
     populateInterpelace: ->
@@ -102,6 +103,7 @@ class Calendar
             date = new Date interpelaca.datum * 1000
             id = "#{date.getFullYear!}-#{date.getMonth!}"
             len = @monthsAssoc[id]?interpelace.push interpelaca
+            @monthsAssoc[id]?totalEvents++
             if len > @interpelaceMax then @interpelaceMax = len
 
     populateVystoupeni: ->
@@ -109,6 +111,7 @@ class Calendar
             date = new Date projev.datum * 1000
             id = "#{date.getFullYear!}-#{date.getMonth!}"
             len = @monthsAssoc[id]?vystoupeni.push projev
+            @monthsAssoc[id]?totalEvents++
             if len > @vystoupeniMax then @vystoupeniMax = len
 
 
@@ -118,3 +121,4 @@ class Month
         @zakony = []
         @interpelace = []
         @vystoupeni = []
+        @totalEvents = 1

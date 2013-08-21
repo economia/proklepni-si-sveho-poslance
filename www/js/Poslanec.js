@@ -53,9 +53,9 @@
     prototype.firstYear = 2010;
     prototype.lastMonth = 8;
     prototype.lastYear = 2013;
-    prototype.zakonyMax = -Infinity;
-    prototype.interpelaceMax = -Infinity;
-    prototype.vystoupeniMax = -Infinity;
+    prototype.zakonyMax = 1;
+    prototype.interpelaceMax = 1;
+    prototype.vystoupeniMax = 1;
     prototype.$element = null;
     function Calendar(arg$){
       var x$, y$, z$, z1$, this$ = this;
@@ -76,17 +76,17 @@
       y$ = x$.append('div');
       y$.attr('class', 'zakony');
       y$.style('opacity', function(it){
-        return it.zakony.length / this$.zakonyMax;
+        return it.zakony.length / this$.zakonyMax * it.zakony.length / it.totalEvents;
       });
       z$ = x$.append('div');
       z$.attr('class', 'interpelace');
       z$.style('opacity', function(it){
-        return it.interpelace.length / this$.interpelaceMax;
+        return it.interpelace.length / this$.interpelaceMax * it.interpelace.length / it.totalEvents;
       });
       z1$ = x$.append('div');
       z1$.attr('class', 'vystoupeni');
       z1$.style('opacity', function(it){
-        return it.vystoupeni.length / this$.vystoupeniMax;
+        return it.vystoupeni.length / this$.vystoupeniMax * it.vystoupeni.length / it.totalEvents;
       });
     }
     prototype.createMonths = function(){
@@ -118,6 +118,9 @@
         date = new Date(zakon.predlozeno * 1000);
         id = date.getFullYear() + "-" + date.getMonth();
         len = (ref$ = this$.monthsAssoc[id]) != null ? ref$.zakony.push(zakon) : void 8;
+        if ((ref$ = this$.monthsAssoc[id]) != null) {
+          ref$.totalEvents++;
+        }
         if (len > this$.zakonyMax) {
           return this$.zakonyMax = len;
         }
@@ -130,6 +133,9 @@
         date = new Date(interpelaca.datum * 1000);
         id = date.getFullYear() + "-" + date.getMonth();
         len = (ref$ = this$.monthsAssoc[id]) != null ? ref$.interpelace.push(interpelaca) : void 8;
+        if ((ref$ = this$.monthsAssoc[id]) != null) {
+          ref$.totalEvents++;
+        }
         if (len > this$.interpelaceMax) {
           return this$.interpelaceMax = len;
         }
@@ -142,6 +148,9 @@
         date = new Date(projev.datum * 1000);
         id = date.getFullYear() + "-" + date.getMonth();
         len = (ref$ = this$.monthsAssoc[id]) != null ? ref$.vystoupeni.push(projev) : void 8;
+        if ((ref$ = this$.monthsAssoc[id]) != null) {
+          ref$.totalEvents++;
+        }
         if (len > this$.vystoupeniMax) {
           return this$.vystoupeniMax = len;
         }
@@ -159,6 +168,7 @@
       this.zakony = [];
       this.interpelace = [];
       this.vystoupeni = [];
+      this.totalEvents = 1;
     }
     return Month;
   }());
