@@ -102,6 +102,8 @@
                     ..append \div
                         ..style \height ~>
                             "#{@vystoupeniScale it.vystoupeni_count}px"
+            ..on \click ->
+                it.onSelect!
 
     getScales: ->
         interpelaceMaximum = Math.max ...@poslanci.map (.interpelace_source_count)

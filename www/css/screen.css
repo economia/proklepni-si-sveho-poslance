@@ -7,6 +7,9 @@ body #wrap {
   background: #fff;
   position: absolute;
 }
+body #wrap .leftPart {
+  transition: 0.4s;
+}
 body #wrap .filter {
   position: absolute;
   top: 0px;
@@ -143,4 +146,36 @@ body #wrap .poslanecList li .barchart .bar.vystoupeni {
 }
 body #wrap .poslanecList li .barchart .bar.vystoupeni div {
   background: #bf5b17;
+}
+body #wrap .rightPart {
+  width: 620px;
+  height: 500px;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  transform: translate(650px, 0px);
+  -o-transform: translate(650px, 0px);
+  -ms-transform: translate(650px, 0px);
+  -moz-transform: translate(650px, 0px);
+  -webkit-transform: translate(650px, 0px);
+  transition: 0.4s;
+  visibility: hidden;
+}
+body #wrap.poslanecSelected .leftPart {
+  transform: translate(-630px, 0px);
+  -o-transform: translate(-630px, 0px);
+  -ms-transform: translate(-630px, 0px);
+  -moz-transform: translate(-630px, 0px);
+  -webkit-transform: translate(-630px, 0px);
+}
+body #wrap.poslanecSelected .leftPart .poslanecList .barchart {
+  display: none;
+}
+body #wrap.poslanecSelected .rightPart {
+  visibility: visible;
+  transform: translate(20px, 0px);
+  -o-transform: translate(20px, 0px);
+  -ms-transform: translate(20px, 0px);
+  -moz-transform: translate(20px, 0px);
+  -webkit-transform: translate(20px, 0px);
 }

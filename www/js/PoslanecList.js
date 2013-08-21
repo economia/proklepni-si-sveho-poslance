@@ -142,6 +142,9 @@
       z12$.style('height', function(it){
         return this$.vystoupeniScale(it.vystoupeni_count) + "px";
       });
+      x$.on('click', function(it){
+        return it.onSelect();
+      });
       return x$;
     };
     prototype.getScales = function(){

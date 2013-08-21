@@ -1,5 +1,5 @@
 window.Poslanec = class Poslanec
-    ({@id, @titul_pred, @prijmeni, @jmeno, @titul_za, @interpelace_source_count, @interpelace_target_count, @absence_count, @nazor_count, @possible_votes_count, @zakony_predkladatel_count, @vystoupeni_count, @kraj, @strana, @preferencni}) ->
+    ({@id, @titul_pred, @prijmeni, @jmeno, @titul_za, @interpelace_source_count, @interpelace_target_count, @absence_count, @nazor_count, @possible_votes_count, @zakony_predkladatel_count, @vystoupeni_count, @kraj, @strana, @preferencni}, @$wrap, @$parent) ->
         @interpelace_sum    = @interpelace_source_count + @interpelace_target_count
         @absence_normalized = @absence_count / @possible_votes_count
         @nazor_normalized   = @nazor_count / @possible_votes_count
@@ -14,3 +14,12 @@ window.Poslanec = class Poslanec
             0
 
     getName: -> "#{@jmeno} #{@prijmeni}"
+
+    onSelect: ->
+        @$wrap.toggleClass 'poslanecSelected'
+        @$parent.html "
+            <img src='' />
+            <h2>#{@titul_pred} #{@jmeno} #{@prijmeni} #{@titul_za}</h2>
+            <h3>#{@strana.plny}</h3>
+        "
+

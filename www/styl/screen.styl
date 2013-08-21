@@ -1,4 +1,5 @@
 @import colors
+@import prefixes
 body
     margin 0px
     font-family arial, sans-serif
@@ -6,6 +7,8 @@ body
         width 650px
         background white
         position absolute
+        .leftPart
+            transition 0.4s
         .filter
             position absolute
             top 0px
@@ -26,3 +29,21 @@ body
             width @width
         .poslanecList
             @import poslanecList
+        .rightPart
+            width 620px
+            height 500px
+            position fixed
+            top 0px
+            left 0px
+            transform translate(650px, 0px)
+            transition 0.4s
+            visibility hidden
+        &.poslanecSelected
+            .leftPart
+                transform translate(-630px, 0px)
+                .poslanecList
+                    .barchart
+                        display none
+            .rightPart
+                visibility visible
+                transform translate(20px, 0px)
