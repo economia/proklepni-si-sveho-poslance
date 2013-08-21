@@ -139,7 +139,6 @@
         ? (krajValues = [], partyValues = [], miscValues = {}, filterValue.forEach(function(it){
           var ref$, prefix, value;
           ref$ = it.split('-'), prefix = ref$[0], value = ref$[1];
-          console.log(prefix);
           switch (prefix) {
           case 'kraj':
             return krajValues.push(+value);

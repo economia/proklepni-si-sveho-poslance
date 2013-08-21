@@ -100,7 +100,6 @@ window.SorterFilter = class SorterFilter
             miscValues  = {}
             filterValue.forEach ->
                 [prefix, value] = it.split '-'
-                console.log prefix
                 switch prefix
                 | \kraj  => krajValues.push +value
                 | \party => partyValues.push value
