@@ -55,11 +55,11 @@
         switch (sortId) {
         case 'interpelace-desc':
           return function(a, b){
-            return b.interpelace_sum - a.interpelace_sum;
+            return b.interpelace_source_count - a.interpelace_source_count;
           };
         case 'interpelace-asc':
           return function(a, b){
-            return a.interpelace_sum - b.interpelace_sum;
+            return a.interpelace_source_count - b.interpelace_source_count;
           };
         case 'zakony-desc':
           return function(a, b){

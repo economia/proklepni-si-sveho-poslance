@@ -49,8 +49,8 @@ window.SorterFilter = class SorterFilter
 
     onSortChange: (sortId) ->
         @sortFunction = switch sortId
-        | \interpelace-desc => (a, b) -> b.interpelace_sum - a.interpelace_sum
-        | \interpelace-asc  => (a, b) -> a.interpelace_sum - b.interpelace_sum
+        | \interpelace-desc => (a, b) -> b.interpelace_source_count - a.interpelace_source_count
+        | \interpelace-asc  => (a, b) -> a.interpelace_source_count - b.interpelace_source_count
 
         | \zakony-desc => (a, b) -> b.zakony_predkladatel_count - a.zakony_predkladatel_count
         | \zakony-asc  => (a, b) -> a.zakony_predkladatel_count - b.zakony_predkladatel_count

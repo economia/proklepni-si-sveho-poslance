@@ -70,15 +70,10 @@
                 ..append \div
                     ..attr \class "interpelace bar"
                     ..attr \data-tooltip ->
-                        str = if it.interpelace_source_count
-                            "Interpeloval(a) <strong>#{it.interpelace_sum}</strong>x"
-                        else
-                            "Byl(a) interpelován(a) <strong>#{it.interpelace_sum}</strong>x"
-                        escape str
-
+                        escape "Interpeloval(a) <strong>#{it.interpelace_sum}</strong>x"
                     ..append \div
                         ..style \height ~>
-                            "#{@interpelaceScale it.interpelace_sum}px"
+                            "#{@interpelaceScale it.interpelace_source_count}px"
                 ..append \div
                     ..attr \class "zakony bar"
                     ..attr \data-tooltip ->
@@ -103,8 +98,8 @@
 
     getScales: ->
         @interpelaceScale = d3.scale.linear!
-            ..domain [0 200 718] # deformace, aby Necas tak nevycnival
-            ..range [1 list_barchart_height * 0.85, list_barchart_height ]
+            ..domain [0 200]
+            ..range [1 list_barchart_height]
 
         zakonyMaximum = Math.max ...@poslanci.map (.zakony_predkladatel_count)
         @zakonyScale = d3.scale.linear!

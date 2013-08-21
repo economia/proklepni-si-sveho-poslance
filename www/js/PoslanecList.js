@@ -100,15 +100,11 @@
       z3$ = z2$.append('div');
       z3$.attr('class', "interpelace bar");
       z3$.attr('data-tooltip', function(it){
-        var str;
-        str = it.interpelace_source_count
-          ? "Interpeloval(a) <strong>" + it.interpelace_sum + "</strong>x"
-          : "Byl(a) interpelován(a) <strong>" + it.interpelace_sum + "</strong>x";
-        return escape(str);
+        return escape("Interpeloval(a) <strong>" + it.interpelace_sum + "</strong>x");
       });
       z4$ = z3$.append('div');
       z4$.style('height', function(it){
-        return this$.interpelaceScale(it.interpelace_sum) + "px";
+        return this$.interpelaceScale(it.interpelace_source_count) + "px";
       });
       z5$ = z2$.append('div');
       z5$.attr('class', "zakony bar");
@@ -142,8 +138,8 @@
     prototype.getScales = function(){
       var x$, zakonyMaximum, y$, z$, z1$;
       x$ = this.interpelaceScale = d3.scale.linear();
-      x$.domain([0, 200, 718]);
-      x$.range([1, list_barchart_height * 0.85, list_barchart_height]);
+      x$.domain([0, 200]);
+      x$.range([1, list_barchart_height]);
       zakonyMaximum = Math.max.apply(Math, this.poslanci.map(function(it){
         return it.zakony_predkladatel_count;
       }));
