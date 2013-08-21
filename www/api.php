@@ -72,7 +72,8 @@ function get_poslanec($id) {
         return null;
     }
     return array(
-        'zakony' => get_poslanec_tisky($id)
+        'zakony'      => get_poslanec_tisky($id),
+        'interpelace' => get_poslanec_interpelace($id)
     );
 }
 
@@ -84,6 +85,19 @@ function get_poslanec_tisky($id) {
     while($row = mysql_fetch_assoc($result)) {
         $row['id'] = (int)$row['id'];
         $row['predlozeno'] = (int)$row['predlozeno'];
+        $r[] = $row;
+    }
+    return $r;
+}
+function get_poslanec_interpelace($id) {
+    $result = mysql_query("SELECT interpelace.id, interpelace.ministr_id, interpelace.vec, interpelace_losovani.datum
+        FROM interpelace JOIN interpelace_losovani ON (interpelace.losovani_id=interpelace_losovani.id)
+        WHERE interpelace.poslanec_id=$id AND interpelace_losovani.datum>1275350400");
+    $r = array();
+    while($row = mysql_fetch_assoc($result)) {
+        $row['id']    = (int)$row['id'];
+        $row['ministr_id']    = (int)$row['ministr_id'];
+        $row['datum'] = (int)$row['datum'];
         $r[] = $row;
     }
     return $r;
