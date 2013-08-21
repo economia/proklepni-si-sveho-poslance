@@ -3,7 +3,7 @@ window.SorterFilter = class SorterFilter
     filterFunction: null
     onSortChangeCb: null
     onFilterChangeCb: null
-    (parentSelector, @parties) ->
+    (parentSelector, @parties, @kraje) ->
         @$element = $ "<div class='filter'></div>"
             ..appendTo $ parentSelector
         @createFilter!
@@ -16,6 +16,8 @@ window.SorterFilter = class SorterFilter
         $element.appendTo @$element
         $element .= find 'select'
         @createPartySelect!
+            ..appendTo $element
+        @createKrajSelect!
             ..appendTo $element
         $element
             ..chosen allow_single_deselect: yes
@@ -31,6 +33,14 @@ window.SorterFilter = class SorterFilter
 
         $partyOptgroup
 
+    createKrajSelect: ->
+        $krajOptgroup = $ "<optgroup label='Kraje'></optgroup>"
+        @kraje.forEach (kraj) ->
+            return if kraj is null
+            $ "<option value='#{kraj.id}'>#{kraj.nazev}</option>"
+                ..appendTo $krajOptgroup
+
+        $krajOptgroup
 
     createSorter: ->
         $element = $ "<div class='sort'><select class='sort' data-placeholder='Seřadit podle'>

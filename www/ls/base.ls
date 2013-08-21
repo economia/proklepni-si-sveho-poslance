@@ -11,7 +11,7 @@ window.Kraj = class Kraj
 (err, data) <~ d3.json "./api.php?get=poslanci"
 kraje  = data.kraje.map  -> if it then new Kraj it   else null
 strany = data.strany.map -> if it then new Strana it else null
-sorterFilter = new SorterFilter \#wrap strany
+sorterFilter = new SorterFilter \#wrap strany, kraje
     ..onSortChange \activity-index-desc
 poslanci = data.poslanci.map ->
     it.kraj = kraje[it.kraj_id]

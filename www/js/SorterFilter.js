@@ -7,29 +7,32 @@
     prototype.filterFunction = null;
     prototype.onSortChangeCb = null;
     prototype.onFilterChangeCb = null;
-    function SorterFilter(parentSelector, parties){
+    function SorterFilter(parentSelector, parties, kraje){
       var x$;
       this.parties = parties;
+      this.kraje = kraje;
       x$ = this.$element = $("<div class='filter'></div>");
       x$.appendTo($(parentSelector));
       this.createFilter();
       this.createSorter();
     }
     prototype.createFilter = function(){
-      var $element, x$, y$, this$ = this;
+      var $element, x$, y$, z$, this$ = this;
       $element = $("<div class='party'><select class='party' multiple='multiple' data-placeholder='Zobrazit pouze stranu'></select></div>");
       $element.appendTo(this.$element);
       $element = $element.find('select');
       x$ = this.createPartySelect();
       x$.appendTo($element);
-      y$ = $element;
-      y$.chosen({
+      y$ = this.createKrajSelect();
+      y$.appendTo($element);
+      z$ = $element;
+      z$.chosen({
         allow_single_deselect: true
       });
-      y$.on('change', function(){
+      z$.on('change', function(){
         return this$.onFilterChange('party', $element.val());
       });
-      return y$;
+      return z$;
     };
     prototype.createPartySelect = function(){
       var $partyOptgroup;
@@ -44,6 +47,20 @@
         return x$;
       });
       return $partyOptgroup;
+    };
+    prototype.createKrajSelect = function(){
+      var $krajOptgroup;
+      $krajOptgroup = $("<optgroup label='Kraje'></optgroup>");
+      this.kraje.forEach(function(kraj){
+        var x$;
+        if (kraj === null) {
+          return;
+        }
+        x$ = $("<option value='" + kraj.id + "'>" + kraj.nazev + "</option>");
+        x$.appendTo($krajOptgroup);
+        return x$;
+      });
+      return $krajOptgroup;
     };
     prototype.createSorter = function(){
       var $element, x$, y$, this$ = this;

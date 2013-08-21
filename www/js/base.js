@@ -35,7 +35,7 @@
         return null;
       }
     });
-    x$ = sorterFilter = new SorterFilter('#wrap', strany);
+    x$ = sorterFilter = new SorterFilter('#wrap', strany, kraje);
     x$.onSortChange('activity-index-desc');
     poslanci = data.poslanci.map(function(it){
       it.kraj = kraje[it.kraj_id];
