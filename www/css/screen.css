@@ -179,3 +179,40 @@ body #wrap.poslanecSelected .rightPart {
   -moz-transform: translate(20px, 0px);
   -webkit-transform: translate(20px, 0px);
 }
+body #wrap .poslanecDetail {
+  padding-left: 20px;
+}
+body #wrap .poslanecDetail img {
+  float: right;
+}
+body #wrap .poslanecDetail h2 {
+  margin-bottom: 0px;
+}
+body #wrap .poslanecDetail h3.party {
+  margin-top: 0px;
+  font-size: 1em;
+  font-weight: normal;
+  color: #777;
+  font-style: italic;
+}
+body #wrap .poslanecDetail div.calendar {
+  width: 380px;
+  height: 184px;
+  position: relative;
+}
+body #wrap .poslanecDetail div.calendar .month {
+  position: absolute;
+  width: 31px;
+  height: 31px;
+}
+body #wrap .poslanecDetail div.calendar .month > div {
+  width: 31px;
+  height: 31px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: #f00;
+}
+body #wrap .poslanecDetail div.calendar .month > div.zakony {
+  background: #beaed4;
+}
