@@ -97,8 +97,9 @@
                             "#{@percentageScale it.nazor_normalized}px"
 
     getScales: ->
+        interpelaceMaximum = Math.max ...@poslanci.map (.interpelace_source_count)
         @interpelaceScale = d3.scale.linear!
-            ..domain [0 200]
+            ..domain [0 interpelaceMaximum]
             ..range [1 list_barchart_height]
 
         zakonyMaximum = Math.max ...@poslanci.map (.zakony_predkladatel_count)

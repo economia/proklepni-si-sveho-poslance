@@ -136,9 +136,12 @@
       return x$;
     };
     prototype.getScales = function(){
-      var x$, zakonyMaximum, y$, z$, z1$;
+      var interpelaceMaximum, x$, zakonyMaximum, y$, z$, z1$;
+      interpelaceMaximum = Math.max.apply(Math, this.poslanci.map(function(it){
+        return it.interpelace_source_count;
+      }));
       x$ = this.interpelaceScale = d3.scale.linear();
-      x$.domain([0, 200]);
+      x$.domain([0, interpelaceMaximum]);
       x$.range([1, list_barchart_height]);
       zakonyMaximum = Math.max.apply(Math, this.poslanci.map(function(it){
         return it.zakony_predkladatel_count;
