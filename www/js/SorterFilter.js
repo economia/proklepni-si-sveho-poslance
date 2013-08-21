@@ -30,7 +30,9 @@
         return x$;
       });
       x$ = $element;
-      x$.chosen();
+      x$.chosen({
+        allow_single_deselect: true
+      });
       x$.on('change', function(){
         return this$.onFilterChange('party', $element.val());
       });
@@ -95,9 +97,16 @@
       this.filterFunction = (function(){
         switch (filterType) {
         case 'party':
-          return function(poslanec){
-            return in$(poslanec.strana.zkratka, filterValue);
-          };
+          if (filterValue) {
+            return function(poslanec){
+              return in$(poslanec.strana.zkratka, filterValue);
+            };
+          } else {
+            return function(){
+              return true;
+            };
+          }
+          break;
         default:
           return null;
         }

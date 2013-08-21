@@ -20,7 +20,7 @@ window.SorterFilter = class SorterFilter
             $ "<option value='#{party.zkratka}'>#{party.nazev}</option>"
                 ..appendTo $element
         $element
-            ..chosen!
+            ..chosen allow_single_deselect: yes
             ..on \change ~>
                 @onFilterChange \party $element.val!
 
@@ -63,7 +63,11 @@ window.SorterFilter = class SorterFilter
 
     onFilterChange: (filterType, filterValue) ->
         @filterFunction = switch filterType
-            | \party => (poslanec) -> poslanec.strana.zkratka in filterValue
+            | \party =>
+                if filterValue
+                    (poslanec) -> poslanec.strana.zkratka in filterValue
+                else
+                    -> true
             | otherwise => null
         @onFilterChangeCb?!
 
