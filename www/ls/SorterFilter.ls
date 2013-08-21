@@ -15,10 +15,8 @@ window.SorterFilter = class SorterFilter
             </div>"
         $element.appendTo @$element
         $element .= find 'select'
-        @createPartySelect!
-            ..appendTo $element
-        @createKrajSelect!
-            ..appendTo $element
+        [@createPartySelect!, @createKrajSelect!, @createMiscSelect!].forEach ->
+            it.appendTo $element
         $element
             ..chosen allow_single_deselect: yes
             ..on \change ~>
@@ -41,6 +39,11 @@ window.SorterFilter = class SorterFilter
                 ..appendTo $krajOptgroup
 
         $krajOptgroup
+
+    createMiscSelect: ->
+         $ "<optgroup label='Ostatní'>
+            <option value='misc-preferencni'>Zvoleni preferenčními hlasy</option>
+         </optgroup>"
 
     createSorter: ->
         $element = $ "<div class='sort'><select class='sort' data-placeholder='Seřadit podle'>
@@ -94,24 +97,23 @@ window.SorterFilter = class SorterFilter
         @filterFunction = if filterValue
             krajValues  = []
             partyValues = []
+            miscValues  = {}
             filterValue.forEach ->
                 [prefix, value] = it.split '-'
                 console.log prefix
                 switch prefix
                 | \kraj  => krajValues.push +value
                 | \party => partyValues.push value
-
+                | \misc => miscValues[value] = true
 
             (poslanec) ->
-                isInParty = if partyValues.length
-                    poslanec.strana.zkratka in partyValues
-                else
-                    yes
-                isInKraj = if krajValues.length
-                    poslanec.kraj.id in krajValues
-                else
-                    yes
-                isInParty and isInKraj
+                if partyValues.length and poslanec.strana.zkratka not in partyValues
+                    return false
+                if krajValues.length and poslanec.kraj.id not in krajValues
+                    return false
+                if miscValues.preferencni and not poslanec.preferencni
+                    return false
+                return true
 
         else
             -> true

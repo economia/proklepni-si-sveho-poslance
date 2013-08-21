@@ -51,6 +51,7 @@ function get_poslanci_list() {
     $r = array();
     while ($row = mysql_fetch_assoc($result)) {
         $row['poslanec_2010']             = (bool)$row['poslanec_2010'];
+        $row['preferencni']               = (bool)$row['preferencni'];
         $row['id']                        = (int)$row['id'];
         $row['interpelace_target_count']  = (int)$row['interpelace_target_count'];
         $row['interpelace_source_count']  = (int)$row['interpelace_source_count'];

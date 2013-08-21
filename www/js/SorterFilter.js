@@ -17,22 +17,21 @@
       this.createSorter();
     }
     prototype.createFilter = function(){
-      var $element, x$, y$, z$, this$ = this;
+      var $element, x$, this$ = this;
       $element = $("<div class='party'><select class='party' multiple='multiple' data-placeholder='Zobrazit pouze poslance strany nebo kraje'></select></div>");
       $element.appendTo(this.$element);
       $element = $element.find('select');
-      x$ = this.createPartySelect();
-      x$.appendTo($element);
-      y$ = this.createKrajSelect();
-      y$.appendTo($element);
-      z$ = $element;
-      z$.chosen({
+      [this.createPartySelect(), this.createKrajSelect(), this.createMiscSelect()].forEach(function(it){
+        return it.appendTo($element);
+      });
+      x$ = $element;
+      x$.chosen({
         allow_single_deselect: true
       });
-      z$.on('change', function(){
+      x$.on('change', function(){
         return this$.onFilterChange($element.val());
       });
-      return z$;
+      return x$;
     };
     prototype.createPartySelect = function(){
       var $partyOptgroup;
@@ -61,6 +60,9 @@
         return x$;
       });
       return $krajOptgroup;
+    };
+    prototype.createMiscSelect = function(){
+      return $("<optgroup label='Ostatní'><option value='misc-preferencni'>Zvoleni preferenčními hlasy</option></optgroup>");
     };
     prototype.createSorter = function(){
       var $element, x$, y$, this$ = this;
@@ -132,9 +134,9 @@
       return typeof this.onSortChangeCb === 'function' ? this.onSortChangeCb() : void 8;
     };
     prototype.onFilterChange = function(filterValue){
-      var krajValues, partyValues;
+      var krajValues, partyValues, miscValues;
       this.filterFunction = filterValue
-        ? (krajValues = [], partyValues = [], filterValue.forEach(function(it){
+        ? (krajValues = [], partyValues = [], miscValues = {}, filterValue.forEach(function(it){
           var ref$, prefix, value;
           ref$ = it.split('-'), prefix = ref$[0], value = ref$[1];
           console.log(prefix);
@@ -143,12 +145,20 @@
             return krajValues.push(+value);
           case 'party':
             return partyValues.push(value);
+          case 'misc':
+            return miscValues[value] = true;
           }
         }), function(poslanec){
-          var isInParty, isInKraj;
-          isInParty = partyValues.length ? in$(poslanec.strana.zkratka, partyValues) : true;
-          isInKraj = krajValues.length ? in$(poslanec.kraj.id, krajValues) : true;
-          return isInParty && isInKraj;
+          if (partyValues.length && !in$(poslanec.strana.zkratka, partyValues)) {
+            return false;
+          }
+          if (krajValues.length && !in$(poslanec.kraj.id, krajValues)) {
+            return false;
+          }
+          if (miscValues.preferencni && !poslanec.preferencni) {
+            return false;
+          }
+          return true;
         })
         : function(){
           return true;
