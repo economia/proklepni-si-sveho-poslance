@@ -213,6 +213,9 @@ body #wrap .poslanecDetail div.calendar .month > div {
   left: 0px;
   background: #f00;
 }
+body #wrap .poslanecDetail div.calendar .month > div.interpelace {
+  background: #7fc97f;
+}
 body #wrap .poslanecDetail div.calendar .month > div.zakony {
   background: #beaed4;
 }

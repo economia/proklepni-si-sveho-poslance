@@ -28,7 +28,7 @@ window.Poslanec = class Poslanec
         (err, data) <~ @loadData
         @$parent.find ".loading" .remove!
         console.log data
-        new Calendar data.zakony
+        new Calendar data
             ..$element.appendTo @$parent.find ".poslanecDetail"
 
     loadData: (cb) ->
@@ -47,12 +47,14 @@ class Calendar
     lastMonth: 8
     lastYear: 2013
     zakonyMax: -Infinity
+    interpelaceMax: -Infinity
     $element: null
 
-    (@zakony) ->
+    ({@zakony, @interpelace}) ->
         @$element = $ "<div class='calendar'></div>"
         @createMonths!
         @populateZakony!
+        @populateInterpelace!
         d3.select @$element.0 .selectAll ".month"
             .data @months
             .enter!.append \div
@@ -62,6 +64,9 @@ class Calendar
                 ..append \div
                     ..attr \class \zakony
                     ..style \opacity ~> it.zakony.length / @zakonyMax
+                ..append \div
+                    ..attr \class \interpelace
+                    ..style \opacity ~> it.interpelace.length / @interpelaceMax
 
     createMonths: ->
         @months = []
@@ -87,7 +92,16 @@ class Calendar
             len = @monthsAssoc[id]?zakony.push zakon
             if len > @zakonyMax then @zakonyMax = len
 
+    populateInterpelace: ->
+        @interpelace.forEach (interpelaca) ~>
+            date = new Date interpelaca.datum * 1000
+            id = "#{date.getFullYear!}-#{date.getMonth!}"
+            len = @monthsAssoc[id]?interpelace.push interpelaca
+            if len > @interpelaceMax then @interpelaceMax = len
+
+
 class Month
     (@year, @month) ->
         @id = "#{@year}-#{@month}"
         @zakony = []
+        @interpelace = []

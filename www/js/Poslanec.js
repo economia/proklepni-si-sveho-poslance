@@ -27,7 +27,7 @@
         var x$;
         this$.$parent.find(".loading").remove();
         console.log(data);
-        x$ = new Calendar(data.zakony);
+        x$ = new Calendar(data);
         x$.$element.appendTo(this$.$parent.find(".poslanecDetail"));
         return x$;
       });
@@ -54,13 +54,15 @@
     prototype.lastMonth = 8;
     prototype.lastYear = 2013;
     prototype.zakonyMax = -Infinity;
+    prototype.interpelaceMax = -Infinity;
     prototype.$element = null;
-    function Calendar(zakony){
-      var x$, y$, this$ = this;
-      this.zakony = zakony;
+    function Calendar(arg$){
+      var x$, y$, z$, this$ = this;
+      this.zakony = arg$.zakony, this.interpelace = arg$.interpelace;
       this.$element = $("<div class='calendar'></div>");
       this.createMonths();
       this.populateZakony();
+      this.populateInterpelace();
       x$ = d3.select(this.$element[0]).selectAll(".month").data(this.months).enter().append('div');
       x$.attr('class', 'month');
       x$.style('left', function(it){
@@ -73,6 +75,11 @@
       y$.attr('class', 'zakony');
       y$.style('opacity', function(it){
         return it.zakony.length / this$.zakonyMax;
+      });
+      z$ = x$.append('div');
+      z$.attr('class', 'interpelace');
+      z$.style('opacity', function(it){
+        return it.interpelace.length / this$.interpelaceMax;
       });
     }
     prototype.createMonths = function(){
@@ -109,6 +116,18 @@
         }
       });
     };
+    prototype.populateInterpelace = function(){
+      var this$ = this;
+      return this.interpelace.forEach(function(interpelaca){
+        var date, id, len, ref$;
+        date = new Date(interpelaca.datum * 1000);
+        id = date.getFullYear() + "-" + date.getMonth();
+        len = (ref$ = this$.monthsAssoc[id]) != null ? ref$.interpelace.push(interpelaca) : void 8;
+        if (len > this$.interpelaceMax) {
+          return this$.interpelaceMax = len;
+        }
+      });
+    };
     return Calendar;
   }());
   Month = (function(){
@@ -119,6 +138,7 @@
       this.month = month;
       this.id = this.year + "-" + this.month;
       this.zakony = [];
+      this.interpelace = [];
     }
     return Month;
   }());
