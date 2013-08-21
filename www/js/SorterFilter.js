@@ -30,7 +30,7 @@
         allow_single_deselect: true
       });
       z$.on('change', function(){
-        return this$.onFilterChange('party', $element.val());
+        return this$.onFilterChange($element.val());
       });
       return z$;
     };
@@ -42,7 +42,7 @@
         if (party === null) {
           return;
         }
-        x$ = $("<option value='" + party.zkratka + "'>" + party.nazev + "</option>");
+        x$ = $("<option value='party-" + party.zkratka + "'>" + party.nazev + "</option>");
         x$.appendTo($partyOptgroup);
         return x$;
       });
@@ -56,7 +56,7 @@
         if (kraj === null) {
           return;
         }
-        x$ = $("<option value='" + kraj.id + "'>" + kraj.nazev + "</option>");
+        x$ = $("<option value='kraj-" + kraj.id + "'>" + kraj.nazev + "</option>");
         x$.appendTo($krajOptgroup);
         return x$;
       });
@@ -131,24 +131,28 @@
       }());
       return typeof this.onSortChangeCb === 'function' ? this.onSortChangeCb() : void 8;
     };
-    prototype.onFilterChange = function(filterType, filterValue){
-      this.filterFunction = (function(){
-        switch (filterType) {
-        case 'party':
-          if (filterValue) {
-            return function(poslanec){
-              return in$(poslanec.strana.zkratka, filterValue);
-            };
-          } else {
-            return function(){
-              return true;
-            };
+    prototype.onFilterChange = function(filterValue){
+      var krajValues, partyValues;
+      this.filterFunction = filterValue
+        ? (krajValues = [], partyValues = [], filterValue.forEach(function(it){
+          var ref$, prefix, value;
+          ref$ = it.split('-'), prefix = ref$[0], value = ref$[1];
+          console.log(prefix);
+          switch (prefix) {
+          case 'kraj':
+            return krajValues.push(+value);
+          case 'party':
+            return partyValues.push(value);
           }
-          break;
-        default:
-          return null;
-        }
-      }());
+        }), function(poslanec){
+          var isInParty, isInKraj;
+          isInParty = partyValues.length ? in$(poslanec.strana.zkratka, partyValues) : true;
+          isInKraj = krajValues.length ? in$(poslanec.kraj.id, krajValues) : true;
+          return isInParty && isInKraj;
+        })
+        : function(){
+          return true;
+        };
       return typeof this.onFilterChangeCb === 'function' ? this.onFilterChangeCb() : void 8;
     };
     return SorterFilter;

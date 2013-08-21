@@ -5,7 +5,7 @@ window.tooltip              = new Tooltip!watchElements!
 window.Strana = class Strana
     ({@nazev, @plny, @zkratka}) ->
 window.Kraj = class Kraj
-    ({@nazev}) ->
+    ({@id, @nazev}) ->
 
 
 (err, data) <~ d3.json "./api.php?get=poslanci"

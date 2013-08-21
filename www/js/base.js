@@ -15,7 +15,7 @@
     Kraj.displayName = 'Kraj';
     var prototype = Kraj.prototype, constructor = Kraj;
     function Kraj(arg$){
-      this.nazev = arg$.nazev;
+      this.id = arg$.id, this.nazev = arg$.nazev;
     }
     return Kraj;
   }());

@@ -22,13 +22,13 @@ window.SorterFilter = class SorterFilter
         $element
             ..chosen allow_single_deselect: yes
             ..on \change ~>
-                @onFilterChange \party $element.val!
+                @onFilterChange $element.val!
 
     createPartySelect: ->
         $partyOptgroup = $ "<optgroup label='Politické strany'></optgroup>"
         @parties.forEach (party) ->
             return if party is null
-            $ "<option value='#{party.zkratka}'>#{party.nazev}</option>"
+            $ "<option value='party-#{party.zkratka}'>#{party.nazev}</option>"
                 ..appendTo $partyOptgroup
 
         $partyOptgroup
@@ -37,7 +37,7 @@ window.SorterFilter = class SorterFilter
         $krajOptgroup = $ "<optgroup label='Kraje'></optgroup>"
         @kraje.forEach (kraj) ->
             return if kraj is null
-            $ "<option value='#{kraj.id}'>#{kraj.nazev}</option>"
+            $ "<option value='kraj-#{kraj.id}'>#{kraj.nazev}</option>"
                 ..appendTo $krajOptgroup
 
         $krajOptgroup
@@ -90,14 +90,31 @@ window.SorterFilter = class SorterFilter
         | otherwise         => null
         @onSortChangeCb?!
 
-    onFilterChange: (filterType, filterValue) ->
-        @filterFunction = switch filterType
-            | \party =>
-                if filterValue
-                    (poslanec) -> poslanec.strana.zkratka in filterValue
+    onFilterChange: (filterValue) ->
+        @filterFunction = if filterValue
+            krajValues  = []
+            partyValues = []
+            filterValue.forEach ->
+                [prefix, value] = it.split '-'
+                console.log prefix
+                switch prefix
+                | \kraj  => krajValues.push +value
+                | \party => partyValues.push value
+
+
+            (poslanec) ->
+                isInParty = if partyValues.length
+                    poslanec.strana.zkratka in partyValues
                 else
-                    -> true
-            | otherwise => null
+                    yes
+                isInKraj = if krajValues.length
+                    poslanec.kraj.id in krajValues
+                else
+                    yes
+                isInParty and isInKraj
+
+        else
+            -> true
         @onFilterChangeCb?!
 
 
