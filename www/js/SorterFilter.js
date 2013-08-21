@@ -18,7 +18,7 @@
     }
     prototype.createFilter = function(){
       var $element, x$, y$, z$, this$ = this;
-      $element = $("<div class='party'><select class='party' multiple='multiple' data-placeholder='Zobrazit pouze stranu'></select></div>");
+      $element = $("<div class='party'><select class='party' multiple='multiple' data-placeholder='Zobrazit pouze poslance strany nebo kraje'></select></div>");
       $element.appendTo(this.$element);
       $element = $element.find('select');
       x$ = this.createPartySelect();

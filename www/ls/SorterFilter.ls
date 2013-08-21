@@ -11,7 +11,7 @@ window.SorterFilter = class SorterFilter
 
     createFilter: ->
         $element = $ "<div class='party'>
-                <select class='party' multiple='multiple' data-placeholder='Zobrazit pouze stranu'></select>
+                <select class='party' multiple='multiple' data-placeholder='Zobrazit pouze poslance strany nebo kraje'></select>
             </div>"
         $element.appendTo @$element
         $element .= find 'select'
