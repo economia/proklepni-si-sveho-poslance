@@ -44,9 +44,7 @@
       x$ = $element;
       x$.appendTo(this.$element);
       y$ = $element = $element.find('select');
-      y$.chosen({
-        allow_single_deselect: true
-      });
+      y$.chosen();
       y$.on('change', function(){
         return this$.onSortChange($element.val());
       });

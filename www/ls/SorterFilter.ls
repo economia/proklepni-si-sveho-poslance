@@ -43,7 +43,7 @@ window.SorterFilter = class SorterFilter
         $element
             ..appendTo @$element
         $element .= find \select
-            ..chosen allow_single_deselect: yes
+            ..chosen! #allow_single_deselect: yes
             ..on \change ~>
                 @onSortChange $element.val!
 
