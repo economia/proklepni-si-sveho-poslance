@@ -73,6 +73,9 @@
       x$.style('top', function(it){
         return (it.year - this$.firstYear) * monthHeight + "px";
       });
+      x$.attr('data-tooltip', function(it){
+        return escape("zakony: " + it.zakony.length + "<br />interpelace: " + it.interpelace.length + "<br />vystoupeni: " + it.vystoupeni.length + "");
+      });
       y$ = x$.append('div');
       y$.attr('class', 'zakony');
       y$.style('opacity', function(it){

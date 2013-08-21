@@ -63,6 +63,12 @@ class Calendar
                 ..attr \class \month
                 ..style \left -> "#{it.month * monthWidth}px"
                 ..style \top ~> "#{(it.year - @firstYear) * monthHeight}px"
+                ..attr \data-tooltip ~>
+                    escape "
+                        zakony: #{it.zakony.length}<br />
+                        interpelace: #{it.interpelace.length}<br />
+                        vystoupeni: #{it.vystoupeni.length}
+                    "
                 ..append \div
                     ..attr \class \zakony
                     ..style \opacity ~> it.zakony.length / @zakonyMax * it.zakony.length / it.totalEvents
