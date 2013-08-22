@@ -72,7 +72,7 @@
       return z2$;
     };
     prototype.decorateRows = function(enterSelection){
-      var x$, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, z7$, z8$, z9$, z10$, z11$, z12$, this$ = this;
+      var x$, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, z7$, z8$, z9$, z10$, this$ = this;
       x$ = enterSelection.append('li');
       x$.attr('class', function(it){
         return "poslanec " + it.strana.zkratka;
@@ -125,21 +125,12 @@
         return this$.percentageInvertedScale(it.absence_normalized) + "px";
       });
       z9$ = z2$.append('div');
-      z9$.attr('class', "nazor bar");
+      z9$.attr('class', "vystoupeni bar");
       z9$.attr('data-tooltip', function(it){
-        return "Vlastní nazor projevil(a) u <strong>" + Math.round(it.nazor_normalized * 100) + "%</strong> hlasování (" + it.nazor_count + " z " + it.possible_votes_count + ")";
+        return "Přednesl(a) projev <strong>" + it.vystoupeni_count + "x</strong>";
       });
       z10$ = z9$.append('div');
       z10$.style('height', function(it){
-        return this$.percentageScale(it.nazor_normalized) + "px";
-      });
-      z11$ = z2$.append('div');
-      z11$.attr('class', "vystoupeni bar");
-      z11$.attr('data-tooltip', function(it){
-        return "Přednesl(a) projev <strong>" + it.vystoupeni_count + "x</strong>";
-      });
-      z12$ = z11$.append('div');
-      z12$.style('height', function(it){
         return this$.vystoupeniScale(it.vystoupeni_count) + "px";
       });
       x$.on('click', function(it){

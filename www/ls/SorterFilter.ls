@@ -56,8 +56,6 @@ window.SorterFilter = class SorterFilter
             <option value='zakony-asc'>Nejméně předložených zákonů</option>
             <option value='absence-asc'>Nejčastěji přítomní</option>
             <option value='absence-desc'>Nejméně přítomní</option>
-            <option value='nazor-desc'>Nejčastěji hlasují ano/ne</option>
-            <option value='nazor-asc'>Nejméně hlasují ano/ne</option>
             <option value='vystoupeni-desc'>Pronesli nejvíce projevů</option>
             <option value='vystoupeni-asc'>Pronesli nejméně projevů</option>
             </select>
@@ -80,9 +78,6 @@ window.SorterFilter = class SorterFilter
 
         | \absence-desc => (a, b) -> b.absence_normalized - a.absence_normalized
         | \absence-asc  => (a, b) -> a.absence_normalized - b.absence_normalized
-
-        | \nazor-desc => (a, b) -> b.nazor_normalized - a.nazor_normalized
-        | \nazor-asc  => (a, b) -> a.nazor_normalized - b.nazor_normalized
 
         | \activity-index-desc => (a, b) -> b.activity_index - a.activity_index
         | \activity-index-asc  => (a, b) -> a.activity_index - b.activity_index

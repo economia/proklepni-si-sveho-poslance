@@ -89,13 +89,6 @@
                         ..style \height ~>
                             "#{@percentageInvertedScale it.absence_normalized}px"
                 ..append \div
-                    ..attr \class "nazor bar"
-                    ..attr \data-tooltip ->
-                        "Vlastní nazor projevil(a) u <strong>#{Math.round it.nazor_normalized*100}%</strong> hlasování (#{it.nazor_count} z #{it.possible_votes_count})"
-                    ..append \div
-                        ..style \height ~>
-                            "#{@percentageScale it.nazor_normalized}px"
-                ..append \div
                     ..attr \class "vystoupeni bar"
                     ..attr \data-tooltip ->
                         "Přednesl(a) projev <strong>#{it.vystoupeni_count}x</strong>"

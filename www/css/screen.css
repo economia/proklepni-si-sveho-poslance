@@ -119,7 +119,7 @@ body #wrap .poslanecList li .barchart {
   position: absolute;
   top: 0px;
   right: 25px;
-  width: 75px;
+  width: 60px;
   top: 10px;
   height: 50px;
 }
@@ -152,14 +152,8 @@ body #wrap .poslanecList li .barchart .bar.absence {
 body #wrap .poslanecList li .barchart .bar.absence div {
   background: #fdc086;
 }
-body #wrap .poslanecList li .barchart .bar.nazor {
-  left: 45px;
-}
-body #wrap .poslanecList li .barchart .bar.nazor div {
-  background: #386cb0;
-}
 body #wrap .poslanecList li .barchart .bar.vystoupeni {
-  left: 60px;
+  left: 45px;
 }
 body #wrap .poslanecList li .barchart .bar.vystoupeni div {
   background: #bf5b17;
