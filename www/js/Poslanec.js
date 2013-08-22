@@ -23,7 +23,8 @@
     prototype.onSelect = function(){
       var x$, $backButton, $header, this$ = this;
       this.$wrap.addClass('poslanecSelected');
-      x$ = $backButton = $("<a href='#' class='backButton'><img src='img/back.png' /></a>");
+      x$ = $backButton = $("<a href='#' class='backButton'></a>");
+      x$.append("<img src='img/back.png' />");
       x$.on('click', function(){
         return this$.$wrap.removeClass('poslanecSelected');
       });
@@ -59,21 +60,24 @@
       var $container, ref$, zakony, vystoupeni, interpelace, x$, y$, z$, this$ = this;
       $container = $("<div class='contentButtons'></div>");
       ref$ = this.data, zakony = ref$.zakony, vystoupeni = ref$.vystoupeni, interpelace = ref$.interpelace;
-      x$ = $("<button class='vystoupeni'>Všechna vystoupení</button>");
+      x$ = $("<button class='vystoupeni'></button>");
+      x$.append("Všechna vystoupení");
       x$.appendTo($container);
       x$.on('click', function(){
         return this$.displayContent({
           vystoupeni: vystoupeni
         });
       });
-      y$ = $("<button class='interpelace'>Interpelace</button>");
+      y$ = $("<button class='interpelace'></button>");
+      y$.append("Interpelace");
       y$.appendTo($container);
       y$.on('click', function(){
         return this$.displayContent({
           interpelace: interpelace
         });
       });
-      z$ = $("<button class='zakony'>Zákony</button>");
+      z$ = $("<button class='zakony'></button>");
+      z$.append("Zákony");
       z$.appendTo($container);
       z$.on('click', function(){
         return this$.displayContent({
@@ -102,46 +106,53 @@
     prototype.displayZakony = function(zakony){
       var x$, $element, y$, $list;
       x$ = $element = $("<div class='zakony'></div>");
-      x$.append("<h3>Zákony</h3>");
-      x$.append("<em>Kliknutím přejdete na detail zákona na webu Poslanecké sněmovny</em>");
+      x$.html("<h3>Zákony</h3><em>Kliknutím přejdete na detail zákona na webu Poslanecké sněmovny</em>");
       y$ = $list = $("<ul></ul>");
       y$.appendTo($element);
       zakony.forEach(function(zakon){
-        return $list.append("<li><a href='http://www.psp.cz/sqw/historie.sqw?o=6&t=" + zakon.cislo_tisku + "' target='_blank'>" + zakon.nazev + "</a></li>");
+        var x$;
+        x$ = $("<li></li>");
+        x$.html("<a href='http://www.psp.cz/sqw/historie.sqw?o=6&t=" + zakon.cislo_tisku + "' target='_blank'>" + zakon.nazev + "</a>");
+        x$.appendTo($list);
+        return x$;
       });
       return $element;
     };
     prototype.displayInterpelace = function(interpelace){
       var x$, $element, y$, $list;
       x$ = $element = $("<div class='interpelace'></div>");
-      x$.append("<h3>Interpelace</h3>");
-      x$.append("<em>Kdy, koho a na jaké téma interpeloval</em>");
+      x$.html("<h3>Interpelace</h3><em>Kdy, koho a na jaké téma interpeloval</em>");
       y$ = $list = $("<ul></ul>");
       y$.appendTo($element);
       interpelace.forEach(function(interpelaca){
-        var date, targetPoslanec, ref$, dateString;
+        var date, targetPoslanec, ref$, dateString, x$;
         date = new Date(interpelaca.datum * 1000);
         targetPoslanec = (ref$ = poslanciAssoc[interpelaca.ministr_id]) != null ? ref$.getName() : void 8;
         if (!targetPoslanec) {
           targetPoslanec = "(neznámý)";
         }
         dateString = date.getDate() + " " + (date.getMonth() + 1) + " " + date.getFullYear();
-        return $list.append("<li><span class='date'>" + dateString + ", </span><span class='target'>" + targetPoslanec + ": </span><span class='vec'>" + interpelaca.vec + "</span></li>");
+        x$ = $("<li></li>");
+        x$.html("<span class='date'>" + dateString + ", </span><span class='target'>" + targetPoslanec + ": </span><span class='vec'>" + interpelaca.vec + "</span>");
+        x$.appendTo($list);
+        return x$;
       });
       return $element;
     };
     prototype.displayVystoupeni = function(vystoupeni){
       var x$, $element, y$, $list;
       x$ = $element = $("<div class='vystoupeni'></div>");
-      x$.append("<h3>Vystoupení</h3>");
-      x$.append("<em>Kliknutím přejdete na příslušný záznam stenoprotokolu</em>");
+      x$.html("<h3>Vystoupení</h3><em>Kliknutím přejdete na příslušný záznam stenoprotokolu</em>");
       y$ = $list = $("<ul></ul>");
       y$.appendTo($element);
       vystoupeni.forEach(function(it){
-        var date, dateString;
+        var date, dateString, x$;
         date = new Date(it.datum * 1000);
         dateString = date.getDate() + ". " + (date.getMonth() + 1) + ". " + date.getFullYear();
-        return $list.append("<li><a href='" + it.url + "' target='_blank'>" + dateString + "</a></li>");
+        x$ = $("<li></li>");
+        x$.html("<a href='" + it.url + "' target='_blank'>" + dateString + "</a>");
+        x$.appendTo($list);
+        return x$;
       });
       return $element;
     };

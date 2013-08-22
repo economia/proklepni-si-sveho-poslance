@@ -18,7 +18,8 @@ window.Poslanec = class Poslanec
 
     onSelect: ->
         @$wrap.addClass 'poslanecSelected'
-        $backButton = $ "<a href='#' class='backButton'><img src='img/back.png' /></a>"
+        $backButton = $ "<a href='#' class='backButton'></a>"
+            ..append "<img src='img/back.png' />"
             ..on \click ~> @$wrap.removeClass 'poslanecSelected'
         @$parent.html "
             <div class='poslanecDetail party-#{@strana.zkratka}'>
@@ -53,13 +54,16 @@ window.Poslanec = class Poslanec
     displayContentButtons: ->
         $container = $ "<div class='contentButtons'></div>"
         {zakony, vystoupeni, interpelace} = @data
-        $ "<button class='vystoupeni'>Všechna vystoupení</button>"
+        $ "<button class='vystoupeni'></button>"
+            ..append "Všechna vystoupení"
             ..appendTo $container
             ..on \click ~> @displayContent {vystoupeni}
-        $ "<button class='interpelace'>Interpelace</button>"
+        $ "<button class='interpelace'></button>"
+            ..append "Interpelace"
             ..appendTo $container
             ..on \click ~> @displayContent {interpelace}
-        $ "<button class='zakony'>Zákony</button>"
+        $ "<button class='zakony'></button>"
+            ..append "Zákony"
             ..appendTo $container
             ..on \click ~> @displayContent {zakony}
 
@@ -76,18 +80,20 @@ window.Poslanec = class Poslanec
 
     displayZakony: (zakony) ->
         $element = $ "<div class='zakony'></div>"
-            ..append "<h3>Zákony</h3>"
-            ..append "<em>Kliknutím přejdete na detail zákona na webu Poslanecké sněmovny</em>"
+            ..html "<h3>Zákony</h3>
+                    <em>Kliknutím přejdete na detail zákona na webu Poslanecké sněmovny</em>"
         $list = $ "<ul></ul>"
             ..appendTo $element
         zakony.forEach (zakon) ->
-            $list.append "<li><a href='http://www.psp.cz/sqw/historie.sqw?o=6&t=#{zakon.cislo_tisku}' target='_blank'>#{zakon.nazev}</a></li>"
+            $ "<li></li>"
+                ..html "<a href='http://www.psp.cz/sqw/historie.sqw?o=6&t=#{zakon.cislo_tisku}' target='_blank'>#{zakon.nazev}</a>"
+                ..appendTo $list
         $element
 
     displayInterpelace: (interpelace) ->
         $element = $ "<div class='interpelace'></div>"
-            ..append "<h3>Interpelace</h3>"
-            ..append "<em>Kdy, koho a na jaké téma interpeloval</em>"
+            ..html "<h3>Interpelace</h3>
+                    <em>Kdy, koho a na jaké téma interpeloval</em>"
         $list = $ "<ul></ul>"
             ..appendTo $element
         interpelace.forEach (interpelaca) ->
@@ -95,21 +101,24 @@ window.Poslanec = class Poslanec
             targetPoslanec = poslanciAssoc[interpelaca.ministr_id]?.getName!
             if not targetPoslanec then targetPoslanec = "(neznámý)"
             dateString = "#{date.getDate!} #{date.getMonth! + 1} #{date.getFullYear!}"
-            $list.append "<li><span class='date'>#dateString, </span>
-                <span class='target'>#targetPoslanec: </span>
-                <span class='vec'>#{interpelaca.vec}</span>
-                </li>"
+            $ "<li></li>"
+                ..html "<span class='date'>#dateString, </span>
+                    <span class='target'>#targetPoslanec: </span>
+                    <span class='vec'>#{interpelaca.vec}</span>"
+                ..appendTo $list
         $element
     displayVystoupeni: (vystoupeni) ->
         $element = $ "<div class='vystoupeni'></div>"
-            ..append "<h3>Vystoupení</h3>"
-            ..append "<em>Kliknutím přejdete na příslušný záznam stenoprotokolu</em>"
+            ..html "<h3>Vystoupení</h3>
+                    <em>Kliknutím přejdete na příslušný záznam stenoprotokolu</em>"
         $list = $ "<ul></ul>"
             ..appendTo $element
         vystoupeni.forEach ->
             date = new Date it.datum*1000
             dateString = "#{date.getDate!}. #{date.getMonth! + 1}. #{date.getFullYear!}"
-            $list.append "<li><a href='#{it.url}' target='_blank'>#{dateString}</a></li>"
+            $ "<li></li>"
+                ..html "<a href='#{it.url}' target='_blank'>#{dateString}</a>"
+                ..appendTo $list
         $element
 
 

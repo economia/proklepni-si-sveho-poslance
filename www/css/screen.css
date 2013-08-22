@@ -17,7 +17,8 @@ body #wrap .leftPart {
 body #wrap .leftPart,
 body #wrap .rightPart {
   height: 500px;
-  position: fixed;
+  position: absolute;
+  background: #fff;
   overflow-y: auto;
   overflow-x: hidden;
 }
