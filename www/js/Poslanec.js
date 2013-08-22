@@ -33,17 +33,20 @@
       $header = this.$element.find(".header");
       $backButton.prependTo($header);
       return this.loadData(function(err, data){
-        var x$, y$;
+        var x$, y$, z$;
         this$.data = data;
         this$.$parent.find(".loading").remove();
         x$ = new Calendar(this$.data);
         x$.$element.appendTo($header);
         x$.onMonthSelected = bind$(this$, 'displayMonth');
-        $header.append("<em class='calendarLegend'>Každé políčko grafiky představuje jeden měsíc, každý řádek rok. Čím sytější barva, tím byl poslanec daný měsíc aktivnější.</em>");
+        y$ = $("<em></em>");
+        y$.html("Každé políčko grafiky představuje jeden měsíc, každý řádek rok.Čím sytější barva, tím byl poslanec daný měsíc aktivnější.");
+        y$.addClass('calendarLegend');
+        y$.appendTo($header);
         $header.append(this$.displayContentButtons());
-        y$ = this$.$contentElement = $("<div class='content'></div>");
-        y$.appendTo(this$.$element);
-        return y$;
+        z$ = this$.$contentElement = $("<div class='content'></div>");
+        z$.appendTo(this$.$element);
+        return z$;
       });
     };
     prototype.loadData = function(cb){

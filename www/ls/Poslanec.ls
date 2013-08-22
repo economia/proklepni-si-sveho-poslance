@@ -39,7 +39,11 @@ window.Poslanec = class Poslanec
         new Calendar @data
             ..$element.appendTo $header
             ..onMonthSelected = @~displayMonth
-        $header.append "<em class='calendarLegend'>Každé políčko grafiky představuje jeden měsíc, každý řádek rok. Čím sytější barva, tím byl poslanec daný měsíc aktivnější.</em>"
+        $ "<em></em>"
+            ..html "Každé políčko grafiky představuje jeden měsíc, každý řádek rok.
+                Čím sytější barva, tím byl poslanec daný měsíc aktivnější."
+            ..addClass \calendarLegend
+            ..appendTo $header
         $header.append @displayContentButtons!
         @$contentElement = $ "<div class='content'></div>"
             ..appendTo @$element
