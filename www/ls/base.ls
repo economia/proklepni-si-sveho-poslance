@@ -26,6 +26,6 @@ poslanecList = new PoslanecList do
     poslanci
     sorterFilter
 
-poslanci
-    .filter -> it.id==252
-    .pop!.onSelect!
+# poslanci
+#     .filter -> it.id==252
+#     .pop!.onSelect!

@@ -12,7 +12,7 @@ body #wrap {
 }
 body #wrap p.junk {
   position: absolute;
-  top: -8px;
+  top: -2px;
   left: 0px;
 }
 body #wrap .leftPart {
@@ -375,6 +375,10 @@ body #wrap .poslanecDetail div.content .vystoupeni li a {
   padding: 7px 0px;
   text-align: center;
   float: left;
+}
+body #wrap .poslanecDetail div.content .hlasovani {
+  float: left;
+  width: 100%;
 }
 body #wrap .poslanecDetail div.content .hlasovani li a {
   position: relative;
