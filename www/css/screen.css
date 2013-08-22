@@ -10,6 +10,11 @@ body #wrap {
   background: #fff;
   position: absolute;
 }
+body #wrap p.junk {
+  position: absolute;
+  top: -8px;
+  left: 0px;
+}
 body #wrap .leftPart {
   width: 650px;
   transition: 0.4s;
@@ -18,7 +23,6 @@ body #wrap .leftPart,
 body #wrap .rightPart {
   height: 500px;
   position: absolute;
-  background: #fff;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -52,6 +56,7 @@ body #wrap .poslanecList {
 }
 body #wrap .poslanecList li {
   position: absolute;
+  border-bottom: 2px solid #fff;
   width: 100%;
   height: 60px;
 }
@@ -160,6 +165,7 @@ body #wrap .poslanecList li .barchart .bar.vystoupeni div {
   background: #bf5b17;
 }
 body #wrap .rightPart {
+  background: #fff;
   width: 620px;
   top: 0px;
   left: 0px;
