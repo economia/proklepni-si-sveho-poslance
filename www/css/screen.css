@@ -185,7 +185,35 @@ body #wrap .poslanecDetail {
 body #wrap .poslanecDetail img {
   float: right;
 }
+body #wrap .poslanecDetail a.backButton {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  display: block;
+  width: 38px;
+  height: 38px;
+  border: 2px solid #1d1d1d;
+  border-radius: 50%;
+  -o-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  background: #fff;
+}
+body #wrap .poslanecDetail a.backButton:hover {
+  background: #eee;
+}
+body #wrap .poslanecDetail a.backButton img {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+}
+body #wrap .poslanecDetail h2,
+body #wrap .poslanecDetail h3.party {
+  margin-left: 60px;
+}
 body #wrap .poslanecDetail h2 {
+  margin-top: 6px;
   margin-bottom: 0px;
 }
 body #wrap .poslanecDetail h3.party {
@@ -212,13 +240,4 @@ body #wrap .poslanecDetail div.calendar .month > div {
   top: 0px;
   left: 0px;
   background: #f00;
-}
-body #wrap .poslanecDetail div.calendar .month > div.interpelace {
-  background: #7fc97f;
-}
-body #wrap .poslanecDetail div.calendar .month > div.zakony {
-  background: #beaed4;
-}
-body #wrap .poslanecDetail div.calendar .month > div.vystoupeni {
-  background: #bf5b17;
 }

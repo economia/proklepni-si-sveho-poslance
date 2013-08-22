@@ -20,15 +20,21 @@
       return this.jmeno + " " + this.prijmeni;
     };
     prototype.onSelect = function(){
-      var this$ = this;
-      this.$wrap.toggleClass('poslanecSelected');
-      this.$parent.html("<div class='poslanecDetail " + this.strana.zkratka + "'><img src='img/poslanci/" + this.id + ".jpg' /><h2>" + this.titul_pred + " " + this.jmeno + " " + this.prijmeni + " " + this.titul_za + "</h2><h3 class='party'>" + this.strana.plny + "</h3><span class='loading'>Prosím strpení, načíají se data...</span></div>");
+      var x$, $backButton, this$ = this;
+      this.$wrap.addClass('poslanecSelected');
+      x$ = $backButton = $("<a href='#' class='backButton'><img src='img/back.png' /></a>");
+      x$.on('click', function(){
+        return this$.$wrap.removeClass('poslanecSelected');
+      });
+      this.$parent.html("<div class='poslanecDetail " + this.strana.zkratka + "'><h2>" + this.titul_pred + " " + this.jmeno + " " + this.prijmeni + " " + this.titul_za + "</h2><h3 class='party'>" + this.strana.plny + "</h3><img src='img/poslanci/" + this.id + ".jpg' /><span class='loading'>Prosím strpení, načíají se data...</span></div>");
+      this.$element = this.$parent.find(".poslanecDetail");
+      $backButton.prependTo(this.$element);
       return this.loadData(function(err, data){
         var x$;
         this$.$parent.find(".loading").remove();
         console.log(data);
         x$ = new Calendar(data);
-        x$.$element.appendTo(this$.$parent.find(".poslanecDetail"));
+        x$.$element.appendTo(this$.$element);
         return x$;
       });
     };

@@ -16,20 +16,24 @@ window.Poslanec = class Poslanec
     getName: -> "#{@jmeno} #{@prijmeni}"
 
     onSelect: ->
-        @$wrap.toggleClass 'poslanecSelected'
+        @$wrap.addClass 'poslanecSelected'
+        $backButton = $ "<a href='#' class='backButton'><img src='img/back.png' /></a>"
+            ..on \click ~> @$wrap.removeClass 'poslanecSelected'
         @$parent.html "
             <div class='poslanecDetail #{@strana.zkratka}'>
-                <img src='img/poslanci/#{@id}.jpg' />
                 <h2>#{@titul_pred} #{@jmeno} #{@prijmeni} #{@titul_za}</h2>
                 <h3 class='party'>#{@strana.plny}</h3>
+                <img src='img/poslanci/#{@id}.jpg' />
                 <span class='loading'>Prosím strpení, načíají se data...</span>
             </div>
         "
+        @$element = @$parent.find ".poslanecDetail"
+        $backButton.prependTo @$element
         (err, data) <~ @loadData
         @$parent.find ".loading" .remove!
         console.log data
         new Calendar data
-            ..$element.appendTo @$parent.find ".poslanecDetail"
+            ..$element.appendTo @$element
 
     loadData: (cb) ->
         (err, data) <~ d3.json "./api.php?get=poslanci/#{@id}"
