@@ -267,6 +267,42 @@ body #wrap .poslanecDetail div.calendar .month > div {
   left: 0px;
   background: #f00;
 }
+body #wrap .poslanecDetail div.content {
+  float: left;
+  width: 100%;
+}
+body #wrap .poslanecDetail div.content ul {
+  padding: 0px;
+  margin-top: 8px;
+  list-style-type: none;
+}
+body #wrap .poslanecDetail div.content ul li {
+  font-size: 0.9em;
+}
+body #wrap .poslanecDetail div.content ul li a {
+  display: block;
+  padding: 5px 10px;
+  background: #e6e6e6;
+  color: #000;
+  text-decoration: none;
+}
+body #wrap .poslanecDetail div.content ul li a:hover {
+  background: #ccc;
+}
+body #wrap .poslanecDetail div.content ul li:nth-child(even) a {
+  background: #fff;
+}
+body #wrap .poslanecDetail div.content ul li:nth-child(even) a:hover {
+  background: #cacaca;
+}
+body #wrap .poslanecDetail div.content .zakony h3 {
+  margin-top: 0px;
+  margin-bottom: 4px;
+}
+body #wrap .poslanecDetail div.content .zakony em {
+  font-size: 0.9em;
+  margin-top: -5px;
+}
 body .chosen-container-single .chosen-single {
   background-color: #fff;
   background-image: -webkit-gradient(linear, 50% 0, 50% 100%, color-stop(1%, #eee), color-stop(15%, #fff));

@@ -61,10 +61,11 @@
       var $element, x$, $list;
       $element = $("<div class='zakony'></div>");
       $element.append("<h3>Zákony</h3>");
+      $element.append("<em>Kliknutím přejdete na detail zákona na webu Poslanecké sněmovny</em>");
       x$ = $list = $("<ul></ul>");
       x$.appendTo($element);
       zakony.forEach(function(zakon){
-        return $list.append("<li>" + zakon.nazev + "</li>");
+        return $list.append("<li><a href='http://www.psp.cz/sqw/historie.sqw?o=6&t=" + zakon.cislo_tisku + "' target='_blank'>" + zakon.nazev + "</a></li>");
       });
       return $element;
     };

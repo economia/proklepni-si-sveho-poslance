@@ -51,10 +51,11 @@ window.Poslanec = class Poslanec
     displayZakony: (zakony) ->
         $element = $ "<div class='zakony'></div>"
         $element.append "<h3>Zákony</h3>"
+        $element.append "<em>Kliknutím přejdete na detail zákona na webu Poslanecké sněmovny</em>"
         $list = $ "<ul></ul>"
             ..appendTo $element
         zakony.forEach (zakon) ->
-            $list.append "<li>#{zakon.nazev}</li>"
+            $list.append "<li><a href='http://www.psp.cz/sqw/historie.sqw?o=6&t=#{zakon.cislo_tisku}' target='_blank'>#{zakon.nazev}</a></li>"
         $element
 
 monthWidth = 31
