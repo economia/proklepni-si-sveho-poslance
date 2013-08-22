@@ -279,10 +279,11 @@ body #wrap .poslanecDetail div.calendar .month > div {
 }
 body #wrap .poslanecDetail div.calendar .yearLegend {
   position: absolute;
-  padding-top: 6px;
+  padding-top: 7px;
   font-style: italic;
   background: #f4f4f4;
-  height: 24px;
+  font-size: 0.95em;
+  height: 23px;
 }
 body #wrap .poslanecDetail div.calendar .yearLegend.y-0 {
   text-align: right;
@@ -294,8 +295,8 @@ body #wrap .poslanecDetail div.calendar .yearLegend.y-0 {
 body #wrap .poslanecDetail div.calendar .yearLegend.y-1 {
   text-align: left;
   padding-left: 10px;
-  padding-top: 5px;
-  height: 25px;
+  padding-top: 6px;
+  height: 24px;
   width: 113px;
   bottom: 0px;
   right: 7px;
