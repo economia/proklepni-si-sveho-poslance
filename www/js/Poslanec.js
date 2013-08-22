@@ -40,7 +40,7 @@
         x$.$element.appendTo($header);
         x$.onMonthSelected = bind$(this$, 'displayMonth');
         y$ = $("<em></em>");
-        y$.html("Každé políčko grafiky představuje jeden měsíc, každý řádek rok.Čím sytější barva, tím byl poslanec daný měsíc aktivnější.");
+        y$.html("Každé políčko grafiky představuje jeden měsíc, každý řádek rok.Čím sytější barva, tím byl poslanec daný měsíc aktivnější.Kliknutím na políčko zobrazíte aktivitu daný měsíc, případně kliknutím na tlačítko níže zobrazíte veškerou aktivitu daného druhu.");
         y$.addClass('calendarLegend');
         y$.appendTo($header);
         $header.append(this$.displayContentButtons());
