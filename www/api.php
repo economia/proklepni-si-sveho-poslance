@@ -82,7 +82,8 @@ function get_poslanec($id) {
 function get_poslanec_tisky($id) {
     $result = mysql_query("SELECT tisky.id, tisky.cislo_tisku, tisky.cislo_za, tisky.predlozeno AS datum, tisky.nazev
         FROM tisky JOIN predkladatele ON (tisky.id=predkladatele.tisk_id)
-        WHERE predkladatele.osoba_id=$id AND predlozeno>1275350400");
+        WHERE predkladatele.osoba_id=$id AND predlozeno>1275350400
+        ORDER BY predlozeno");
     $r = array();
     while($row = mysql_fetch_assoc($result)) {
         $row['id'] = (int)$row['id'];
@@ -94,7 +95,8 @@ function get_poslanec_tisky($id) {
 function get_poslanec_interpelace($id) {
     $result = mysql_query("SELECT interpelace.id, interpelace.ministr_id, interpelace.vec, interpelace_losovani.datum
         FROM interpelace JOIN interpelace_losovani ON (interpelace.losovani_id=interpelace_losovani.id)
-        WHERE interpelace.poslanec_id=$id AND interpelace_losovani.datum>1275350400");
+        WHERE interpelace.poslanec_id=$id AND interpelace_losovani.datum>1275350400
+        ORDER BY interpelace_losovani.datum ASC");
     $r = array();
     while($row = mysql_fetch_assoc($result)) {
         $row['id']    = (int)$row['id'];
@@ -105,7 +107,7 @@ function get_poslanec_interpelace($id) {
     return $r;
 }
 function get_poslanec_vystoupeni($id) {
-    $result = mysql_query("SELECT datum, url FROM poslanci_vystoupeni WHERE poslanec_id=$id");
+    $result = mysql_query("SELECT datum, url FROM poslanci_vystoupeni WHERE poslanec_id=$id ORDER BY datum ASC");
     $r = array();
     while($row = mysql_fetch_assoc($result)) {
         $row['datum'] = (int)$row['datum'];
@@ -117,7 +119,8 @@ function get_poslanec_hlasovani($id) {
     $result = mysql_query("SELECT hlasovani.id, hlasovani.nazev, hlasovani.datum, hlasovani_poslanec.vysledek FROM hlasovani
         JOIN hlasovani_poslanec ON (hlasovani.id=hlasovani_poslanec.hlasovani_id)
         JOIN poslanci_hlas_pseudoid ON (poslanci_hlas_pseudoid.poslanec_hlas_id = hlasovani_poslanec.poslanec_id)
-        WHERE hlasovani.bod>0 AND poslanci_hlas_pseudoid.poslanec_id=$id AND datum>0");
+        WHERE hlasovani.bod>0 AND poslanci_hlas_pseudoid.poslanec_id=$id AND datum>0
+        ORDER BY datum ASC");
     $r = array();
     while($row = mysql_fetch_assoc($result)) {
         $row['datum'] = (int)$row['datum'];
