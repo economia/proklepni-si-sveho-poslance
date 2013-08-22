@@ -2,6 +2,9 @@ body {
   margin: 0px;
   font-family: arial, sans-serif;
 }
+body a img {
+  border: 0px;
+}
 body #wrap {
   width: 650px;
   background: #fff;
