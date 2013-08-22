@@ -157,21 +157,24 @@ class Calendar
     zakonyMax: 1
     interpelaceMax: 1
     vystoupeniMax: 1
+    hlasovaniMax: 1
     $element: null
     onMonthSelected: null
 
-    ({@zakony, @interpelace, @vystoupeni}) ->
+    ({@zakony, @interpelace, @vystoupeni, @hlasovani}) ->
         @$element = $ "<div class='calendar'></div>"
         @createLegend!
         @createMonths!
         @populateZakony!
         @populateInterpelace!
         @populateVystoupeni!
+        @populateHlasovani!
         backgroundColor  = [255 255 255]
         colorDiffFunction = (color, index) -> backgroundColor[index] - color
         interpelaceDiff  = [127 201 127].map colorDiffFunction
         zakonyDiff       = [190 174 212].map colorDiffFunction
-        vystoupeniDiff   = [191 91 23].map colorDiffFunction
+        vystoupeniDiff   = [191  91  23].map colorDiffFunction
+        hlasovaniDiff    = [ 56 108 176].map colorDiffFunction
         d3.select @$element.0 .selectAll ".month"
             .data @months
             .enter!.append \div
@@ -182,19 +185,22 @@ class Calendar
                     escape "<strong>#{it.humanName} #{it.year}</strong><br />
                         Zákony:      <strong>#{it.zakony.length}</strong><br />
                         Interpelace: <strong>#{it.interpelace.length}</strong><br />
-                        Vystoupení:  <strong>#{it.vystoupeni.length}</strong>
+                        Vystoupení:  <strong>#{it.vystoupeni.length}</strong><br />
+                        Hlasování:  <strong>#{it.hlasovani.length}</strong>
                     "
                 ..append \div
                     ..style \background ~>
                         zakonyScore      = it.zakony.length      / @zakonyMax      * it.zakony.length      / it.totalEvents
                         vystoupeniScore  = it.vystoupeni.length  / @vystoupeniMax  * it.vystoupeni.length  / it.totalEvents
                         interpelaceScore = it.interpelace.length / @interpelaceMax * it.interpelace.length / it.totalEvents
+                        hlasovaniScore   = it.hlasovani.length   / @hlasovaniMax   * it.hlasovani.length   / it.totalEvents
                         totalScore = zakonyScore + vystoupeniScore + interpelaceScore
                         finalColor = backgroundColor.map (defaultLight, index) ->
                             color = defaultLight
                             color -= interpelaceDiff[index] * interpelaceScore
                             color -= zakonyDiff[index]      * zakonyScore
                             color -= vystoupeniDiff[index]  * vystoupeniScore
+                            color -= hlasovaniDiff[index]   * hlasovaniScore
                             Math.round color
                         "rgb(#{finalColor.join ','})"
                 ..on \click ~>
@@ -245,6 +251,13 @@ class Calendar
             len = @monthsAssoc[id]?vystoupeni.push projev
             @monthsAssoc[id]?totalEvents++
             if len > @vystoupeniMax then @vystoupeniMax = len
+    populateHlasovani: ->
+        @hlasovani.forEach (hlas) ~>
+            date = new Date hlas.datum * 1000
+            id = "#{date.getFullYear!}-#{date.getMonth!}"
+            len = @monthsAssoc[id]?hlasovani.push hlas
+            @monthsAssoc[id]?totalEvents++
+            if len > @hlasovaniMax then @hlasovaniMax = len
 
 
 class Month
@@ -255,4 +268,5 @@ class Month
         @zakony = []
         @interpelace = []
         @vystoupeni = []
+        @hlasovani = []
         @totalEvents = 1

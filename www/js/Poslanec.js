@@ -193,17 +193,19 @@
     prototype.zakonyMax = 1;
     prototype.interpelaceMax = 1;
     prototype.vystoupeniMax = 1;
+    prototype.hlasovaniMax = 1;
     prototype.$element = null;
     prototype.onMonthSelected = null;
     function Calendar(arg$){
-      var backgroundColor, colorDiffFunction, interpelaceDiff, zakonyDiff, vystoupeniDiff, x$, y$, this$ = this;
-      this.zakony = arg$.zakony, this.interpelace = arg$.interpelace, this.vystoupeni = arg$.vystoupeni;
+      var backgroundColor, colorDiffFunction, interpelaceDiff, zakonyDiff, vystoupeniDiff, hlasovaniDiff, x$, y$, this$ = this;
+      this.zakony = arg$.zakony, this.interpelace = arg$.interpelace, this.vystoupeni = arg$.vystoupeni, this.hlasovani = arg$.hlasovani;
       this.$element = $("<div class='calendar'></div>");
       this.createLegend();
       this.createMonths();
       this.populateZakony();
       this.populateInterpelace();
       this.populateVystoupeni();
+      this.populateHlasovani();
       backgroundColor = [255, 255, 255];
       colorDiffFunction = function(color, index){
         return backgroundColor[index] - color;
@@ -211,6 +213,7 @@
       interpelaceDiff = [127, 201, 127].map(colorDiffFunction);
       zakonyDiff = [190, 174, 212].map(colorDiffFunction);
       vystoupeniDiff = [191, 91, 23].map(colorDiffFunction);
+      hlasovaniDiff = [56, 108, 176].map(colorDiffFunction);
       x$ = d3.select(this.$element[0]).selectAll(".month").data(this.months).enter().append('div');
       x$.attr('class', 'month');
       x$.style('left', function(it){
@@ -220,14 +223,15 @@
         return (it.year - this$.firstYear) * monthHeight + "px";
       });
       x$.attr('data-tooltip', function(it){
-        return escape("<strong>" + it.humanName + " " + it.year + "</strong><br />Zákony:      <strong>" + it.zakony.length + "</strong><br />Interpelace: <strong>" + it.interpelace.length + "</strong><br />Vystoupení:  <strong>" + it.vystoupeni.length + "</strong>");
+        return escape("<strong>" + it.humanName + " " + it.year + "</strong><br />Zákony:      <strong>" + it.zakony.length + "</strong><br />Interpelace: <strong>" + it.interpelace.length + "</strong><br />Vystoupení:  <strong>" + it.vystoupeni.length + "</strong><br />Hlasování:  <strong>" + it.hlasovani.length + "</strong>");
       });
       y$ = x$.append('div');
       y$.style('background', function(it){
-        var zakonyScore, vystoupeniScore, interpelaceScore, totalScore, finalColor;
+        var zakonyScore, vystoupeniScore, interpelaceScore, hlasovaniScore, totalScore, finalColor;
         zakonyScore = it.zakony.length / this$.zakonyMax * it.zakony.length / it.totalEvents;
         vystoupeniScore = it.vystoupeni.length / this$.vystoupeniMax * it.vystoupeni.length / it.totalEvents;
         interpelaceScore = it.interpelace.length / this$.interpelaceMax * it.interpelace.length / it.totalEvents;
+        hlasovaniScore = it.hlasovani.length / this$.hlasovaniMax * it.hlasovani.length / it.totalEvents;
         totalScore = zakonyScore + vystoupeniScore + interpelaceScore;
         finalColor = backgroundColor.map(function(defaultLight, index){
           var color;
@@ -235,6 +239,7 @@
           color -= interpelaceDiff[index] * interpelaceScore;
           color -= zakonyDiff[index] * zakonyScore;
           color -= vystoupeniDiff[index] * vystoupeniScore;
+          color -= hlasovaniDiff[index] * hlasovaniScore;
           return Math.round(color);
         });
         return "rgb(" + finalColor.join(',') + ")";
@@ -319,6 +324,21 @@
         }
       });
     };
+    prototype.populateHlasovani = function(){
+      var this$ = this;
+      return this.hlasovani.forEach(function(hlas){
+        var date, id, len, ref$;
+        date = new Date(hlas.datum * 1000);
+        id = date.getFullYear() + "-" + date.getMonth();
+        len = (ref$ = this$.monthsAssoc[id]) != null ? ref$.hlasovani.push(hlas) : void 8;
+        if ((ref$ = this$.monthsAssoc[id]) != null) {
+          ref$.totalEvents++;
+        }
+        if (len > this$.hlasovaniMax) {
+          return this$.hlasovaniMax = len;
+        }
+      });
+    };
     return Calendar;
   }());
   Month = (function(){
@@ -333,6 +353,7 @@
       this.zakony = [];
       this.interpelace = [];
       this.vystoupeni = [];
+      this.hlasovani = [];
       this.totalEvents = 1;
     }
     return Month;
