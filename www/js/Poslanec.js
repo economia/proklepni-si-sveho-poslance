@@ -53,8 +53,8 @@
       var zakony, interpelace, vystoupeni, $element;
       zakony = arg$.zakony, interpelace = arg$.interpelace, vystoupeni = arg$.vystoupeni;
       $element = $("<div class='content'></div>");
-      if (interpelace) {
-        $element.append(this.displayInterpelace(interpelace));
+      if (vystoupeni) {
+        $element.append(this.displayVystoupeni(vystoupeni));
       }
       return $element;
     };
@@ -86,6 +86,21 @@
         }
         dateString = date.getDate() + " " + (date.getMonth() + 1) + " " + date.getFullYear();
         return $list.append("<li><span class='date'>" + dateString + ", </span><span class='target'>" + targetPoslanec + ": </span><span class='vec'>" + interpelaca.vec + "</span></li>");
+      });
+      return $element;
+    };
+    prototype.displayVystoupeni = function(vystoupeni){
+      var x$, $element, y$, $list;
+      x$ = $element = $("<div class='vystoupeni'></div>");
+      x$.append("<h3>Vystoupení</h3>");
+      x$.append("<em>Kliknutím přejdete na příslušný záznam stenoprotokolu</em>");
+      y$ = $list = $("<ul></ul>");
+      y$.appendTo($element);
+      vystoupeni.forEach(function(it){
+        var date, dateString;
+        date = new Date(it.datum * 1000);
+        dateString = date.getDate() + ". " + (date.getMonth() + 1) + ". " + date.getFullYear();
+        return $list.append("<li><a href='" + it.url + "' target='_blank'>" + dateString + "</a></li>");
       });
       return $element;
     };

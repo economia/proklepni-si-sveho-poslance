@@ -47,7 +47,8 @@ window.Poslanec = class Poslanec
     displayContent: ({zakony, interpelace, vystoupeni})->
         $element = $ "<div class='content'></div>"
         # if zakony then $element.append @displayZakony zakony
-        if interpelace then $element.append @displayInterpelace interpelace
+        # if interpelace then $element.append @displayInterpelace interpelace
+        if vystoupeni then $element.append @displayVystoupeni vystoupeni
         $element
 
     displayZakony: (zakony) ->
@@ -75,6 +76,17 @@ window.Poslanec = class Poslanec
                 <span class='target'>#targetPoslanec: </span>
                 <span class='vec'>#{interpelaca.vec}</span>
                 </li>"
+        $element
+    displayVystoupeni: (vystoupeni) ->
+        $element = $ "<div class='vystoupeni'></div>"
+            ..append "<h3>Vystoupení</h3>"
+            ..append "<em>Kliknutím přejdete na příslušný záznam stenoprotokolu</em>"
+        $list = $ "<ul></ul>"
+            ..appendTo $element
+        vystoupeni.forEach ->
+            date = new Date it.datum*1000
+            dateString = "#{date.getDate!}. #{date.getMonth! + 1}. #{date.getFullYear!}"
+            $list.append "<li><a href='#{it.url}' target='_blank'>#{dateString}</a></li>"
         $element
 
 
