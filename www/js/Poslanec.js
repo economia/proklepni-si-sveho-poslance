@@ -35,7 +35,7 @@
         console.log(data);
         x$ = new Calendar(data);
         x$.$element.appendTo(this$.$element);
-        return x$;
+        return this$.$element.append(this$.displayContent(data));
       });
     };
     prototype.loadData = function(cb){
@@ -47,6 +47,26 @@
         });
         return cb(null, data);
       });
+    };
+    prototype.displayContent = function(arg$){
+      var zakony, interpelace, vystoupeni, $element;
+      zakony = arg$.zakony, interpelace = arg$.interpelace, vystoupeni = arg$.vystoupeni;
+      $element = $("<div class='content'></div>");
+      if (zakony) {
+        $element.append(this.displayZakony(zakony));
+      }
+      return $element;
+    };
+    prototype.displayZakony = function(zakony){
+      var $element, x$, $list;
+      $element = $("<div class='zakony'></div>");
+      $element.append("<h3>Zákony</h3>");
+      x$ = $list = $("<ul></ul>");
+      x$.appendTo($element);
+      zakony.forEach(function(zakon){
+        return $list.append("<li>" + zakon.nazev + "</li>");
+      });
+      return $element;
     };
     return Poslanec;
   }());

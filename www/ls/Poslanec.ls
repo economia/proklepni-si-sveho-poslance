@@ -34,6 +34,7 @@ window.Poslanec = class Poslanec
         console.log data
         new Calendar data
             ..$element.appendTo @$element
+        @$element.append @displayContent data
 
     loadData: (cb) ->
         (err, data) <~ d3.json "./api.php?get=poslanci/#{@id}"
@@ -41,6 +42,20 @@ window.Poslanec = class Poslanec
             it.nazev = unescape it.nazev
             it
         cb null, data
+
+    displayContent: ({zakony, interpelace, vystoupeni})->
+        $element = $ "<div class='content'></div>"
+        if zakony then $element.append @displayZakony zakony
+        $element
+
+    displayZakony: (zakony) ->
+        $element = $ "<div class='zakony'></div>"
+        $element.append "<h3>Zákony</h3>"
+        $list = $ "<ul></ul>"
+            ..appendTo $element
+        zakony.forEach (zakon) ->
+            $list.append "<li>#{zakon.nazev}</li>"
+        $element
 
 monthWidth = 31
 monthHeight = 31

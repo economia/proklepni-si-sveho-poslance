@@ -198,6 +198,10 @@ body #wrap .poslanecDetail .backButton {
   -webkit-transform: rotate(180deg);
 }
 body #wrap .poslanecDetail {
+  height: 500px;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding-left: 20px;
 }
 body #wrap .poslanecDetail img {
