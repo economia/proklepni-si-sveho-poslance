@@ -57,11 +57,11 @@
       });
     };
     prototype.displayContentButtons = function(){
-      var $container, ref$, zakony, vystoupeni, interpelace, x$, y$, z$, this$ = this;
+      var $container, ref$, zakony, vystoupeni, interpelace, x$, y$, z$, z1$, this$ = this;
       $container = $("<div class='contentButtons'></div>");
       ref$ = this.data, zakony = ref$.zakony, vystoupeni = ref$.vystoupeni, interpelace = ref$.interpelace;
       x$ = $("<button class='vystoupeni'></button>");
-      x$.append("Všechna vystoupení");
+      x$.append("Vystoupení");
       x$.appendTo($container);
       x$.on('click', function(){
         return this$.displayContent({
@@ -82,6 +82,14 @@
       z$.on('click', function(){
         return this$.displayContent({
           zakony: zakony
+        });
+      });
+      z1$ = $("<button class='hlasovani'></button>");
+      z1$.append("Hlasování");
+      z1$.appendTo($container);
+      z1$.on('click', function(){
+        return this$.displayContent({
+          hlasovani: hlasovani
         });
       });
       return $container;

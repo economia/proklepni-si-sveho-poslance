@@ -391,14 +391,18 @@ body #wrap .poslanecDetail .contentButtons button {
   margin: 0px;
 }
 body #wrap .poslanecDetail .contentButtons button.vystoupeni {
-  width: 150px;
+  width: 87px;
 }
 body #wrap .poslanecDetail .contentButtons button.interpelace {
-  margin: 0px 26px;
-  width: 95px;
+  margin: 0px 20px;
+  width: 85px;
 }
 body #wrap .poslanecDetail .contentButtons button.zakony {
-  width: 76px;
+  width: 64px;
+}
+body #wrap .poslanecDetail .contentButtons button.hlasovani {
+  width: 77px;
+  margin-left: 20px;
 }
 body #wrap .poslanecDetail .contentButtons button:hover {
   cursor: pointer;

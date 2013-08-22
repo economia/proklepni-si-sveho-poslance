@@ -25,3 +25,7 @@ poslanecList = new PoslanecList do
     \.leftPart
     poslanci
     sorterFilter
+
+poslanci
+    .filter -> it.id==252
+    .pop!.onSelect!

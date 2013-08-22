@@ -55,7 +55,7 @@ window.Poslanec = class Poslanec
         $container = $ "<div class='contentButtons'></div>"
         {zakony, vystoupeni, interpelace} = @data
         $ "<button class='vystoupeni'></button>"
-            ..append "Všechna vystoupení"
+            ..append "Vystoupení"
             ..appendTo $container
             ..on \click ~> @displayContent {vystoupeni}
         $ "<button class='interpelace'></button>"
@@ -66,6 +66,10 @@ window.Poslanec = class Poslanec
             ..append "Zákony"
             ..appendTo $container
             ..on \click ~> @displayContent {zakony}
+        $ "<button class='hlasovani'></button>"
+            ..append "Hlasování"
+            ..appendTo $container
+            ..on \click ~> @displayContent {hlasovani}
 
         $container
 
