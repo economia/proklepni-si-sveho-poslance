@@ -21,14 +21,18 @@
       return this.jmeno + " " + this.prijmeni;
     };
     prototype.onSelect = function(){
-      var x$, $backButton, $header, this$ = this;
+      var x$, $backButton, supplemental, $header, this$ = this;
       this.$wrap.addClass('poslanecSelected');
       x$ = $backButton = $("<a href='#' class='backButton'></a>");
       x$.append("<img src='img/back.png' />");
       x$.on('click', function(){
         return this$.$wrap.removeClass('poslanecSelected');
       });
-      this.$parent.html("<div class='poslanecDetail party-" + this.strana.zkratka + "'><div class='header'><h2>" + this.titul_pred + " " + this.jmeno + " " + this.prijmeni + " " + this.titul_za + "</h2><h3 class='party'>" + this.strana.plny + "</h3><img class='foto' src='img/poslanci/" + this.id + ".jpg' /><span class='loading'>Prosím strpení, načíají se data...</span></div></div>");
+      supplemental = '';
+      if (this.preferencni) {
+        supplemental += "Zvolen(a) preferenčními hlasy";
+      }
+      this.$parent.html("<div class='poslanecDetail party-" + this.strana.zkratka + "'><div class='header'><h2>" + this.titul_pred + " " + this.jmeno + " " + this.prijmeni + " " + this.titul_za + "</h2><h3 class='party'>" + this.strana.plny + " / " + this.kraj.plny + "</h3><h4 class='supplemental'>" + supplemental + "</h4><img class='foto' src='img/poslanci/" + this.id + ".jpg' /><span class='loading'>Prosím strpení, načíají se data...</span></div></div>");
       this.$element = this.$parent.find(".poslanecDetail");
       $header = this.$element.find(".header");
       $backButton.prependTo($header);

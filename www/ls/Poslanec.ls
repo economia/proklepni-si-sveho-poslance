@@ -21,11 +21,16 @@ window.Poslanec = class Poslanec
         $backButton = $ "<a href='#' class='backButton'></a>"
             ..append "<img src='img/back.png' />"
             ..on \click ~> @$wrap.removeClass 'poslanecSelected'
+        supplemental = ''
+        if @preferencni
+            supplemental += "Zvolen(a) preferenčními hlasy"
+
         @$parent.html "
             <div class='poslanecDetail party-#{@strana.zkratka}'>
                 <div class='header'>
                     <h2>#{@titul_pred} #{@jmeno} #{@prijmeni} #{@titul_za}</h2>
-                    <h3 class='party'>#{@strana.plny}</h3>
+                    <h3 class='party'>#{@strana.plny} / #{@kraj.plny}</h3>
+                    <h4 class='supplemental'>#supplemental</h4>
                     <img class='foto' src='img/poslanci/#{@id}.jpg' />
                     <span class='loading'>Prosím strpení, načíají se data...</span>
                 </div>

@@ -249,7 +249,8 @@ body #wrap .poslanecDetail .header a.backButton img {
   left: -2px;
 }
 body #wrap .poslanecDetail .header h2,
-body #wrap .poslanecDetail .header h3.party {
+body #wrap .poslanecDetail .header h3.party,
+body #wrap .poslanecDetail .header h4.supplemental {
   margin-left: 60px;
 }
 body #wrap .poslanecDetail .header h2 {
@@ -261,7 +262,14 @@ body #wrap .poslanecDetail .header h3.party {
   font-size: 1em;
   font-weight: normal;
   color: #777;
+  margin-bottom: 0px;
+}
+body #wrap .poslanecDetail .header h4.supplemental {
+  font-size: 0.9em;
+  color: #777;
   font-style: italic;
+  font-weight: normal;
+  margin-top: 4px;
 }
 body #wrap .poslanecDetail .header em.calendarLegend {
   font-size: 0.9em;

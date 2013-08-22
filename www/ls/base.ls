@@ -6,7 +6,7 @@ window.poslanciAssoc        = {}
 window.Strana = class Strana
     ({@nazev, @plny, @zkratka}) ->
 window.Kraj = class Kraj
-    ({@id, @nazev}) ->
+    ({@id, @nazev, @plny}) ->
 
 
 (err, data) <~ d3.json "./api.php?get=poslanci"
