@@ -79,13 +79,13 @@ function get_poslanec($id) {
 }
 
 function get_poslanec_tisky($id) {
-    $result = mysql_query("SELECT tisky.id, tisky.cislo_tisku, tisky.cislo_za, tisky.predlozeno, tisky.nazev
+    $result = mysql_query("SELECT tisky.id, tisky.cislo_tisku, tisky.cislo_za, tisky.predlozeno AS datum, tisky.nazev
         FROM tisky JOIN predkladatele ON (tisky.id=predkladatele.tisk_id)
         WHERE predkladatele.osoba_id=$id AND predlozeno>1275350400");
     $r = array();
     while($row = mysql_fetch_assoc($result)) {
         $row['id'] = (int)$row['id'];
-        $row['predlozeno'] = (int)$row['predlozeno'];
+        $row['datum'] = (int)$row['datum'];
         $r[] = $row;
     }
     return $r;

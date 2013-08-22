@@ -34,6 +34,7 @@ window.Poslanec = class Poslanec
         @$parent.find ".loading" .remove!
         new Calendar @data
             ..$element.appendTo @$element
+            ..onMonthSelected = @~displayMonth
         @$element.append @displayContentButtons!
         @$contentElement = $ "<div class='content'></div>"
             ..appendTo @$element
@@ -60,11 +61,14 @@ window.Poslanec = class Poslanec
 
         $container
 
+    displayMonth: (month) ->
+        @displayContent month
+
     displayContent: ({zakony, interpelace, vystoupeni})->
         @$contentElement.empty!
-        if zakony then @$contentElement.append @displayZakony zakony
-        if interpelace then @$contentElement.append @displayInterpelace interpelace
-        if vystoupeni then @$contentElement.append @displayVystoupeni vystoupeni
+        if zakony?length then @$contentElement.append @displayZakony zakony
+        if interpelace?length then @$contentElement.append @displayInterpelace interpelace
+        if vystoupeni?length then @$contentElement.append @displayVystoupeni vystoupeni
 
     displayZakony: (zakony) ->
         $element = $ "<div class='zakony'></div>"
@@ -117,6 +121,7 @@ class Calendar
     interpelaceMax: 1
     vystoupeniMax: 1
     $element: null
+    onMonthSelected: null
 
     ({@zakony, @interpelace, @vystoupeni}) ->
         @$element = $ "<div class='calendar'></div>"
@@ -154,6 +159,8 @@ class Calendar
                             color -= vystoupeniDiff[index]  * vystoupeniScore
                             Math.round color
                         "rgb(#{finalColor.join ','})"
+                ..on \click ~>
+                    @onMonthSelected? it
 
     createMonths: ->
         @months = []
@@ -174,7 +181,7 @@ class Calendar
 
     populateZakony: ->
         @zakony.forEach (zakon) ~>
-            date = new Date zakon.predlozeno * 1000
+            date = new Date zakon.datum * 1000
             id = "#{date.getFullYear!}-#{date.getMonth!}"
             len = @monthsAssoc[id]?zakony.push zakon
             @monthsAssoc[id]?totalEvents++

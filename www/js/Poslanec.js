@@ -36,6 +36,7 @@
         this$.$parent.find(".loading").remove();
         x$ = new Calendar(this$.data);
         x$.$element.appendTo(this$.$element);
+        x$.onMonthSelected = bind$(this$, 'displayMonth');
         this$.$element.append(this$.displayContentButtons());
         y$ = this$.$contentElement = $("<div class='content'></div>");
         y$.appendTo(this$.$element);
@@ -79,17 +80,20 @@
       });
       return $container;
     };
+    prototype.displayMonth = function(month){
+      return this.displayContent(month);
+    };
     prototype.displayContent = function(arg$){
       var zakony, interpelace, vystoupeni;
       zakony = arg$.zakony, interpelace = arg$.interpelace, vystoupeni = arg$.vystoupeni;
       this.$contentElement.empty();
-      if (zakony) {
+      if (zakony != null && zakony.length) {
         this.$contentElement.append(this.displayZakony(zakony));
       }
-      if (interpelace) {
+      if (interpelace != null && interpelace.length) {
         this.$contentElement.append(this.displayInterpelace(interpelace));
       }
-      if (vystoupeni) {
+      if (vystoupeni != null && vystoupeni.length) {
         return this.$contentElement.append(this.displayVystoupeni(vystoupeni));
       }
     };
@@ -154,6 +158,7 @@
     prototype.interpelaceMax = 1;
     prototype.vystoupeniMax = 1;
     prototype.$element = null;
+    prototype.onMonthSelected = null;
     function Calendar(arg$){
       var backgroundColor, colorDiffFunction, interpelaceDiff, zakonyDiff, vystoupeniDiff, x$, y$, this$ = this;
       this.zakony = arg$.zakony, this.interpelace = arg$.interpelace, this.vystoupeni = arg$.vystoupeni;
@@ -197,6 +202,9 @@
         });
         return "rgb(" + finalColor.join(',') + ")";
       });
+      x$.on('click', function(it){
+        return typeof this$.onMonthSelected === 'function' ? this$.onMonthSelected(it) : void 8;
+      });
     }
     prototype.createMonths = function(){
       var currentYear, currentMonth, currentDate, month, results$ = [];
@@ -224,7 +232,7 @@
       var this$ = this;
       return this.zakony.forEach(function(zakon){
         var date, id, len, ref$;
-        date = new Date(zakon.predlozeno * 1000);
+        date = new Date(zakon.datum * 1000);
         id = date.getFullYear() + "-" + date.getMonth();
         len = (ref$ = this$.monthsAssoc[id]) != null ? ref$.zakony.push(zakon) : void 8;
         if ((ref$ = this$.monthsAssoc[id]) != null) {
@@ -283,4 +291,7 @@
     }
     return Month;
   }());
+  function bind$(obj, key, target){
+    return function(){ return (target || obj)[key].apply(obj, arguments) };
+  }
 }).call(this);
