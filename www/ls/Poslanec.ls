@@ -57,6 +57,11 @@ class Calendar
         @populateZakony!
         @populateInterpelace!
         @populateVystoupeni!
+        backgroundColor  = [255 255 255]
+        colorDiffFunction = (color, index) -> backgroundColor[index] - color
+        interpelaceDiff  = [127 201 127].map colorDiffFunction
+        zakonyDiff       = [190 174 212].map colorDiffFunction
+        vystoupeniDiff   = [191 91 23].map colorDiffFunction
         d3.select @$element.0 .selectAll ".month"
             .data @months
             .enter!.append \div
@@ -71,13 +76,18 @@ class Calendar
                     "
                 ..append \div
                     ..attr \class \zakony
-                    ..style \opacity ~> it.zakony.length / @zakonyMax * it.zakony.length / it.totalEvents
-                ..append \div
-                    ..attr \class \interpelace
-                    ..style \opacity ~> it.interpelace.length / @interpelaceMax * it.interpelace.length / it.totalEvents
-                ..append \div
-                    ..attr \class \vystoupeni
-                    ..style \opacity ~> it.vystoupeni.length / @vystoupeniMax * it.vystoupeni.length / it.totalEvents
+                    ..style \background ~>
+                        zakonyScore      = it.zakony.length      / @zakonyMax      * it.zakony.length      / it.totalEvents
+                        vystoupeniScore  = it.vystoupeni.length  / @vystoupeniMax  * it.vystoupeni.length  / it.totalEvents
+                        interpelaceScore = it.interpelace.length / @interpelaceMax * it.interpelace.length / it.totalEvents
+                        totalScore = zakonyScore + vystoupeniScore + interpelaceScore
+                        finalColor = backgroundColor.map (defaultLight, index) ->
+                            color = defaultLight
+                            color -= interpelaceDiff[index] * interpelaceScore
+                            color -= zakonyDiff[index]      * zakonyScore
+                            color -= vystoupeniDiff[index]  * vystoupeniScore
+                            Math.round color
+                        "rgb(#{finalColor.join ','})"
 
     createMonths: ->
         @months = []

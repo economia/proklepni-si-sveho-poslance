@@ -58,13 +58,20 @@
     prototype.vystoupeniMax = 1;
     prototype.$element = null;
     function Calendar(arg$){
-      var x$, y$, z$, z1$, this$ = this;
+      var backgroundColor, colorDiffFunction, interpelaceDiff, zakonyDiff, vystoupeniDiff, x$, y$, this$ = this;
       this.zakony = arg$.zakony, this.interpelace = arg$.interpelace, this.vystoupeni = arg$.vystoupeni;
       this.$element = $("<div class='calendar'></div>");
       this.createMonths();
       this.populateZakony();
       this.populateInterpelace();
       this.populateVystoupeni();
+      backgroundColor = [255, 255, 255];
+      colorDiffFunction = function(color, index){
+        return backgroundColor[index] - color;
+      };
+      interpelaceDiff = [127, 201, 127].map(colorDiffFunction);
+      zakonyDiff = [190, 174, 212].map(colorDiffFunction);
+      vystoupeniDiff = [191, 91, 23].map(colorDiffFunction);
       x$ = d3.select(this.$element[0]).selectAll(".month").data(this.months).enter().append('div');
       x$.attr('class', 'month');
       x$.style('left', function(it){
@@ -78,18 +85,21 @@
       });
       y$ = x$.append('div');
       y$.attr('class', 'zakony');
-      y$.style('opacity', function(it){
-        return it.zakony.length / this$.zakonyMax * it.zakony.length / it.totalEvents;
-      });
-      z$ = x$.append('div');
-      z$.attr('class', 'interpelace');
-      z$.style('opacity', function(it){
-        return it.interpelace.length / this$.interpelaceMax * it.interpelace.length / it.totalEvents;
-      });
-      z1$ = x$.append('div');
-      z1$.attr('class', 'vystoupeni');
-      z1$.style('opacity', function(it){
-        return it.vystoupeni.length / this$.vystoupeniMax * it.vystoupeni.length / it.totalEvents;
+      y$.style('background', function(it){
+        var zakonyScore, vystoupeniScore, interpelaceScore, totalScore, finalColor;
+        zakonyScore = it.zakony.length / this$.zakonyMax * it.zakony.length / it.totalEvents;
+        vystoupeniScore = it.vystoupeni.length / this$.vystoupeniMax * it.vystoupeni.length / it.totalEvents;
+        interpelaceScore = it.interpelace.length / this$.interpelaceMax * it.interpelace.length / it.totalEvents;
+        totalScore = zakonyScore + vystoupeniScore + interpelaceScore;
+        finalColor = backgroundColor.map(function(defaultLight, index){
+          var color;
+          color = defaultLight;
+          color -= interpelaceDiff[index] * interpelaceScore;
+          color -= zakonyDiff[index] * zakonyScore;
+          color -= vystoupeniDiff[index] * vystoupeniScore;
+          return Math.round(color);
+        });
+        return "rgb(" + finalColor.join(',') + ")";
       });
     }
     prototype.createMonths = function(){
