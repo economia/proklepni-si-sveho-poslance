@@ -391,54 +391,57 @@ body #wrap .poslanecDetail .contentButtons button {
   margin: 0px;
 }
 body #wrap .poslanecDetail .contentButtons button.vystoupeni {
+  background: #e6772c;
   width: 87px;
 }
+body #wrap .poslanecDetail .contentButtons button.vystoupeni:hover {
+  background: #ab5114;
+  color: #fff;
+}
+body #wrap .poslanecDetail .contentButtons button.vystoupeni:active {
+  background: #7a3a0f;
+  color: #fff;
+}
 body #wrap .poslanecDetail .contentButtons button.interpelace {
+  background: #7fc97f;
   margin: 0px 20px;
   width: 85px;
 }
+body #wrap .poslanecDetail .contentButtons button.interpelace:hover {
+  background: #44a144;
+  color: #fff;
+}
+body #wrap .poslanecDetail .contentButtons button.interpelace:active {
+  background: #317331;
+  color: #fff;
+}
 body #wrap .poslanecDetail .contentButtons button.zakony {
+  background: #beaed4;
   width: 64px;
 }
+body #wrap .poslanecDetail .contentButtons button.zakony:hover {
+  background: #8162ac;
+  color: #fff;
+}
+body #wrap .poslanecDetail .contentButtons button.zakony:active {
+  background: #5c437e;
+  color: #fff;
+}
 body #wrap .poslanecDetail .contentButtons button.hlasovani {
+  background: #80a6d7;
   width: 77px;
   margin-left: 20px;
 }
+body #wrap .poslanecDetail .contentButtons button.hlasovani:hover {
+  background: #3a70b7;
+  color: #fff;
+}
+body #wrap .poslanecDetail .contentButtons button.hlasovani:active {
+  background: #295082;
+  color: #fff;
+}
 body #wrap .poslanecDetail .contentButtons button:hover {
   cursor: pointer;
-}
-body #wrap .poslanecDetail.party-cssd button {
-  background: #f29400;
-}
-body #wrap .poslanecDetail.party-cssd button:hover {
-  background: #c27600;
-  color: #fff;
-}
-body #wrap .poslanecDetail.party-top button {
-  background: #7c0042;
-  color: #fff;
-}
-body #wrap .poslanecDetail.party-top button:hover {
-  background: #4a0028;
-}
-body #wrap .poslanecDetail.party-kscm button {
-  background: #e3001a;
-  color: #fff;
-}
-body #wrap .poslanecDetail.party-kscm button:hover {
-  background: #9f0012;
-}
-body #wrap .poslanecDetail.party-vv button {
-  background: #a9def5;
-}
-body #wrap .poslanecDetail.party-vv button:hover {
-  background: #5fc2ec;
-}
-body #wrap .poslanecDetail.party-ods button {
-  background: #17a1ff;
-}
-body #wrap .poslanecDetail.party-ods button:hover {
-  background: #0084de;
 }
 body .chosen-container-single .chosen-single {
   background-color: #fff;
