@@ -22,20 +22,24 @@ window.Poslanec = class Poslanec
             ..on \click ~> @$wrap.removeClass 'poslanecSelected'
         @$parent.html "
             <div class='poslanecDetail party-#{@strana.zkratka}'>
-                <h2>#{@titul_pred} #{@jmeno} #{@prijmeni} #{@titul_za}</h2>
-                <h3 class='party'>#{@strana.plny}</h3>
-                <img class='foto' src='img/poslanci/#{@id}.jpg' />
-                <span class='loading'>Prosím strpení, načíají se data...</span>
+                <div class='header'>
+                    <h2>#{@titul_pred} #{@jmeno} #{@prijmeni} #{@titul_za}</h2>
+                    <h3 class='party'>#{@strana.plny}</h3>
+                    <img class='foto' src='img/poslanci/#{@id}.jpg' />
+                    <span class='loading'>Prosím strpení, načíají se data...</span>
+                </div>
             </div>
         "
         @$element = @$parent.find ".poslanecDetail"
-        $backButton.prependTo @$element
+        $header = @$element.find ".header"
+        $backButton.prependTo $header
         (err, @data) <~ @loadData
         @$parent.find ".loading" .remove!
         new Calendar @data
-            ..$element.appendTo @$element
+            ..$element.appendTo $header
             ..onMonthSelected = @~displayMonth
-        @$element.append @displayContentButtons!
+        $header.append "<em class='calendarLegend'>Každé políčko grafiky představuje jeden měsíc, každý řádek rok. Čím sytější barva, tím byl poslanec daný měsíc aktivnější.</em>"
+        $header.append @displayContentButtons!
         @$contentElement = $ "<div class='content'></div>"
             ..appendTo @$element
 

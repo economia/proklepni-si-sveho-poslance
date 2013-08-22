@@ -21,23 +21,25 @@
       return this.jmeno + " " + this.prijmeni;
     };
     prototype.onSelect = function(){
-      var x$, $backButton, this$ = this;
+      var x$, $backButton, $header, this$ = this;
       this.$wrap.addClass('poslanecSelected');
       x$ = $backButton = $("<a href='#' class='backButton'><img src='img/back.png' /></a>");
       x$.on('click', function(){
         return this$.$wrap.removeClass('poslanecSelected');
       });
-      this.$parent.html("<div class='poslanecDetail party-" + this.strana.zkratka + "'><h2>" + this.titul_pred + " " + this.jmeno + " " + this.prijmeni + " " + this.titul_za + "</h2><h3 class='party'>" + this.strana.plny + "</h3><img class='foto' src='img/poslanci/" + this.id + ".jpg' /><span class='loading'>Prosím strpení, načíají se data...</span></div>");
+      this.$parent.html("<div class='poslanecDetail party-" + this.strana.zkratka + "'><div class='header'><h2>" + this.titul_pred + " " + this.jmeno + " " + this.prijmeni + " " + this.titul_za + "</h2><h3 class='party'>" + this.strana.plny + "</h3><img class='foto' src='img/poslanci/" + this.id + ".jpg' /><span class='loading'>Prosím strpení, načíají se data...</span></div></div>");
       this.$element = this.$parent.find(".poslanecDetail");
-      $backButton.prependTo(this.$element);
+      $header = this.$element.find(".header");
+      $backButton.prependTo($header);
       return this.loadData(function(err, data){
         var x$, y$;
         this$.data = data;
         this$.$parent.find(".loading").remove();
         x$ = new Calendar(this$.data);
-        x$.$element.appendTo(this$.$element);
+        x$.$element.appendTo($header);
         x$.onMonthSelected = bind$(this$, 'displayMonth');
-        this$.$element.append(this$.displayContentButtons());
+        $header.append("<em class='calendarLegend'>Každé políčko grafiky představuje jeden měsíc, každý řádek rok. Čím sytější barva, tím byl poslanec daný měsíc aktivnější.</em>");
+        $header.append(this$.displayContentButtons());
         y$ = this$.$contentElement = $("<div class='content'></div>");
         y$.appendTo(this$.$element);
         return y$;

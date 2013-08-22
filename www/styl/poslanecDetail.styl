@@ -1,89 +1,99 @@
 &
     position relative
     padding-left 20px
-    img.foto
-        float right
-        margin-top 15px
-    a.backButton
-        position absolute
-        top 4px
-        left @padding-left
-        display block
-        width 38px
-        height 38px
-        border 2px solid #1d1d1d
-        border-radius 50%
-        background white
-        &:hover
-            background #eee
-        img
-            position absolute
-            top -2px
-            left -2px
-    h2
-    h3.party
-        margin-left 60px
-    h2
-        margin-top 10px
-        margin-bottom 0px
-    h3.party
-        margin-top 0px
-        font-size 1em
-        font-weight normal
-        color #777
-        font-style italic
-
-    div.calendar
-        margin-top 31px
-        width 380px
-        height 125px
+    .header
+        float left
+        width 100%
         margin-bottom 20px
         position relative
-        .month
+        img.foto
+            float right
+            margin-top 15px
+        a.backButton
             position absolute
-            width 30px
-            height 30px
-            border 1px solid #ddd
-            z-index 1
+            top 14px
+            left 0px
+            display block
+            width 38px
+            height 38px
+            border 2px solid #1d1d1d
+            border-radius 50%
+            background white
             &:hover
-                z-index 2
-                border 2px solid #666
-                cursor pointer
-            > div
-                width @width
-                height @height
+                background #eee
+            img
                 position absolute
-                top 0px
-                left 0px
-                background red
-        .yearLegend
-            position absolute
-            padding-top 7px
+                top -2px
+                left -2px
+        h2
+        h3.party
+            margin-left 60px
+        h2
+            margin-top 10px
+            margin-bottom 0px
+        h3.party
+            margin-top 0px
+            font-size 1em
+            font-weight normal
+            color #777
             font-style italic
-            background #f4f4f4
-            font-size 0.95em
-            height (30px - @padding-top)
-            &.y-0
-                text-align right
-                padding-right 10px
-                width (154px - @padding-right)
-                top 0px
-                left 0px
-            &.y-1
-                text-align left
-                padding-left 10px
-                padding-top 6px
-                height (30px - @padding-top)
-                width (123px - @padding-left)
-                bottom 0px
-                right 7px
-        .monthLegend
-            float left
-            width 31px
+        em.calendarLegend
+            font-size 0.9em
+            width 380px
+            display block
+            margin-bottom 20px
+
+        div.calendar
+            margin-top 31px
+            width 380px
+            height 125px
+            margin-bottom 10px
             position relative
-            top -17px
-            text-align center
-            font-size 0.7em
+            .month
+                position absolute
+                width 30px
+                height 30px
+                border 1px solid #ddd
+                z-index 1
+                &:hover
+                    z-index 2
+                    border 2px solid #666
+                    cursor pointer
+                > div
+                    width @width
+                    height @height
+                    position absolute
+                    top 0px
+                    left 0px
+                    background red
+            .yearLegend
+                position absolute
+                padding-top 7px
+                font-style italic
+                background #f4f4f4
+                font-size 0.95em
+                height (30px - @padding-top)
+                &.y-0
+                    text-align right
+                    padding-right 10px
+                    width (154px - @padding-right)
+                    top 0px
+                    left 0px
+                &.y-1
+                    text-align left
+                    padding-left 10px
+                    padding-top 6px
+                    height (30px - @padding-top)
+                    width (123px - @padding-left)
+                    bottom 0px
+                    right 7px
+            .monthLegend
+                float left
+                width 31px
+                position relative
+                top -17px
+                text-align center
+                font-size 0.7em
 
 
 
@@ -129,6 +139,8 @@
                     float left
 
     .contentButtons
+        position absolute
+        bottom 0px
         button
             font-family arial, sans-serif
             font-size 0.8em
