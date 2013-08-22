@@ -379,6 +379,7 @@ body #wrap .poslanecDetail div.content .vystoupeni li a {
   float: left;
 }
 body #wrap .poslanecDetail div.content .hlasovani {
+  margin-top: 15px;
   float: left;
   width: 100%;
 }
