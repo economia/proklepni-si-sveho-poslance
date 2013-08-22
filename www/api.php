@@ -74,7 +74,8 @@ function get_poslanec($id) {
     return array(
         'zakony'      => get_poslanec_tisky($id),
         'interpelace' => get_poslanec_interpelace($id),
-        'vystoupeni'  => get_poslanec_vystoupeni($id)
+        'vystoupeni'  => get_poslanec_vystoupeni($id),
+        'hlasovani' => get_poslanec_hlasovani($id)
     );
 }
 
@@ -105,6 +106,18 @@ function get_poslanec_interpelace($id) {
 }
 function get_poslanec_vystoupeni($id) {
     $result = mysql_query("SELECT datum, url FROM poslanci_vystoupeni WHERE poslanec_id=$id");
+    $r = array();
+    while($row = mysql_fetch_assoc($result)) {
+        $row['datum'] = (int)$row['datum'];
+        $r[] = $row;
+    }
+    return $r;
+}
+function get_poslanec_hlasovani($id) {
+    $result = mysql_query("SELECT DISTINCT hlasovani.nazev, hlasovani.datum, hlasovani_poslanec.vysledek FROM hlasovani
+        JOIN hlasovani_poslanec ON (hlasovani.id=hlasovani_poslanec.hlasovani_id)
+        JOIN poslanci_hlas_pseudoid ON (poslanci_hlas_pseudoid.poslanec_hlas_id = hlasovani_poslanec.poslanec_id)
+        WHERE hlasovani.bod>0 AND poslanci_hlas_pseudoid.poslanec_id=$id AND datum>0");
     $r = array();
     while($row = mysql_fetch_assoc($result)) {
         $row['datum'] = (int)$row['datum'];
