@@ -83,14 +83,19 @@ window.Poslanec = class Poslanec
 
     displayContent: ({zakony, interpelace, vystoupeni})->
         @$contentElement.empty!
-        if zakony?length then @$contentElement.append @displayZakony zakony
-        if interpelace?length then @$contentElement.append @displayInterpelace interpelace
-        if vystoupeni?length then @$contentElement.append @displayVystoupeni vystoupeni
+        if zakony then @$contentElement.append @displayZakony zakony
+        if interpelace then @$contentElement.append @displayInterpelace interpelace
+        if vystoupeni then @$contentElement.append @displayVystoupeni vystoupeni
 
     displayZakony: (zakony) ->
+        emText = if zakony.length
+            "Kliknutím přejdete na detail zákona na webu Poslanecké sněmovny"
+        else
+            "Poslanec v daném období žádný zákon nepředložil"
         $element = $ "<div class='zakony'></div>"
             ..html "<h3>Zákony</h3>
-                    <em>Kliknutím přejdete na detail zákona na webu Poslanecké sněmovny</em>"
+                    <em>#emText</em>"
+        return $element unless zakony.length
         $list = $ "<ul></ul>"
             ..appendTo $element
         zakony.forEach (zakon) ->
@@ -100,9 +105,14 @@ window.Poslanec = class Poslanec
         $element
 
     displayInterpelace: (interpelace) ->
+        emText = if interpelace.length
+            "Kdy, koho a na jaké téma interpeloval"
+        else
+            "Poslanec v daném období nikoho neinterpeloval"
         $element = $ "<div class='interpelace'></div>"
             ..html "<h3>Interpelace</h3>
-                    <em>Kdy, koho a na jaké téma interpeloval</em>"
+                    <em>#emText</em>"
+        return $element unless interpelace.length
         $list = $ "<ul></ul>"
             ..appendTo $element
         interpelace.forEach (interpelaca) ->
@@ -117,9 +127,14 @@ window.Poslanec = class Poslanec
                 ..appendTo $list
         $element
     displayVystoupeni: (vystoupeni) ->
+        emText = if vystoupeni.length
+            "Kliknutím přejdete na příslušný záznam stenoprotokolu"
+        else
+            "Poslanec v daném období neměl žádné projevy"
         $element = $ "<div class='vystoupeni'></div>"
             ..html "<h3>Vystoupení</h3>
-                    <em>Kliknutím přejdete na příslušný záznam stenoprotokolu</em>"
+                    <em>#emText</em>"
+        return $element unless vystoupeni.length
         $list = $ "<ul></ul>"
             ..appendTo $element
         vystoupeni.forEach ->

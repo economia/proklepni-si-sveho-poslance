@@ -104,20 +104,24 @@
       var zakony, interpelace, vystoupeni;
       zakony = arg$.zakony, interpelace = arg$.interpelace, vystoupeni = arg$.vystoupeni;
       this.$contentElement.empty();
-      if (zakony != null && zakony.length) {
+      if (zakony) {
         this.$contentElement.append(this.displayZakony(zakony));
       }
-      if (interpelace != null && interpelace.length) {
+      if (interpelace) {
         this.$contentElement.append(this.displayInterpelace(interpelace));
       }
-      if (vystoupeni != null && vystoupeni.length) {
+      if (vystoupeni) {
         return this.$contentElement.append(this.displayVystoupeni(vystoupeni));
       }
     };
     prototype.displayZakony = function(zakony){
-      var x$, $element, y$, $list;
+      var emText, x$, $element, y$, $list;
+      emText = zakony.length ? "Kliknutím přejdete na detail zákona na webu Poslanecké sněmovny" : "Poslanec v daném období žádný zákon nepředložil";
       x$ = $element = $("<div class='zakony'></div>");
-      x$.html("<h3>Zákony</h3><em>Kliknutím přejdete na detail zákona na webu Poslanecké sněmovny</em>");
+      x$.html("<h3>Zákony</h3><em>" + emText + "</em>");
+      if (!zakony.length) {
+        return $element;
+      }
       y$ = $list = $("<ul></ul>");
       y$.appendTo($element);
       zakony.forEach(function(zakon){
@@ -130,9 +134,13 @@
       return $element;
     };
     prototype.displayInterpelace = function(interpelace){
-      var x$, $element, y$, $list;
+      var emText, x$, $element, y$, $list;
+      emText = interpelace.length ? "Kdy, koho a na jaké téma interpeloval" : "Poslanec v daném období nikoho neinterpeloval";
       x$ = $element = $("<div class='interpelace'></div>");
-      x$.html("<h3>Interpelace</h3><em>Kdy, koho a na jaké téma interpeloval</em>");
+      x$.html("<h3>Interpelace</h3><em>" + emText + "</em>");
+      if (!interpelace.length) {
+        return $element;
+      }
       y$ = $list = $("<ul></ul>");
       y$.appendTo($element);
       interpelace.forEach(function(interpelaca){
@@ -151,9 +159,13 @@
       return $element;
     };
     prototype.displayVystoupeni = function(vystoupeni){
-      var x$, $element, y$, $list;
+      var emText, x$, $element, y$, $list;
+      emText = vystoupeni.length ? "Kliknutím přejdete na příslušný záznam stenoprotokolu" : "Poslanec v daném období neměl žádné projevy";
       x$ = $element = $("<div class='vystoupeni'></div>");
-      x$.html("<h3>Vystoupení</h3><em>Kliknutím přejdete na příslušný záznam stenoprotokolu</em>");
+      x$.html("<h3>Vystoupení</h3><em>" + emText + "</em>");
+      if (!vystoupeni.length) {
+        return $element;
+      }
       y$ = $list = $("<ul></ul>");
       y$.appendTo($element);
       vystoupeni.forEach(function(it){
