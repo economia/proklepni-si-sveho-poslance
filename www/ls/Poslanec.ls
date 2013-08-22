@@ -69,10 +69,10 @@ class Calendar
                 ..style \left -> "#{it.month * monthWidth}px"
                 ..style \top ~> "#{(it.year - @firstYear) * monthHeight}px"
                 ..attr \data-tooltip ~>
-                    escape "
-                        zakony: #{it.zakony.length}<br />
-                        interpelace: #{it.interpelace.length}<br />
-                        vystoupeni: #{it.vystoupeni.length}
+                    escape "<strong>#{it.humanName} #{it.year}</strong><br />
+                        Zákony:      <strong>#{it.zakony.length}</strong><br />
+                        Interpelace: <strong>#{it.interpelace.length}</strong><br />
+                        Vystoupení:  <strong>#{it.vystoupeni.length}</strong>
                     "
                 ..append \div
                     ..attr \class \zakony
@@ -132,8 +132,10 @@ class Calendar
 
 
 class Month
+    humanNames: <[Leden Únor Březen Duben Květen Červen Červenec Srpen Září Říjen Listopad Prosinec]>
     (@year, @month) ->
         @id = "#{@year}-#{@month}"
+        @humanName = @humanNames[month]
         @zakony = []
         @interpelace = []
         @vystoupeni = []

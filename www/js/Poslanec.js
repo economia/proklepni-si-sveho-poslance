@@ -81,7 +81,7 @@
         return (it.year - this$.firstYear) * monthHeight + "px";
       });
       x$.attr('data-tooltip', function(it){
-        return escape("zakony: " + it.zakony.length + "<br />interpelace: " + it.interpelace.length + "<br />vystoupeni: " + it.vystoupeni.length + "");
+        return escape("<strong>" + it.humanName + " " + it.year + "</strong><br />Zákony:      <strong>" + it.zakony.length + "</strong><br />Interpelace: <strong>" + it.interpelace.length + "</strong><br />Vystoupení:  <strong>" + it.vystoupeni.length + "</strong>");
       });
       y$ = x$.append('div');
       y$.attr('class', 'zakony');
@@ -174,10 +174,12 @@
   Month = (function(){
     Month.displayName = 'Month';
     var prototype = Month.prototype, constructor = Month;
+    prototype.humanNames = ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'];
     function Month(year, month){
       this.year = year;
       this.month = month;
       this.id = this.year + "-" + this.month;
+      this.humanName = this.humanNames[month];
       this.zakony = [];
       this.interpelace = [];
       this.vystoupeni = [];
