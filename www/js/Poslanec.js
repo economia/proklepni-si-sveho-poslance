@@ -27,7 +27,7 @@
       x$.on('click', function(){
         return this$.$wrap.removeClass('poslanecSelected');
       });
-      this.$parent.html("<div class='poslanecDetail party-" + this.strana.zkratka + "'><h2>" + this.titul_pred + " " + this.jmeno + " " + this.prijmeni + " " + this.titul_za + "</h2><h3 class='party'>" + this.strana.plny + "</h3><img src='img/poslanci/" + this.id + ".jpg' /><span class='loading'>Prosím strpení, načíají se data...</span></div>");
+      this.$parent.html("<div class='poslanecDetail party-" + this.strana.zkratka + "'><h2>" + this.titul_pred + " " + this.jmeno + " " + this.prijmeni + " " + this.titul_za + "</h2><h3 class='party'>" + this.strana.plny + "</h3><img class='foto' src='img/poslanci/" + this.id + ".jpg' /><span class='loading'>Prosím strpení, načíají se data...</span></div>");
       this.$element = this.$parent.find(".poslanecDetail");
       $backButton.prependTo(this.$element);
       return this.loadData(function(err, data){
@@ -209,8 +209,11 @@
     }
     prototype.createLegend = function(){
       var this$ = this;
-      return [this.firstYear, this.lastYear].forEach(function(year, index){
+      [this.firstYear, this.lastYear].forEach(function(year, index){
         return this$.$element.append("<div class='yearLegend y-" + index + "'>" + year + "</div>");
+      });
+      return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].forEach(function(month, index){
+        return this$.$element.append("<div class='monthLegend m-" + index + "'>" + month + "</div>");
       });
     };
     prototype.createMonths = function(){

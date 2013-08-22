@@ -24,7 +24,7 @@ window.Poslanec = class Poslanec
             <div class='poslanecDetail party-#{@strana.zkratka}'>
                 <h2>#{@titul_pred} #{@jmeno} #{@prijmeni} #{@titul_za}</h2>
                 <h3 class='party'>#{@strana.plny}</h3>
-                <img src='img/poslanci/#{@id}.jpg' />
+                <img class='foto' src='img/poslanci/#{@id}.jpg' />
                 <span class='loading'>Prosím strpení, načíají se data...</span>
             </div>
         "
@@ -165,6 +165,8 @@ class Calendar
     createLegend: ->
         [@firstYear, @lastYear].forEach (year, index) ~>
             @$element.append "<div class='yearLegend y-#index'>#year</div>"
+        [1 to 12].forEach (month, index) ~>
+            @$element.append "<div class='monthLegend m-#index'>#month</div>"
 
     createMonths: ->
         @months = []

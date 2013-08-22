@@ -208,8 +208,9 @@ body #wrap .poslanecDetail {
   position: relative;
   padding-left: 20px;
 }
-body #wrap .poslanecDetail img {
+body #wrap .poslanecDetail img.foto {
   float: right;
+  margin-top: 15px;
 }
 body #wrap .poslanecDetail a.backButton {
   position: absolute;
@@ -250,6 +251,7 @@ body #wrap .poslanecDetail h3.party {
   font-style: italic;
 }
 body #wrap .poslanecDetail div.calendar {
+  margin-top: 31px;
   width: 380px;
   height: 125px;
   margin-bottom: 20px;
@@ -297,6 +299,14 @@ body #wrap .poslanecDetail div.calendar .yearLegend.y-1 {
   width: 113px;
   bottom: 0px;
   right: 7px;
+}
+body #wrap .poslanecDetail div.calendar .monthLegend {
+  float: left;
+  width: 31px;
+  position: relative;
+  top: -17px;
+  text-align: center;
+  font-size: 0.7em;
 }
 body #wrap .poslanecDetail div.content {
   float: left;
