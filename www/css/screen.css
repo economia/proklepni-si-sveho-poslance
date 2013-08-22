@@ -251,7 +251,7 @@ body #wrap .poslanecDetail h3.party {
 }
 body #wrap .poslanecDetail div.calendar {
   width: 380px;
-  height: 124px;
+  height: 125px;
   margin-bottom: 20px;
   position: relative;
 }
@@ -274,6 +274,29 @@ body #wrap .poslanecDetail div.calendar .month > div {
   top: 0px;
   left: 0px;
   background: #f00;
+}
+body #wrap .poslanecDetail div.calendar .yearLegend {
+  position: absolute;
+  padding-top: 6px;
+  font-style: italic;
+  background: #f4f4f4;
+  height: 24px;
+}
+body #wrap .poslanecDetail div.calendar .yearLegend.y-0 {
+  text-align: right;
+  padding-right: 10px;
+  width: 144px;
+  top: 0px;
+  left: 0px;
+}
+body #wrap .poslanecDetail div.calendar .yearLegend.y-1 {
+  text-align: left;
+  padding-left: 10px;
+  padding-top: 5px;
+  height: 25px;
+  width: 113px;
+  bottom: 0px;
+  right: 7px;
 }
 body #wrap .poslanecDetail div.content {
   float: left;

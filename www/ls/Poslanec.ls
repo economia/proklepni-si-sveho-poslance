@@ -125,6 +125,7 @@ class Calendar
 
     ({@zakony, @interpelace, @vystoupeni}) ->
         @$element = $ "<div class='calendar'></div>"
+        @createLegend!
         @createMonths!
         @populateZakony!
         @populateInterpelace!
@@ -161,6 +162,9 @@ class Calendar
                         "rgb(#{finalColor.join ','})"
                 ..on \click ~>
                     @onMonthSelected? it
+    createLegend: ->
+        [@firstYear, @lastYear].forEach (year, index) ~>
+            @$element.append "<div class='yearLegend y-#index'>#year</div>"
 
     createMonths: ->
         @months = []

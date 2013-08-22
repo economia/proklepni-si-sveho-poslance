@@ -163,6 +163,7 @@
       var backgroundColor, colorDiffFunction, interpelaceDiff, zakonyDiff, vystoupeniDiff, x$, y$, this$ = this;
       this.zakony = arg$.zakony, this.interpelace = arg$.interpelace, this.vystoupeni = arg$.vystoupeni;
       this.$element = $("<div class='calendar'></div>");
+      this.createLegend();
       this.createMonths();
       this.populateZakony();
       this.populateInterpelace();
@@ -206,6 +207,12 @@
         return typeof this$.onMonthSelected === 'function' ? this$.onMonthSelected(it) : void 8;
       });
     }
+    prototype.createLegend = function(){
+      var this$ = this;
+      return [this.firstYear, this.lastYear].forEach(function(year, index){
+        return this$.$element.append("<div class='yearLegend y-" + index + "'>" + year + "</div>");
+      });
+    };
     prototype.createMonths = function(){
       var currentYear, currentMonth, currentDate, month, results$ = [];
       this.months = [];

@@ -33,7 +33,7 @@
         font-style italic
     div.calendar
         width 380px
-        height 124px
+        height 125px
         margin-bottom 20px
         position relative
         .month
@@ -53,6 +53,27 @@
                 top 0px
                 left 0px
                 background red
+        .yearLegend
+            position absolute
+            padding-top 6px
+            font-style italic
+            background #f4f4f4
+            height (30px - @padding-top)
+            &.y-0
+                text-align right
+                padding-right 10px
+                width (154px - @padding-right)
+                top 0px
+                left 0px
+            &.y-1
+                text-align left
+                padding-left 10px
+                padding-top 5px
+                height (30px - @padding-top)
+                width (123px - @padding-left)
+                bottom 0px
+                right 7px
+
 
     div.content
         float left
