@@ -33,7 +33,8 @@
         font-style italic
     div.calendar
         width 380px
-        height 184px
+        height 124px
+        margin-bottom 20px
         position relative
         .month
             position absolute
@@ -88,3 +89,38 @@
                     text-align center
                     float left
 
+    .contentButtons
+        button
+            border 0px none
+            background #ccc
+            padding 8px 5px
+            &:hover
+                cursor pointer
+    &.party-cssd
+        button
+            background PartyCSSD
+            &:hover
+                background darken(@background, 20%)
+                color white
+    &.party-top
+        button
+            background PartyTOP
+            color white
+            &:hover
+                background darken(@background, 40%)
+    &.party-kscm
+        button
+            background PartyKSCM
+            color white
+            &:hover
+                background darken(@background, 30%)
+    &.party-vv
+        button
+            background lighten(PartyVV, 30%)
+            &:hover
+                background darken(@background, 20%)
+    &.party-ods
+        button
+            background lighten(PartyODS, 30%)
+            &:hover
+                background darken(@background, 20%)

@@ -21,7 +21,7 @@ window.Poslanec = class Poslanec
         $backButton = $ "<a href='#' class='backButton'><img src='img/back.png' /></a>"
             ..on \click ~> @$wrap.removeClass 'poslanecSelected'
         @$parent.html "
-            <div class='poslanecDetail #{@strana.zkratka}'>
+            <div class='poslanecDetail party-#{@strana.zkratka}'>
                 <h2>#{@titul_pred} #{@jmeno} #{@prijmeni} #{@titul_za}</h2>
                 <h3 class='party'>#{@strana.plny}</h3>
                 <img src='img/poslanci/#{@id}.jpg' />
@@ -30,12 +30,13 @@ window.Poslanec = class Poslanec
         "
         @$element = @$parent.find ".poslanecDetail"
         $backButton.prependTo @$element
-        (err, data) <~ @loadData
+        (err, @data) <~ @loadData
         @$parent.find ".loading" .remove!
-        console.log data
-        new Calendar data
+        new Calendar @data
             ..$element.appendTo @$element
-        @$element.append @displayContent data
+        @$element.append @displayContentButtons!
+        @$contentElement = $ "<div class='content'></div>"
+            ..appendTo @$element
 
     loadData: (cb) ->
         (err, data) <~ d3.json "./api.php?get=poslanci/#{@id}"
@@ -44,12 +45,26 @@ window.Poslanec = class Poslanec
             it
         cb null, data
 
+    displayContentButtons: ->
+        $container = $ "<div class='contentButtons'></div>"
+        {zakony, vystoupeni, interpelace} = @data
+        $ "<button>Všechny vystoupení</button>"
+            ..appendTo $container
+            ..on \click ~> @displayContent {vystoupeni}
+        $ "<button>Všechny interpelace</button>"
+            ..appendTo $container
+            ..on \click ~> @displayContent {interpelace}
+        $ "<button>Všechny zákony</button>"
+            ..appendTo $container
+            ..on \click ~> @displayContent {zakony}
+
+        $container
+
     displayContent: ({zakony, interpelace, vystoupeni})->
-        $element = $ "<div class='content'></div>"
-        # if zakony then $element.append @displayZakony zakony
-        # if interpelace then $element.append @displayInterpelace interpelace
-        if vystoupeni then $element.append @displayVystoupeni vystoupeni
-        $element
+        @$contentElement.empty!
+        if zakony then @$contentElement.append @displayZakony zakony
+        if interpelace then @$contentElement.append @displayInterpelace interpelace
+        if vystoupeni then @$contentElement.append @displayVystoupeni vystoupeni
 
     displayZakony: (zakony) ->
         $element = $ "<div class='zakony'></div>"

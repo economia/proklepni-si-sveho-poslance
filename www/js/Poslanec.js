@@ -27,16 +27,19 @@
       x$.on('click', function(){
         return this$.$wrap.removeClass('poslanecSelected');
       });
-      this.$parent.html("<div class='poslanecDetail " + this.strana.zkratka + "'><h2>" + this.titul_pred + " " + this.jmeno + " " + this.prijmeni + " " + this.titul_za + "</h2><h3 class='party'>" + this.strana.plny + "</h3><img src='img/poslanci/" + this.id + ".jpg' /><span class='loading'>Prosím strpení, načíají se data...</span></div>");
+      this.$parent.html("<div class='poslanecDetail party-" + this.strana.zkratka + "'><h2>" + this.titul_pred + " " + this.jmeno + " " + this.prijmeni + " " + this.titul_za + "</h2><h3 class='party'>" + this.strana.plny + "</h3><img src='img/poslanci/" + this.id + ".jpg' /><span class='loading'>Prosím strpení, načíají se data...</span></div>");
       this.$element = this.$parent.find(".poslanecDetail");
       $backButton.prependTo(this.$element);
       return this.loadData(function(err, data){
-        var x$;
+        var x$, y$;
+        this$.data = data;
         this$.$parent.find(".loading").remove();
-        console.log(data);
-        x$ = new Calendar(data);
+        x$ = new Calendar(this$.data);
         x$.$element.appendTo(this$.$element);
-        return this$.$element.append(this$.displayContent(data));
+        this$.$element.append(this$.displayContentButtons());
+        y$ = this$.$contentElement = $("<div class='content'></div>");
+        y$.appendTo(this$.$element);
+        return y$;
       });
     };
     prototype.loadData = function(cb){
@@ -49,14 +52,46 @@
         return cb(null, data);
       });
     };
+    prototype.displayContentButtons = function(){
+      var $container, ref$, zakony, vystoupeni, interpelace, x$, y$, z$, this$ = this;
+      $container = $("<div class='contentButtons'></div>");
+      ref$ = this.data, zakony = ref$.zakony, vystoupeni = ref$.vystoupeni, interpelace = ref$.interpelace;
+      x$ = $("<button>Všechny vystoupení</button>");
+      x$.appendTo($container);
+      x$.on('click', function(){
+        return this$.displayContent({
+          vystoupeni: vystoupeni
+        });
+      });
+      y$ = $("<button>Všechny interpelace</button>");
+      y$.appendTo($container);
+      y$.on('click', function(){
+        return this$.displayContent({
+          interpelace: interpelace
+        });
+      });
+      z$ = $("<button>Všechny zákony</button>");
+      z$.appendTo($container);
+      z$.on('click', function(){
+        return this$.displayContent({
+          zakony: zakony
+        });
+      });
+      return $container;
+    };
     prototype.displayContent = function(arg$){
-      var zakony, interpelace, vystoupeni, $element;
+      var zakony, interpelace, vystoupeni;
       zakony = arg$.zakony, interpelace = arg$.interpelace, vystoupeni = arg$.vystoupeni;
-      $element = $("<div class='content'></div>");
-      if (vystoupeni) {
-        $element.append(this.displayVystoupeni(vystoupeni));
+      this.$contentElement.empty();
+      if (zakony) {
+        this.$contentElement.append(this.displayZakony(zakony));
       }
-      return $element;
+      if (interpelace) {
+        this.$contentElement.append(this.displayInterpelace(interpelace));
+      }
+      if (vystoupeni) {
+        return this.$contentElement.append(this.displayVystoupeni(vystoupeni));
+      }
     };
     prototype.displayZakony = function(zakony){
       var x$, $element, y$, $list;
