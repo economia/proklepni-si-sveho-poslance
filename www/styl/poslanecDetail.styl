@@ -5,7 +5,7 @@
         float right
     a.backButton
         position absolute
-        top 10px
+        top 4px
         left @padding-left
         display block
         width 38px
@@ -23,7 +23,7 @@
     h3.party
         margin-left 60px
     h2
-        margin-top 6px
+        margin-top 10px
         margin-bottom 0px
     h3.party
         margin-top 0px
@@ -97,9 +97,20 @@
 
     .contentButtons
         button
+            font-family arial, sans-serif
+            font-size 0.8em
             border 0px none
             background #ccc
-            padding 8px 5px
+            padding 8px 0px
+            text-align center
+            margin 0px
+            &.vystoupeni
+                width 150px
+            &.interpelace
+                margin 0px 26px
+                width 95px
+            &.zakony
+                width 76px
             &:hover
                 cursor pointer
     &.party-cssd

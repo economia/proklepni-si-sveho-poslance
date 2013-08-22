@@ -57,21 +57,21 @@
       var $container, ref$, zakony, vystoupeni, interpelace, x$, y$, z$, this$ = this;
       $container = $("<div class='contentButtons'></div>");
       ref$ = this.data, zakony = ref$.zakony, vystoupeni = ref$.vystoupeni, interpelace = ref$.interpelace;
-      x$ = $("<button>Všechny vystoupení</button>");
+      x$ = $("<button class='vystoupeni'>Všechna vystoupení</button>");
       x$.appendTo($container);
       x$.on('click', function(){
         return this$.displayContent({
           vystoupeni: vystoupeni
         });
       });
-      y$ = $("<button>Všechny interpelace</button>");
+      y$ = $("<button class='interpelace'>Interpelace</button>");
       y$.appendTo($container);
       y$.on('click', function(){
         return this$.displayContent({
           interpelace: interpelace
         });
       });
-      z$ = $("<button>Všechny zákony</button>");
+      z$ = $("<button class='zakony'>Zákony</button>");
       z$.appendTo($container);
       z$.on('click', function(){
         return this$.displayContent({

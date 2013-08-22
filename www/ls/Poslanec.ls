@@ -49,13 +49,13 @@ window.Poslanec = class Poslanec
     displayContentButtons: ->
         $container = $ "<div class='contentButtons'></div>"
         {zakony, vystoupeni, interpelace} = @data
-        $ "<button>Všechny vystoupení</button>"
+        $ "<button class='vystoupeni'>Všechna vystoupení</button>"
             ..appendTo $container
             ..on \click ~> @displayContent {vystoupeni}
-        $ "<button>Všechny interpelace</button>"
+        $ "<button class='interpelace'>Interpelace</button>"
             ..appendTo $container
             ..on \click ~> @displayContent {interpelace}
-        $ "<button>Všechny zákony</button>"
+        $ "<button class='zakony'>Zákony</button>"
             ..appendTo $container
             ..on \click ~> @displayContent {zakony}
 
