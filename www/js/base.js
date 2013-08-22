@@ -45,9 +45,6 @@
       return new Poslanec(it, $wrap, $rightPart);
     });
     poslanci.sort(sorterFilter.sortFunction);
-    poslanecList = new PoslanecList('.leftPart', poslanci, sorterFilter);
-    return poslanci.filter(function(it){
-      return it.id === 252;
-    }).pop().onSelect();
+    return poslanecList = new PoslanecList('.leftPart', poslanci, sorterFilter);
   });
 }).call(this);

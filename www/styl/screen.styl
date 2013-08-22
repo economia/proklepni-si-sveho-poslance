@@ -10,17 +10,25 @@ body
         background white
         position absolute
         .leftPart
+            width 650px
             transition 0.4s
+        .leftPart
+        .rightPart
+            height 500px
+            position fixed
+            overflow-y auto
+            overflow-x hidden
+
         .filter
             position absolute
             top 0px
             left 0px
-            width 100%
+            width 630px
             div.party
                 float left
                 margin-top 2px
                 select
-                    width 420px
+                    width 410px
             div.sort
                 margin-top 2px
                 float right
@@ -33,8 +41,6 @@ body
             @import poslanecList
         .rightPart
             width 620px
-            height 500px
-            position fixed
             top 0px
             left 0px
             transform translate(650px, 0px)
@@ -43,6 +49,7 @@ body
         &.poslanecSelected
             .leftPart
                 transform translate(-630px, 0px)
+                overflow hidden
                 .poslanecList
                     .barchart
                         display none

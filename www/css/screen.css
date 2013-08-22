@@ -11,20 +11,28 @@ body #wrap {
   position: absolute;
 }
 body #wrap .leftPart {
+  width: 650px;
   transition: 0.4s;
+}
+body #wrap .leftPart,
+body #wrap .rightPart {
+  height: 500px;
+  position: fixed;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 body #wrap .filter {
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 100%;
+  width: 630px;
 }
 body #wrap .filter div.party {
   float: left;
   margin-top: 2px;
 }
 body #wrap .filter div.party select {
-  width: 420px;
+  width: 410px;
 }
 body #wrap .filter div.sort {
   margin-top: 2px;
@@ -104,7 +112,7 @@ body #wrap .poslanecList li .party {
 body #wrap .poslanecList li .barchart {
   position: absolute;
   top: 0px;
-  right: 5px;
+  right: 25px;
   width: 75px;
   top: 10px;
   height: 50px;
@@ -152,8 +160,6 @@ body #wrap .poslanecList li .barchart .bar.vystoupeni div {
 }
 body #wrap .rightPart {
   width: 620px;
-  height: 500px;
-  position: fixed;
   top: 0px;
   left: 0px;
   transform: translate(650px, 0px);
@@ -170,6 +176,7 @@ body #wrap.poslanecSelected .leftPart {
   -ms-transform: translate(-630px, 0px);
   -moz-transform: translate(-630px, 0px);
   -webkit-transform: translate(-630px, 0px);
+  overflow: hidden;
 }
 body #wrap.poslanecSelected .leftPart .poslanecList .barchart {
   display: none;
@@ -198,10 +205,7 @@ body #wrap .poslanecDetail .backButton {
   -webkit-transform: rotate(180deg);
 }
 body #wrap .poslanecDetail {
-  height: 500px;
   position: relative;
-  overflow-y: auto;
-  overflow-x: hidden;
   padding-left: 20px;
 }
 body #wrap .poslanecDetail img {
