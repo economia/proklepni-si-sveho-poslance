@@ -142,7 +142,6 @@ class Calendar
                         Vystoupení:  <strong>#{it.vystoupeni.length}</strong>
                     "
                 ..append \div
-                    ..attr \class \zakony
                     ..style \background ~>
                         zakonyScore      = it.zakony.length      / @zakonyMax      * it.zakony.length      / it.totalEvents
                         vystoupeniScore  = it.vystoupeni.length  / @vystoupeniMax  * it.vystoupeni.length  / it.totalEvents

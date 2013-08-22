@@ -181,7 +181,6 @@
         return escape("<strong>" + it.humanName + " " + it.year + "</strong><br />Zákony:      <strong>" + it.zakony.length + "</strong><br />Interpelace: <strong>" + it.interpelace.length + "</strong><br />Vystoupení:  <strong>" + it.vystoupeni.length + "</strong>");
       });
       y$ = x$.append('div');
-      y$.attr('class', 'zakony');
       y$.style('background', function(it){
         var zakonyScore, vystoupeniScore, interpelaceScore, totalScore, finalColor;
         zakonyScore = it.zakony.length / this$.zakonyMax * it.zakony.length / it.totalEvents;
