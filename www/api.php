@@ -114,13 +114,14 @@ function get_poslanec_vystoupeni($id) {
     return $r;
 }
 function get_poslanec_hlasovani($id) {
-    $result = mysql_query("SELECT DISTINCT hlasovani.nazev, hlasovani.datum, hlasovani_poslanec.vysledek FROM hlasovani
+    $result = mysql_query("SELECT hlasovani.id, hlasovani.nazev, hlasovani.datum, hlasovani_poslanec.vysledek FROM hlasovani
         JOIN hlasovani_poslanec ON (hlasovani.id=hlasovani_poslanec.hlasovani_id)
         JOIN poslanci_hlas_pseudoid ON (poslanci_hlas_pseudoid.poslanec_hlas_id = hlasovani_poslanec.poslanec_id)
         WHERE hlasovani.bod>0 AND poslanci_hlas_pseudoid.poslanec_id=$id AND datum>0");
     $r = array();
     while($row = mysql_fetch_assoc($result)) {
         $row['datum'] = (int)$row['datum'];
+        $row['id'] = (int)$row['id'];
         $r[] = $row;
     }
     return $r;

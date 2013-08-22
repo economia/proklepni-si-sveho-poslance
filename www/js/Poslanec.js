@@ -60,9 +60,9 @@
       });
     };
     prototype.displayContentButtons = function(){
-      var $container, ref$, zakony, vystoupeni, interpelace, x$, y$, z$, z1$, this$ = this;
+      var $container, ref$, zakony, vystoupeni, interpelace, hlasovani, x$, y$, z$, z1$, this$ = this;
       $container = $("<div class='contentButtons'></div>");
-      ref$ = this.data, zakony = ref$.zakony, vystoupeni = ref$.vystoupeni, interpelace = ref$.interpelace;
+      ref$ = this.data, zakony = ref$.zakony, vystoupeni = ref$.vystoupeni, interpelace = ref$.interpelace, hlasovani = ref$.hlasovani;
       x$ = $("<button class='vystoupeni'></button>");
       x$.append("Vystoupení");
       x$.appendTo($container);
@@ -101,8 +101,8 @@
       return this.displayContent(month);
     };
     prototype.displayContent = function(arg$){
-      var zakony, interpelace, vystoupeni;
-      zakony = arg$.zakony, interpelace = arg$.interpelace, vystoupeni = arg$.vystoupeni;
+      var zakony, interpelace, vystoupeni, hlasovani;
+      zakony = arg$.zakony, interpelace = arg$.interpelace, vystoupeni = arg$.vystoupeni, hlasovani = arg$.hlasovani;
       this.$contentElement.empty();
       if (zakony) {
         this.$contentElement.append(this.displayZakony(zakony));
@@ -111,7 +111,10 @@
         this.$contentElement.append(this.displayInterpelace(interpelace));
       }
       if (vystoupeni) {
-        return this.$contentElement.append(this.displayVystoupeni(vystoupeni));
+        this.$contentElement.append(this.displayVystoupeni(vystoupeni));
+      }
+      if (hlasovani) {
+        return this.$contentElement.append(this.displayHlasovani(hlasovani));
       }
     };
     prototype.displayZakony = function(zakony){
@@ -174,6 +177,43 @@
         dateString = date.getDate() + ". " + (date.getMonth() + 1) + ". " + date.getFullYear();
         x$ = $("<li></li>");
         x$.html("<a href='" + it.url + "' target='_blank'>" + dateString + "</a>");
+        x$.appendTo($list);
+        return x$;
+      });
+      return $element;
+    };
+    prototype.displayHlasovani = function(hlasovani){
+      var emText, x$, $element, y$, $list;
+      emText = hlasovani.length ? "<em>Kliknutím přejdete na detail hlasování na webu psp.cz</em><ul class='legend'><li><span class='voteLabel favor'><span>Pro</span></span>Hlasoval pro</li><li><span class='voteLabel against'><span>Proti</span></span>Hlasoval proti</li><li><span class='voteLabel abstain'><span>Zdržel se</span></span>Hlasoval \"zdržuji se\" (stiskl příslušné tlačítko)</li><li><span class='voteLabel no-vote'><span>Nehlasoval</span></span>Nehlasoval (byl přihlášen, ale nestisknul žádné tlačítko)</li><li><span class='voteLabel absent'><span>Nepřihlášen</span></span>Nebyl přihlášen</li><li><span class='voteLabel pardoned'><span>Omluven</span></span>Nebyl přihlášen, byl omluven</li></ul>" : "<em>Poslanec v daném období nehlasoval</em>";
+      x$ = $element = $("<div class='hlasovani'></div>");
+      x$.html("<h3>Hlasování</h3>" + emText);
+      if (!hlasovani.length) {
+        return $element;
+      }
+      y$ = $list = $("<ul></ul>");
+      y$.appendTo($element);
+      hlasovani.forEach(function(it){
+        var date, dateString, ref$, labelString, labelClass, x$;
+        date = new Date(it.datum * 1000);
+        dateString = date.getDate() + ". " + (date.getMonth() + 1) + ". " + date.getFullYear();
+        ref$ = (function(){
+          switch (it.vysledek) {
+          case 'A':
+            return ["Pro", "favor"];
+          case 'B':
+            return ["Proti", "against"];
+          case 'C':
+            return ["Zdržel se", "abstain"];
+          case 'F':
+            return ["Nehlasoval", "no-vote"];
+          case '@':
+            return ["Nepřihlášen", "absent"];
+          case 'M':
+            return ["Omluven", "pardoned"];
+          }
+        }()), labelString = ref$[0], labelClass = ref$[1];
+        x$ = $("<li></li>");
+        x$.html("<a href='http://www.psp.cz/sqw/hlasy.sqw?g=" + it.id + "&amp;l=cz' target='_blank'><span class='voteLabel " + labelClass + "'><span>" + labelString + "</span></span>" + dateString + ": " + unescape(it.nazev) + "</a>");
         x$.appendTo($list);
         return x$;
       });

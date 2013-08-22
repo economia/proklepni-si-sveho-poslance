@@ -58,7 +58,7 @@ window.Poslanec = class Poslanec
 
     displayContentButtons: ->
         $container = $ "<div class='contentButtons'></div>"
-        {zakony, vystoupeni, interpelace} = @data
+        {zakony, vystoupeni, interpelace, hlasovani} = @data
         $ "<button class='vystoupeni'></button>"
             ..append "Vystoupení"
             ..appendTo $container
@@ -81,11 +81,12 @@ window.Poslanec = class Poslanec
     displayMonth: (month) ->
         @displayContent month
 
-    displayContent: ({zakony, interpelace, vystoupeni})->
+    displayContent: ({zakony, interpelace, vystoupeni, hlasovani})->
         @$contentElement.empty!
-        if zakony then @$contentElement.append @displayZakony zakony
+        if zakony      then @$contentElement.append @displayZakony      zakony
         if interpelace then @$contentElement.append @displayInterpelace interpelace
-        if vystoupeni then @$contentElement.append @displayVystoupeni vystoupeni
+        if vystoupeni  then @$contentElement.append @displayVystoupeni  vystoupeni
+        if hlasovani   then @$contentElement.append @displayHlasovani   hlasovani
 
     displayZakony: (zakony) ->
         emText = if zakony.length
@@ -144,6 +145,44 @@ window.Poslanec = class Poslanec
                 ..html "<a href='#{it.url}' target='_blank'>#{dateString}</a>"
                 ..appendTo $list
         $element
+    displayHlasovani: (hlasovani) ->
+        emText = if hlasovani.length
+            "<em>Kliknutím přejdete na detail hlasování na webu psp.cz</em>
+            <ul class='legend'>
+                <li><span class='voteLabel favor'><span>Pro</span></span>Hlasoval pro</li>
+                <li><span class='voteLabel against'><span>Proti</span></span>Hlasoval proti</li>
+                <li><span class='voteLabel abstain'><span>Zdržel se</span></span>Hlasoval \"zdržuji se\" (stiskl příslušné tlačítko)</li>
+                <li><span class='voteLabel no-vote'><span>Nehlasoval</span></span>Nehlasoval (byl přihlášen, ale nestisknul žádné tlačítko)</li>
+                <li><span class='voteLabel absent'><span>Nepřihlášen</span></span>Nebyl přihlášen</li>
+                <li><span class='voteLabel pardoned'><span>Omluven</span></span>Nebyl přihlášen, byl omluven</li>
+            </ul>
+            "
+        else
+            "<em>Poslanec v daném období nehlasoval</em>"
+        $element = $ "<div class='hlasovani'></div>"
+            ..html "<h3>Hlasování</h3>
+                    #emText"
+        return $element unless hlasovani.length
+        $list = $ "<ul></ul>"
+            ..appendTo $element
+        hlasovani.forEach ->
+            date = new Date it.datum*1000
+            dateString = "#{date.getDate!}. #{date.getMonth! + 1}. #{date.getFullYear!}"
+            [labelString, labelClass] = switch it.vysledek
+                | \A => [ "Pro"         "favor"    ]
+                | \B => [ "Proti"       "against"  ]
+                | \C => [ "Zdržel se"   "abstain"  ]
+                | \F => [ "Nehlasoval"  "no-vote"  ]
+                | \@ => [ "Nepřihlášen" "absent"   ]
+                | \M => [ "Omluven"     "pardoned" ]
+            $ "<li></li>"
+                ..html "
+                    <a href='http://www.psp.cz/sqw/hlasy.sqw?g=#{it.id}&amp;l=cz' target='_blank'>
+                    <span class='voteLabel #labelClass'><span>#labelString</span></span>#dateString: #{unescape it.nazev}
+                    </a>"
+                ..appendTo $list
+        $element
+
 
 
 monthWidth = 31

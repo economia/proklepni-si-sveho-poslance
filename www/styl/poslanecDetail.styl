@@ -136,6 +136,45 @@
                     padding 7px 0px
                     text-align center
                     float left
+        .hlasovani
+            li
+                a
+                    position relative
+                    padding-left 95px
+            span.voteLabel
+                display block
+                position absolute
+                top 5px
+                left 0px
+                width 85px
+                > span
+                    font-size 0.7em
+                    background red
+                    border-radius 2px
+                    padding 2px 5px
+                    display block
+                    float right
+                &.against span
+                    background #E41A1C
+                    color white
+                &.favor span
+                    background #4DAF4A
+                &.abstain span
+                    background #377EB8
+                    color white
+                &.no-vote span
+                    background #984EA3
+                    color white
+                &.absent span
+                    background #FFFF33
+                &.pardoned span
+                    background #FF7F00
+            ul.legend
+                li
+                    position relative
+                    padding 5px 0px
+                    padding-left 95px
+
 
     .contentButtons
         position absolute

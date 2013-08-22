@@ -376,6 +376,55 @@ body #wrap .poslanecDetail div.content .vystoupeni li a {
   text-align: center;
   float: left;
 }
+body #wrap .poslanecDetail div.content .hlasovani li a {
+  position: relative;
+  padding-left: 95px;
+}
+body #wrap .poslanecDetail div.content .hlasovani span.voteLabel {
+  display: block;
+  position: absolute;
+  top: 5px;
+  left: 0px;
+  width: 85px;
+}
+body #wrap .poslanecDetail div.content .hlasovani span.voteLabel > span {
+  font-size: 0.7em;
+  background: #f00;
+  border-radius: 2px;
+  -o-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  padding: 2px 5px;
+  display: block;
+  float: right;
+}
+body #wrap .poslanecDetail div.content .hlasovani span.voteLabel.against span {
+  background: #e41a1c;
+  color: #fff;
+}
+body #wrap .poslanecDetail div.content .hlasovani span.voteLabel.favor span {
+  background: #4daf4a;
+}
+body #wrap .poslanecDetail div.content .hlasovani span.voteLabel.abstain span {
+  background: #377eb8;
+  color: #fff;
+}
+body #wrap .poslanecDetail div.content .hlasovani span.voteLabel.no-vote span {
+  background: #984ea3;
+  color: #fff;
+}
+body #wrap .poslanecDetail div.content .hlasovani span.voteLabel.absent span {
+  background: #ff3;
+}
+body #wrap .poslanecDetail div.content .hlasovani span.voteLabel.pardoned span {
+  background: #ff7f00;
+}
+body #wrap .poslanecDetail div.content .hlasovani ul.legend li {
+  position: relative;
+  padding: 5px 0px;
+  padding-left: 95px;
+}
 body #wrap .poslanecDetail .contentButtons {
   position: absolute;
   bottom: 0px;
