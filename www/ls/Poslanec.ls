@@ -1,3 +1,4 @@
+poslanciAssoc = window.poslanciAssoc
 window.Poslanec = class Poslanec
     ({@id, @titul_pred, @prijmeni, @jmeno, @titul_za, @interpelace_source_count, @interpelace_target_count, @absence_count, @nazor_count, @possible_votes_count, @zakony_predkladatel_count, @vystoupeni_count, @kraj, @strana, @preferencni}, @$wrap, @$parent) ->
         @interpelace_sum    = @interpelace_source_count + @interpelace_target_count
@@ -45,18 +46,37 @@ window.Poslanec = class Poslanec
 
     displayContent: ({zakony, interpelace, vystoupeni})->
         $element = $ "<div class='content'></div>"
-        if zakony then $element.append @displayZakony zakony
+        # if zakony then $element.append @displayZakony zakony
+        if interpelace then $element.append @displayInterpelace interpelace
         $element
 
     displayZakony: (zakony) ->
         $element = $ "<div class='zakony'></div>"
-        $element.append "<h3>Zákony</h3>"
-        $element.append "<em>Kliknutím přejdete na detail zákona na webu Poslanecké sněmovny</em>"
+            ..append "<h3>Zákony</h3>"
+            ..append "<em>Kliknutím přejdete na detail zákona na webu Poslanecké sněmovny</em>"
         $list = $ "<ul></ul>"
             ..appendTo $element
         zakony.forEach (zakon) ->
             $list.append "<li><a href='http://www.psp.cz/sqw/historie.sqw?o=6&t=#{zakon.cislo_tisku}' target='_blank'>#{zakon.nazev}</a></li>"
         $element
+
+    displayInterpelace: (interpelace) ->
+        $element = $ "<div class='interpelace'></div>"
+            ..append "<h3>Interpelace</h3>"
+            ..append "<em>Kdy, koho a na jaké téma interpeloval</em>"
+        $list = $ "<ul></ul>"
+            ..appendTo $element
+        interpelace.forEach (interpelaca) ->
+            date = new Date interpelaca.datum*1000
+            targetPoslanec = poslanciAssoc[interpelaca.ministr_id]?.getName!
+            if not targetPoslanec then targetPoslanec = "(neznámý)"
+            dateString = "#{date.getDate!} #{date.getMonth! + 1} #{date.getFullYear!}"
+            $list.append "<li><span class='date'>#dateString, </span>
+                <span class='target'>#targetPoslanec: </span>
+                <span class='vec'>#{interpelaca.vec}</span>
+                </li>"
+        $element
+
 
 monthWidth = 31
 monthHeight = 31

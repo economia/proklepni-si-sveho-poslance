@@ -1,6 +1,7 @@
 window.list_item_height     = 62
 window.list_barchart_height = 50
 window.tooltip              = new Tooltip!watchElements!
+window.poslanciAssoc        = {}
 
 window.Strana = class Strana
     ({@nazev, @plny, @zkratka}) ->
@@ -18,7 +19,7 @@ sorterFilter = new SorterFilter \.leftPart strany, kraje
 poslanci = data.poslanci.map ->
     it.kraj = kraje[it.kraj_id]
     it.strana = strany[it.strana_id]
-    new Poslanec it, $wrap, $rightPart
+    poslanciAssoc[it.id] = poslanec = new Poslanec it, $wrap, $rightPart
 poslanci.sort sorterFilter.sortFunction
 poslanecList = new PoslanecList do
     \.leftPart

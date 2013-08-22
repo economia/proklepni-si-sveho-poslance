@@ -3,6 +3,7 @@
   window.list_item_height = 62;
   window.list_barchart_height = 50;
   window.tooltip = new Tooltip().watchElements();
+  window.poslanciAssoc = {};
   window.Strana = Strana = (function(){
     Strana.displayName = 'Strana';
     var prototype = Strana.prototype, constructor = Strana;
@@ -40,9 +41,10 @@
     x$ = sorterFilter = new SorterFilter('.leftPart', strany, kraje);
     x$.onSortChange('activity-index-desc');
     poslanci = data.poslanci.map(function(it){
+      var poslanec;
       it.kraj = kraje[it.kraj_id];
       it.strana = strany[it.strana_id];
-      return new Poslanec(it, $wrap, $rightPart);
+      return poslanciAssoc[it.id] = poslanec = new Poslanec(it, $wrap, $rightPart);
     });
     poslanci.sort(sorterFilter.sortFunction);
     poslanecList = new PoslanecList('.leftPart', poslanci, sorterFilter);

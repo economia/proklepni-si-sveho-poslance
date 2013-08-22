@@ -295,13 +295,18 @@ body #wrap .poslanecDetail div.content ul li:nth-child(even) a {
 body #wrap .poslanecDetail div.content ul li:nth-child(even) a:hover {
   background: #cacaca;
 }
-body #wrap .poslanecDetail div.content .zakony h3 {
+body #wrap .poslanecDetail div.content .zakony h3,
+body #wrap .poslanecDetail div.content .interpelace h3 {
   margin-top: 0px;
   margin-bottom: 4px;
 }
-body #wrap .poslanecDetail div.content .zakony em {
+body #wrap .poslanecDetail div.content .zakony em,
+body #wrap .poslanecDetail div.content .interpelace em {
   font-size: 0.9em;
   margin-top: -5px;
+}
+body #wrap .poslanecDetail div.content .interpelace li {
+  line-height: 1.4em;
 }
 body .chosen-container-single .chosen-single {
   background-color: #fff;

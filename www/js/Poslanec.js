@@ -1,5 +1,6 @@
 (function(){
-  var Poslanec, monthWidth, monthHeight, Calendar, Month;
+  var poslanciAssoc, Poslanec, monthWidth, monthHeight, Calendar, Month;
+  poslanciAssoc = window.poslanciAssoc;
   window.Poslanec = Poslanec = (function(){
     Poslanec.displayName = 'Poslanec';
     var prototype = Poslanec.prototype, constructor = Poslanec;
@@ -52,20 +53,39 @@
       var zakony, interpelace, vystoupeni, $element;
       zakony = arg$.zakony, interpelace = arg$.interpelace, vystoupeni = arg$.vystoupeni;
       $element = $("<div class='content'></div>");
-      if (zakony) {
-        $element.append(this.displayZakony(zakony));
+      if (interpelace) {
+        $element.append(this.displayInterpelace(interpelace));
       }
       return $element;
     };
     prototype.displayZakony = function(zakony){
-      var $element, x$, $list;
-      $element = $("<div class='zakony'></div>");
-      $element.append("<h3>Zákony</h3>");
-      $element.append("<em>Kliknutím přejdete na detail zákona na webu Poslanecké sněmovny</em>");
-      x$ = $list = $("<ul></ul>");
-      x$.appendTo($element);
+      var x$, $element, y$, $list;
+      x$ = $element = $("<div class='zakony'></div>");
+      x$.append("<h3>Zákony</h3>");
+      x$.append("<em>Kliknutím přejdete na detail zákona na webu Poslanecké sněmovny</em>");
+      y$ = $list = $("<ul></ul>");
+      y$.appendTo($element);
       zakony.forEach(function(zakon){
         return $list.append("<li><a href='http://www.psp.cz/sqw/historie.sqw?o=6&t=" + zakon.cislo_tisku + "' target='_blank'>" + zakon.nazev + "</a></li>");
+      });
+      return $element;
+    };
+    prototype.displayInterpelace = function(interpelace){
+      var x$, $element, y$, $list;
+      x$ = $element = $("<div class='interpelace'></div>");
+      x$.append("<h3>Interpelace</h3>");
+      x$.append("<em>Kdy, koho a na jaké téma interpeloval</em>");
+      y$ = $list = $("<ul></ul>");
+      y$.appendTo($element);
+      interpelace.forEach(function(interpelaca){
+        var date, targetPoslanec, ref$, dateString;
+        date = new Date(interpelaca.datum * 1000);
+        targetPoslanec = (ref$ = poslanciAssoc[interpelaca.ministr_id]) != null ? ref$.getName() : void 8;
+        if (!targetPoslanec) {
+          targetPoslanec = "(neznámý)";
+        }
+        dateString = date.getDate() + " " + (date.getMonth() + 1) + " " + date.getFullYear();
+        return $list.append("<li><span class='date'>" + dateString + ", </span><span class='target'>" + targetPoslanec + ": </span><span class='vec'>" + interpelaca.vec + "</span></li>");
       });
       return $element;
     };
