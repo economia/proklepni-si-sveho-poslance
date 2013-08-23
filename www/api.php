@@ -1,6 +1,6 @@
 <?php
 $config = require('./config.php');
-$allowed_methods = array('poslanci', 'generate_jsons');
+$allowed_methods = array('poslanci', 'generate_jsons', 'generate_ordering');
 $request = array();
 mysql_connect($config['db_host'], $config['db_user'], $config['db_pass']);
 mysql_select_db($config['db_name']);
@@ -33,6 +33,18 @@ function generate_jsons() {
         file_put_contents("../data/json/$id.json", file_get_contents("http://127.0.0.1/proklepni-si-poslance/www/api.php?get=poslanci/$id"));
     }
     file_put_contents("../data/json/list.json", file_get_contents("http://127.0.0.1/proklepni-si-poslance/www/api.php?get=poslanci"));
+}
+function generate_ordering() {
+    mysql_query("UPDATE poslanci SET activity_index=0");
+    $fields = array('interpelace_source_count', 'zakony_predkladatel_count', '(1 - absence_count / possible_votes_count)', 'vystoupeni_count');
+    foreach($fields as $field) {
+        $result = mysql_query("SELECT id FROM poslanci WHERE poslanec_2010=1 ORDER BY $field DESC");
+        $i = 0;
+        while($row = mysql_fetch_assoc($result)) {
+            mysql_query("UPDATE poslanci SET activity_index=activity_index + $i WHERE id={$row['id']} LIMIT 1");
+            $i++;
+        }
+    }
 }
 function get_strany_list() {
     $result = mysql_query("SELECT * FROM strany");
