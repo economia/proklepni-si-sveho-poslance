@@ -49,7 +49,6 @@ window.SorterFilter = class SorterFilter
 
     createSorter: ->
         $element = $ "<div class='sort'><select class='sort' data-placeholder='Seřadit podle'>
-            <option value=''></option>
             <option value='activity-index-desc'>Celkově nejaktivnější</option>
             <option value='activity-index-asc'>Celkově nejméně aktivní</option>
             <option value='interpelace-desc'>Nejvíce interpelující</option>
