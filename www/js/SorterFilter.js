@@ -66,7 +66,7 @@
     };
     prototype.createSorter = function(){
       var $element, x$, y$, this$ = this;
-      $element = $("<div class='sort'><select class='sort' data-placeholder='Seřadit podle'><option value=''></option><option value='activity-index-desc'>Celkově nějaktivnější</option><option value='activity-index-asc'>Celkově nejméně aktivní</option><option value='interpelace-desc'>Nejvíce interpelující</option><option value='interpelace-asc'>Nejméně interpelují</option><option value='zakony-desc'>Nejvíce předložených zákonů</option><option value='zakony-asc'>Nejméně předložených zákonů</option><option value='absence-asc'>Nejčastěji přítomní</option><option value='absence-desc'>Nejméně přítomní</option><option value='vystoupeni-desc'>Pronesli nejvíce projevů</option><option value='vystoupeni-asc'>Pronesli nejméně projevů</option></select></div>");
+      $element = $("<div class='sort'><select class='sort' data-placeholder='Seřadit podle'><option value=''></option><option value='activity-index-desc'>Celkově nejaktivnější</option><option value='activity-index-asc'>Celkově nejméně aktivní</option><option value='interpelace-desc'>Nejvíce interpelující</option><option value='interpelace-asc'>Nejméně interpelují</option><option value='zakony-desc'>Nejvíce předložených zákonů</option><option value='zakony-asc'>Nejméně předložených zákonů</option><option value='absence-asc'>Nejčastěji přítomní</option><option value='absence-desc'>Nejméně přítomní</option><option value='vystoupeni-desc'>Pronesli nejvíce projevů</option><option value='vystoupeni-asc'>Pronesli nejméně projevů</option></select></div>");
       x$ = $element;
       x$.appendTo(this.$element);
       y$ = $element = $element.find('select');
