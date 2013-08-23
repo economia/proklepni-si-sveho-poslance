@@ -58,26 +58,27 @@
             .bar
                 position absolute
                 height @height
-                width (@width / barCount)
+                margin-right 0px
+                width ((@width / barCount) - @margin-right)
                 left @width
                 div
                     position absolute
                     width @width
                     bottom 0px
                 &.interpelace
-                    left (@width * 0)
+                    left ((@width + @margin-right) * 0)
                     div
                         background scaleQualitativeMedium[0]
                 &.zakony
-                    left (@width * 1)
+                    left ((@width + @margin-right) * 1)
                     div
                         background scaleQualitativeMedium[1]
                 &.absence
-                    left (@width * 2)
+                    left ((@width + @margin-right) * 2)
                     div
                         background scaleQualitativeMedium[2]
                 &.vystoupeni
-                    left (@width * 3)
+                    left ((@width + @margin-right) * 3)
                     div
                         background scaleQualitativeMedium[4]
 

@@ -126,6 +126,7 @@ body #wrap .poslanecList li .barchart {
 body #wrap .poslanecList li .barchart .bar {
   position: absolute;
   height: 50px;
+  margin-right: 0px;
   width: 15px;
   left: 15px;
 }
