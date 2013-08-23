@@ -1,6 +1,6 @@
 poslanciAssoc = window.poslanciAssoc
 window.Poslanec = class Poslanec
-    ({@id, @titul_pred, @prijmeni, @jmeno, @titul_za, @interpelace_source_count, @interpelace_target_count, @absence_count, @nazor_count, @possible_votes_count, @zakony_predkladatel_count, @vystoupeni_count, @kraj, @strana, @preferencni}, @$wrap, @$parent) ->
+    ({@id, @titul_pred, @prijmeni, @jmeno, @titul_za, @interpelace_source_count, @interpelace_target_count, @absence_count, @nazor_count, @possible_votes_count, @zakony_predkladatel_count, @vystoupeni_count, @kraj, @strana, @preferencni, @from_date, @to_date}, @$wrap, @$parent) ->
         @interpelace_sum    = @interpelace_source_count + @interpelace_target_count
         @absence_normalized = @absence_count / @possible_votes_count
         @nazor_normalized   = @nazor_count / @possible_votes_count
@@ -13,6 +13,9 @@ window.Poslanec = class Poslanec
         @activity_index = activities.reduce do
             (curr, prev) -> prev + curr
             0
+        if @from_date > 1275696000 and @to_date
+            console.log @id
+
 
     getName: -> "#{@jmeno} #{@prijmeni}"
 
@@ -21,16 +24,26 @@ window.Poslanec = class Poslanec
         $backButton = $ "<a href='#' class='backButton'></a>"
             ..append "<img src='img/back.png' />"
             ..on \click ~> @$wrap.removeClass 'poslanecSelected'
-        supplemental = ''
+        supplemental = []
         if @preferencni
-            supplemental += "Zvolen(a) preferenčními hlasy"
+            supplemental.push "Zvolen(a) preferenčními hlasy"
+        if @from_date > 1275696000 # 5.6.2010
+            date = new Date @from_date * 1000
+            supplemental.push "V parlamentu od #{date.getDate!}. #{date.getMonth! + 1}. #{date.getFullYear!}"
+        if @to_date
+            date = new Date @to_date * 1000
+            str = ""
+            unless @from_date > 1275696000
+                str = "V parlamentu "
+            str += "do #{date.getDate!}. #{date.getMonth! + 1}. #{date.getFullYear!}"
+            supplemental.push str
 
         @$parent.html "
             <div class='poslanecDetail party-#{@strana.zkratka}'>
                 <div class='header'>
                     <h2>#{@titul_pred} #{@jmeno} #{@prijmeni} #{@titul_za}</h2>
                     <h3 class='party'>#{@strana.plny} / #{@kraj.plny}</h3>
-                    <h4 class='supplemental'>#supplemental</h4>
+                    <h4 class='supplemental'>#{supplemental.join ', '}</h4>
                     <img class='foto' src='img/poslanci/#{@id}.jpg' />
                     <span class='loading'>Prosím strpení, načíají se data...</span>
                 </div>
