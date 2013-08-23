@@ -85,6 +85,7 @@ function get_poslanci_list() {
         $row['strana_id']                 = (int)$row['strana_id'];
         $row['from_date']                 = (int)$row['from_date'];
         $row['to_date']                   = (int)$row['to_date'];
+        $row['activity_index']            = (int)$row['activity_index'];
         $r[] = $row;
     }
     return $r;

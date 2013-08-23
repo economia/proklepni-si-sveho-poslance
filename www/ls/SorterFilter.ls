@@ -80,8 +80,8 @@ window.SorterFilter = class SorterFilter
         | \absence-desc => (a, b) -> b.absence_normalized - a.absence_normalized
         | \absence-asc  => (a, b) -> a.absence_normalized - b.absence_normalized
 
-        | \activity-index-desc => (a, b) -> b.activity_index - a.activity_index
-        | \activity-index-asc  => (a, b) -> a.activity_index - b.activity_index
+        | \activity-index-desc => (a, b) -> a.activity_index - b.activity_index
+        | \activity-index-asc  => (a, b) -> b.activity_index - a.activity_index
 
         | \vystoupeni-desc => (a, b) -> b.vystoupeni_count - a.vystoupeni_count
         | \vystoupeni-asc  => (a, b) -> a.vystoupeni_count - b.vystoupeni_count

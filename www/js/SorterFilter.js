@@ -105,11 +105,11 @@
           };
         case 'activity-index-desc':
           return function(a, b){
-            return b.activity_index - a.activity_index;
+            return a.activity_index - b.activity_index;
           };
         case 'activity-index-asc':
           return function(a, b){
-            return a.activity_index - b.activity_index;
+            return b.activity_index - a.activity_index;
           };
         case 'vystoupeni-desc':
           return function(a, b){
