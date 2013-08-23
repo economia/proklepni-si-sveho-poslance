@@ -106,14 +106,14 @@
 
     appendPiechart: (row) ->
         radius = list_barchart_height / 2
-        colors = <[ #FC8D59 #91CF60 ]>
+        colors = <[ #91CF60 #FC8D59 ]>
         row.append \svg
             .append \g
                 .attr \transform "translate(#radius, #radius)"
                 .attr \data-tooltip ->
                     "Byl(a) u <strong>#{it.possible_votes_count - it.absence_count}</strong> hlasování z <strong>#{it.possible_votes_count}</strong>"
                 .selectAll \path
-                .data ~> @pie [it.absence_count, it.possible_votes_count - it.absence_count]
+                .data ~> @pie [it.possible_votes_count - it.absence_count, it.absence_count]
                 .enter!
                     ..append \path
                         ..attr \fill (d, i) ->
