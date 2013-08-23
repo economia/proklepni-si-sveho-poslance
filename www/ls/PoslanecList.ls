@@ -110,7 +110,7 @@
 
     appendPiechart: (row) ->
         radius = list_barchart_height / 2
-        colors = <[ #91CF60 #FC8D59 ]>
+        colors = <[ #85BEE6 transparent ]>
         row.append \svg
             .append \g
                 .attr \transform "translate(#radius, #radius)"
@@ -147,11 +147,13 @@
 
         @percentageInvertedScale = d3.scale.linear!
             ..domain [1 0]
-            ..range [1 list_barchart_height]
+            ..range [1 list_barchart_height * 0.9]
         @pie = d3.layout.pie!
+            ..startAngle -> Math.PI * 1.5
+            ..endAngle Math.PI * 3.5
             ..sort -> null
         @pieArc = d3.svg.arc!
-            ..outerRadius list_barchart_height / 2
+            ..outerRadius list_barchart_height * 0.9 / 2
 
     getRowElements: ->
         @container.selectAll "li.poslanec"

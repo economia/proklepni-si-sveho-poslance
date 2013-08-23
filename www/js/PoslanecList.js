@@ -156,7 +156,7 @@
     prototype.appendPiechart = function(row){
       var radius, colors, x$, y$, this$ = this;
       radius = list_barchart_height / 2;
-      colors = ['#91CF60', '#FC8D59'];
+      colors = ['#85BEE6', 'transparent'];
       x$ = row.append('svg').append('g').attr('transform', "translate(" + radius + ", " + radius + ")").attr('data-tooltip', function(it){
         return "Byl(a) u <strong>" + (it.possible_votes_count - it.absence_count) + "</strong> hlasování z <strong>" + it.possible_votes_count + "</strong>";
       }).selectAll('path').data(function(it){
@@ -194,13 +194,17 @@
       z1$.range([1, list_barchart_height]);
       z2$ = this.percentageInvertedScale = d3.scale.linear();
       z2$.domain([1, 0]);
-      z2$.range([1, list_barchart_height]);
+      z2$.range([1, list_barchart_height * 0.9]);
       z3$ = this.pie = d3.layout.pie();
+      z3$.startAngle(function(){
+        return Math.PI * 1.5;
+      });
+      z3$.endAngle(Math.PI * 3.5);
       z3$.sort(function(){
         return null;
       });
       z4$ = this.pieArc = d3.svg.arc();
-      z4$.outerRadius(list_barchart_height / 2);
+      z4$.outerRadius(list_barchart_height * 0.9 / 2);
       return z4$;
     };
     prototype.getRowElements = function(){
