@@ -129,7 +129,7 @@
       z3$ = x$.append('div');
       z3$.attr('class', "vystoupeni bar");
       z3$.attr('data-tooltip', function(it){
-        return "Přednesl(a) projev <strong>" + it.vystoupeni_count + "x</strong>";
+        return "Promluvil(a) <strong>" + it.vystoupeni_count + "x</strong>";
       });
       z4$ = z3$.append('div');
       z4$.style('height', function(it){

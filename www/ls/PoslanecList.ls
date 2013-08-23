@@ -92,7 +92,7 @@
             ..append \div
                 ..attr \class "vystoupeni bar"
                 ..attr \data-tooltip ->
-                    "Přednesl(a) projev <strong>#{it.vystoupeni_count}x</strong>"
+                    "Promluvil(a) <strong>#{it.vystoupeni_count}x</strong>"
                 ..append \div
                     ..style \height ~>
                         "#{@vystoupeniScale it.vystoupeni_count}px"
