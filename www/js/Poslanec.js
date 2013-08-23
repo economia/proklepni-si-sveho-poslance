@@ -12,6 +12,7 @@
       this.interpelace_sum = this.interpelace_source_count + this.interpelace_target_count;
       this.absence_normalized = this.absence_count / this.possible_votes_count;
       this.nazor_normalized = this.nazor_count / this.possible_votes_count;
+      this.notActiveFromStart = this.from_date > 1275696000;
       activities = [this.interpelace_source_count, (1 - this.absence_normalized) * 100, this.nazor_normalized * 100, this.zakony_predkladatel_count, this.vystoupeni_count];
       this.activity_index = activities.reduce(function(curr, prev){
         return prev + curr;
@@ -32,14 +33,14 @@
       if (this.preferencni) {
         supplemental.push("Zvolen(a) preferenčními hlasy");
       }
-      if (this.from_date > 1275696000) {
+      if (this.notActiveFromStart) {
         date = new Date(this.from_date * 1000);
         supplemental.push("V parlamentu od " + date.getDate() + ". " + (date.getMonth() + 1) + ". " + date.getFullYear());
       }
       if (this.to_date) {
         date = new Date(this.to_date * 1000);
         str = "";
-        if (!(this.from_date > 1275696000)) {
+        if (!this.notActiveFromStart) {
           str = "V parlamentu ";
         }
         str += "do " + date.getDate() + ". " + (date.getMonth() + 1) + ". " + date.getFullYear();

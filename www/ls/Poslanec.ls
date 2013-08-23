@@ -4,7 +4,7 @@ window.Poslanec = class Poslanec
         @interpelace_sum    = @interpelace_source_count + @interpelace_target_count
         @absence_normalized = @absence_count / @possible_votes_count
         @nazor_normalized   = @nazor_count / @possible_votes_count
-        @activeFromStart    = @from_date > 1275696000 # 5.6.2010
+        @notActiveFromStart = @from_date > 1275696000 # 5.6.2010
         activities =
             @interpelace_source_count
             (1 - @absence_normalized) * 100
@@ -25,13 +25,13 @@ window.Poslanec = class Poslanec
         supplemental = []
         if @preferencni
             supplemental.push "Zvolen(a) preferenčními hlasy"
-        if @activeFromStart
+        if @notActiveFromStart
             date = new Date @from_date * 1000
             supplemental.push "V parlamentu od #{date.getDate!}. #{date.getMonth! + 1}. #{date.getFullYear!}"
         if @to_date
             date = new Date @to_date * 1000
             str = ""
-            unless @activeFromStart
+            unless @notActiveFromStart
                 str = "V parlamentu "
             str += "do #{date.getDate!}. #{date.getMonth! + 1}. #{date.getFullYear!}"
             supplemental.push str

@@ -152,7 +152,7 @@
           if (miscValues.novacek && !poslanec.novacek) {
             return false;
           }
-          if (miscValues.celeobdobi && poslanec.activeFromStart && !poslanec.to_date) {
+          if (miscValues.celeobdobi && (poslanec.notActiveFromStart || poslanec.to_date)) {
             return false;
           }
           return true;

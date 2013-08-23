@@ -111,7 +111,7 @@ window.SorterFilter = class SorterFilter
                     return false
                 if miscValues.novacek and not poslanec.novacek
                     return false
-                if miscValues.celeobdobi and poslanec.activeFromStart and not poslanec.to_date
+                if miscValues.celeobdobi and (poslanec.notActiveFromStart or poslanec.to_date)
                     return false
                 return true
 
