@@ -141,7 +141,7 @@
       var emText, x$, $element, y$, $list;
       emText = zakony.length ? "Kliknutím přejdete na detail zákona na webu Poslanecké sněmovny" : "Poslanec v daném období žádný zákon nepředložil";
       x$ = $element = $("<div class='zakony'></div>");
-      x$.html("<h3>Zákony</h3><em>" + emText + "</em>");
+      x$.html("<h3>Navržené zákony</h3><em>" + emText + "</em>");
       if (!zakony.length) {
         return $element;
       }

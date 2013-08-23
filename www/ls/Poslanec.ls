@@ -111,7 +111,7 @@ window.Poslanec = class Poslanec
         else
             "Poslanec v daném období žádný zákon nepředložil"
         $element = $ "<div class='zakony'></div>"
-            ..html "<h3>Zákony</h3>
+            ..html "<h3>Navržené zákony</h3>
                     <em>#emText</em>"
         return $element unless zakony.length
         $list = $ "<ul></ul>"
