@@ -44,6 +44,7 @@ window.SorterFilter = class SorterFilter
          $ "<optgroup label='Ostatní'>
             <option value='misc-preferencni'>Zvoleni preferenčními hlasy</option>
             <option value='misc-novacek'>Nově zvolení poslanci</option>
+            <option value='misc-celeobdobi'>Byli poslanci celé období</option>
          </optgroup>"
 
     createSorter: ->
@@ -109,6 +110,8 @@ window.SorterFilter = class SorterFilter
                 if miscValues.preferencni and not poslanec.preferencni
                     return false
                 if miscValues.novacek and not poslanec.novacek
+                    return false
+                if miscValues.celeobdobi and poslanec.activeFromStart and not poslanec.to_date
                     return false
                 return true
 

@@ -62,7 +62,7 @@
       return $krajOptgroup;
     };
     prototype.createMiscSelect = function(){
-      return $("<optgroup label='Ostatní'><option value='misc-preferencni'>Zvoleni preferenčními hlasy</option><option value='misc-novacek'>Nově zvolení poslanci</option></optgroup>");
+      return $("<optgroup label='Ostatní'><option value='misc-preferencni'>Zvoleni preferenčními hlasy</option><option value='misc-novacek'>Nově zvolení poslanci</option><option value='misc-celeobdobi'>Byli poslanci celé období</option></optgroup>");
     };
     prototype.createSorter = function(){
       var $element, x$, y$, this$ = this;
@@ -150,6 +150,9 @@
             return false;
           }
           if (miscValues.novacek && !poslanec.novacek) {
+            return false;
+          }
+          if (miscValues.celeobdobi && poslanec.activeFromStart && !poslanec.to_date) {
             return false;
           }
           return true;
