@@ -99,7 +99,7 @@
             barchart.append \div
                 ..attr \class "absence bar"
                 ..attr \data-tooltip ->
-                    "Byl(a) u <strong>#{Math.round (1-it.absence_normalized)*100}%</strong> hlasování (#{it.absence_count} z #{it.possible_votes_count})"
+                    "Byl(a) u <strong>#{it.possible_votes_count - it.absence_count}</strong> hlasování z <strong>#{it.possible_votes_count}</strong>"
                 ..append \div
                     ..style \height ~>
                         "#{@percentageInvertedScale it.absence_normalized}px"
@@ -110,6 +110,8 @@
         row.append \svg
             .append \g
                 .attr \transform "translate(#radius, #radius)"
+                .attr \data-tooltip ->
+                    "Byl(a) u <strong>#{it.possible_votes_count - it.absence_count}</strong> hlasování z <strong>#{it.possible_votes_count}</strong>"
                 .selectAll \path
                 .data ~> @pie [it.absence_count, it.possible_votes_count - it.absence_count]
                 .enter!
@@ -117,8 +119,6 @@
                         ..attr \fill (d, i) ->
                             colors[i]
                         ..attr \d @pieArc
-
-
 
     getScales: ->
         interpelaceMaximum = Math.max ...@poslanci.map (.interpelace_source_count)

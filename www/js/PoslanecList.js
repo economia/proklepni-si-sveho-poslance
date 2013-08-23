@@ -138,7 +138,7 @@
         z5$ = barchart.append('div');
         z5$.attr('class', "absence bar");
         z5$.attr('data-tooltip', function(it){
-          return "Byl(a) u <strong>" + Math.round((1 - it.absence_normalized) * 100) + "%</strong> hlasování (" + it.absence_count + " z " + it.possible_votes_count + ")";
+          return "Byl(a) u <strong>" + (it.possible_votes_count - it.absence_count) + "</strong> hlasování z <strong>" + it.possible_votes_count + "</strong>";
         });
         z6$ = z5$.append('div');
         z6$.style('height', function(it){
@@ -151,7 +151,9 @@
       var radius, colors, x$, y$, this$ = this;
       radius = list_barchart_height / 2;
       colors = ['#FC8D59', '#91CF60'];
-      x$ = row.append('svg').append('g').attr('transform', "translate(" + radius + ", " + radius + ")").selectAll('path').data(function(it){
+      x$ = row.append('svg').append('g').attr('transform', "translate(" + radius + ", " + radius + ")").attr('data-tooltip', function(it){
+        return "Byl(a) u <strong>" + (it.possible_votes_count - it.absence_count) + "</strong> hlasování z <strong>" + it.possible_votes_count + "</strong>";
+      }).selectAll('path').data(function(it){
         return this$.pie([it.absence_count, it.possible_votes_count - it.absence_count]);
       }).enter();
       y$ = x$.append('path');
