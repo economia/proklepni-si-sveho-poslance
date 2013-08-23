@@ -25,16 +25,18 @@ window.Poslanec = class Poslanec
         supplemental = []
         if @preferencni
             supplemental.push "Zvolen(a) preferenčními hlasy"
-        if @notActiveFromStart
-            date = new Date @from_date * 1000
-            supplemental.push "V parlamentu od #{date.getDate!}. #{date.getMonth! + 1}. #{date.getFullYear!}"
-        if @to_date
-            date = new Date @to_date * 1000
-            str = ""
-            unless @notActiveFromStart
-                str = "V parlamentu "
-            str += "do #{date.getDate!}. #{date.getMonth! + 1}. #{date.getFullYear!}"
-            supplemental.push str
+        if @notActiveFromStart or @to_date
+            date_from = new Date @from_date * 1000
+            date_to = new Date @to_date * 1000
+            supplemental.push switch
+            | @notActiveFromStart and @to_date
+                 "V parlamentu od #{date_from.getDate!}. #{date_from.getMonth! + 1}. #{date_from.getFullYear!} do #date_togetDate!}. #{date_to.getMonth! + 1}. #{date_to.getFullYear!}"
+            | @notActiveFromStart
+                "V parlamentu od #{date_from.getDate!}. #{date_from.getMonth! + 1}. #{date_from.getFullYear!}"
+            | otherwise
+                "V parlamentu do #{date_to.getDate!}. #{date_to.getMonth! + 1}. #{date_to.getFullYear!}"
+        else
+            supplemental.push "V parlamentu celé volební období"
         if @novacek
             supplemental.push "Nově zvolený poslanec"
 

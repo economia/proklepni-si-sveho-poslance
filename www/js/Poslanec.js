@@ -22,7 +22,7 @@
       return this.jmeno + " " + this.prijmeni;
     };
     prototype.onSelect = function(){
-      var x$, $backButton, supplemental, date, str, $header, this$ = this;
+      var x$, $backButton, supplemental, date_from, date_to, $header, this$ = this;
       this.$wrap.addClass('poslanecSelected');
       x$ = $backButton = $("<a href='#' class='backButton'></a>");
       x$.append("<img src='img/back.png' />");
@@ -33,18 +33,21 @@
       if (this.preferencni) {
         supplemental.push("Zvolen(a) preferenčními hlasy");
       }
-      if (this.notActiveFromStart) {
-        date = new Date(this.from_date * 1000);
-        supplemental.push("V parlamentu od " + date.getDate() + ". " + (date.getMonth() + 1) + ". " + date.getFullYear());
-      }
-      if (this.to_date) {
-        date = new Date(this.to_date * 1000);
-        str = "";
-        if (!this.notActiveFromStart) {
-          str = "V parlamentu ";
-        }
-        str += "do " + date.getDate() + ". " + (date.getMonth() + 1) + ". " + date.getFullYear();
-        supplemental.push(str);
+      if (this.notActiveFromStart || this.to_date) {
+        date_from = new Date(this.from_date * 1000);
+        date_to = new Date(this.to_date * 1000);
+        supplemental.push((function(){
+          switch (false) {
+          case !(this.notActiveFromStart && this.to_date):
+            return "V parlamentu od " + date_from.getDate() + ". " + (date_from.getMonth() + 1) + ". " + date_from.getFullYear() + " do " + date_togetDate + "!}. " + (date_to.getMonth() + 1) + ". " + date_to.getFullYear();
+          case !this.notActiveFromStart:
+            return "V parlamentu od " + date_from.getDate() + ". " + (date_from.getMonth() + 1) + ". " + date_from.getFullYear();
+          default:
+            return "V parlamentu do " + date_to.getDate() + ". " + (date_to.getMonth() + 1) + ". " + date_to.getFullYear();
+          }
+        }.call(this)));
+      } else {
+        supplemental.push("V parlamentu celé volební období");
       }
       if (this.novacek) {
         supplemental.push("Nově zvolený poslanec");
