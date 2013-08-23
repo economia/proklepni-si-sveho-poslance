@@ -68,36 +68,7 @@ body #wrap .poslanecList li {
   border-bottom: 2px solid #fff;
   width: 100%;
   height: 60px;
-}
-body #wrap .poslanecList li.ods {
-  background: #eef8ff;
-}
-body #wrap .poslanecList li.ods:hover {
-  background: #d5eeff;
-}
-body #wrap .poslanecList li.cssd {
-  background: #fff6e7;
-}
-body #wrap .poslanecList li.cssd:hover {
-  background: #ffedcf;
-}
-body #wrap .poslanecList li.kscm {
-  background: #ffdde1;
-}
-body #wrap .poslanecList li.kscm:hover {
-  background: #ffc5cc;
-}
-body #wrap .poslanecList li.top {
-  background: #ffecf6;
-}
-body #wrap .poslanecList li.top:hover {
-  background: #ffd3ea;
-}
-body #wrap .poslanecList li.vv {
-  background: #f3fafe;
-}
-body #wrap .poslanecList li.vv:hover {
-  background: #dcf0fc;
+  background: #eee;
 }
 body #wrap .poslanecList li:hover {
   background: #f0f0ff;
