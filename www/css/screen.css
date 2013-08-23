@@ -77,7 +77,7 @@ body #wrap .poslanecList li:hover {
 body #wrap .poslanecList li .name,
 body #wrap .poslanecList li .party {
   display: block;
-  padding-left: 65px;
+  padding-left: 95px;
 }
 body #wrap .poslanecList li .name {
   font-size: 1.2em;
@@ -87,13 +87,29 @@ body #wrap .poslanecList li .name {
 body #wrap .poslanecList li img {
   position: absolute;
   top: 0px;
-  left: 0px;
+  left: 31px;
 }
 body #wrap .poslanecList li .party {
   color: #777;
   font-style: italic;
   font-size: 0.9em;
   padding-top: 2px;
+}
+body #wrap .poslanecList li .order {
+  display: block;
+  position: absolute;
+  bottom: 14px;
+  left: 0px;
+  width: 28px;
+  padding-top: 6px;
+  font-size: 0.72em;
+  height: 22px;
+  border-radius: 50%;
+  -o-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  text-align: center;
 }
 body #wrap .poslanecList li .barchart {
   position: absolute;
@@ -508,4 +524,7 @@ body .chosen-container-single .chosen-single {
 }
 body .chosen-container-single .chosen-single div b {
   background-position: 0px 4px;
+}
+body .chosen-search {
+  display: none;
 }

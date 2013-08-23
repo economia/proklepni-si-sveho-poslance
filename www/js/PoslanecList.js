@@ -72,7 +72,7 @@
       return z2$;
     };
     prototype.decorateRows = function(enterSelection){
-      var x$, row, y$, z$, z1$;
+      var x$, row, y$, z$, z1$, z2$;
       x$ = row = enterSelection.append('li');
       x$.attr('class', function(it){
         return "poslanec " + it.strana.zkratka;
@@ -94,6 +94,11 @@
       z1$ = x$.append('img');
       z1$.attr('src', function(it){
         return "./img/poslanci_thumb/" + it.id + ".png";
+      });
+      z2$ = x$.append('span');
+      z2$.attr('class', 'order');
+      z2$.html(function(poslanec, index){
+        return (index + 1) + ".";
       });
       x$.on('click', function(it){
         return it.onSelect();

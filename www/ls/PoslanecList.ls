@@ -65,6 +65,9 @@
                 ..html (.strana.plny)
             ..append \img
                 ..attr \src -> "./img/poslanci_thumb/#{it.id}.png"
+            ..append \span
+                ..attr \class \order
+                ..html (poslanec, index) -> "#{index+1}."
             ..on \click ->
                 it.onSelect!
         @appendBarchart row
