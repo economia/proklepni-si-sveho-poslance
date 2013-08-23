@@ -25,6 +25,7 @@ body #wrap .rightPart {
   position: absolute;
 }
 body #wrap .rightPart {
+  z-index: 3;
   overflow-y: auto;
   overflow-x: hidden;
 }
