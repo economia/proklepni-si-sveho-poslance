@@ -1,6 +1,6 @@
 poslanciAssoc = window.poslanciAssoc
 window.Poslanec = class Poslanec
-    ({@id, @titul_pred, @prijmeni, @jmeno, @titul_za, @interpelace_source_count, @interpelace_target_count, @absence_count, @nazor_count, @possible_votes_count, @zakony_predkladatel_count, @vystoupeni_count, @kraj, @strana, @preferencni, @from_date, @to_date}, @$wrap, @$parent) ->
+    ({@id, @titul_pred, @prijmeni, @jmeno, @titul_za, @interpelace_source_count, @interpelace_target_count, @absence_count, @nazor_count, @possible_votes_count, @zakony_predkladatel_count, @vystoupeni_count, @kraj, @strana, @preferencni, @novacek, @from_date, @to_date}, @$wrap, @$parent) ->
         @interpelace_sum    = @interpelace_source_count + @interpelace_target_count
         @absence_normalized = @absence_count / @possible_votes_count
         @nazor_normalized   = @nazor_count / @possible_votes_count
@@ -13,9 +13,6 @@ window.Poslanec = class Poslanec
         @activity_index = activities.reduce do
             (curr, prev) -> prev + curr
             0
-        if @from_date > 1275696000 and @to_date
-            console.log @id
-
 
     getName: -> "#{@jmeno} #{@prijmeni}"
 
@@ -37,6 +34,8 @@ window.Poslanec = class Poslanec
                 str = "V parlamentu "
             str += "do #{date.getDate!}. #{date.getMonth! + 1}. #{date.getFullYear!}"
             supplemental.push str
+        if @novacek
+            supplemental.push "Nově zvolený poslanec"
 
         @$parent.html "
             <div class='poslanecDetail party-#{@strana.zkratka}'>

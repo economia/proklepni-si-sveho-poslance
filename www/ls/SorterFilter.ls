@@ -43,6 +43,7 @@ window.SorterFilter = class SorterFilter
     createMiscSelect: ->
          $ "<optgroup label='Ostatní'>
             <option value='misc-preferencni'>Zvoleni preferenčními hlasy</option>
+            <option value='misc-novacek'>Nově zvolení poslanci</option>
          </optgroup>"
 
     createSorter: ->
@@ -106,6 +107,8 @@ window.SorterFilter = class SorterFilter
                 if krajValues.length and poslanec.kraj.id not in krajValues
                     return false
                 if miscValues.preferencni and not poslanec.preferencni
+                    return false
+                if miscValues.novacek and not poslanec.novacek
                     return false
                 return true
 

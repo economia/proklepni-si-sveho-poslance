@@ -6,7 +6,7 @@
     var prototype = Poslanec.prototype, constructor = Poslanec;
     function Poslanec(arg$, $wrap, $parent){
       var activities;
-      this.id = arg$.id, this.titul_pred = arg$.titul_pred, this.prijmeni = arg$.prijmeni, this.jmeno = arg$.jmeno, this.titul_za = arg$.titul_za, this.interpelace_source_count = arg$.interpelace_source_count, this.interpelace_target_count = arg$.interpelace_target_count, this.absence_count = arg$.absence_count, this.nazor_count = arg$.nazor_count, this.possible_votes_count = arg$.possible_votes_count, this.zakony_predkladatel_count = arg$.zakony_predkladatel_count, this.vystoupeni_count = arg$.vystoupeni_count, this.kraj = arg$.kraj, this.strana = arg$.strana, this.preferencni = arg$.preferencni, this.from_date = arg$.from_date, this.to_date = arg$.to_date;
+      this.id = arg$.id, this.titul_pred = arg$.titul_pred, this.prijmeni = arg$.prijmeni, this.jmeno = arg$.jmeno, this.titul_za = arg$.titul_za, this.interpelace_source_count = arg$.interpelace_source_count, this.interpelace_target_count = arg$.interpelace_target_count, this.absence_count = arg$.absence_count, this.nazor_count = arg$.nazor_count, this.possible_votes_count = arg$.possible_votes_count, this.zakony_predkladatel_count = arg$.zakony_predkladatel_count, this.vystoupeni_count = arg$.vystoupeni_count, this.kraj = arg$.kraj, this.strana = arg$.strana, this.preferencni = arg$.preferencni, this.novacek = arg$.novacek, this.from_date = arg$.from_date, this.to_date = arg$.to_date;
       this.$wrap = $wrap;
       this.$parent = $parent;
       this.interpelace_sum = this.interpelace_source_count + this.interpelace_target_count;
@@ -16,9 +16,6 @@
       this.activity_index = activities.reduce(function(curr, prev){
         return prev + curr;
       }, 0);
-      if (this.from_date > 1275696000 && this.to_date) {
-        console.log(this.id);
-      }
     }
     prototype.getName = function(){
       return this.jmeno + " " + this.prijmeni;
@@ -47,6 +44,9 @@
         }
         str += "do " + date.getDate() + ". " + (date.getMonth() + 1) + ". " + date.getFullYear();
         supplemental.push(str);
+      }
+      if (this.novacek) {
+        supplemental.push("Nově zvolený poslanec");
       }
       this.$parent.html("<div class='poslanecDetail party-" + this.strana.zkratka + "'><div class='header'><h2>" + this.titul_pred + " " + this.jmeno + " " + this.prijmeni + " " + this.titul_za + "</h2><h3 class='party'>" + this.strana.plny + " / " + this.kraj.plny + "</h3><h4 class='supplemental'>" + supplemental.join(', ') + "</h4><img class='foto' src='img/poslanci/" + this.id + ".jpg' /><span class='loading'>Prosím strpení, načíají se data...</span></div></div>");
       this.$element = this.$parent.find(".poslanecDetail");
