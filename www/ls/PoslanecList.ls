@@ -68,10 +68,11 @@
             ..on \click ->
                 it.onSelect!
         @appendBarchart row
-        @appendPiechart row
+        if Modernizr.svg
+            @appendPiechart row
 
     appendBarchart: (row) ->
-        row.append \div
+        barchart = row.append \div
             ..attr \class \barchart
             ..append \div
                 ..attr \class "interpelace bar"
@@ -88,19 +89,20 @@
                     ..style \height ~>
                         "#{@zakonyScale it.zakony_predkladatel_count}px"
             ..append \div
-                ..attr \class "absence bar"
-                ..attr \data-tooltip ->
-                    "Byl(a) u <strong>#{Math.round (1-it.absence_normalized)*100}%</strong> hlasování (#{it.absence_count} z #{it.possible_votes_count})"
-                ..append \div
-                    ..style \height ~>
-                        "#{@percentageInvertedScale it.absence_normalized}px"
-            ..append \div
                 ..attr \class "vystoupeni bar"
                 ..attr \data-tooltip ->
                     "Přednesl(a) projev <strong>#{it.vystoupeni_count}x</strong>"
                 ..append \div
                     ..style \height ~>
                         "#{@vystoupeniScale it.vystoupeni_count}px"
+        if not Modernizr.svg
+            barchart.append \div
+                ..attr \class "absence bar"
+                ..attr \data-tooltip ->
+                    "Byl(a) u <strong>#{Math.round (1-it.absence_normalized)*100}%</strong> hlasování (#{it.absence_count} z #{it.possible_votes_count})"
+                ..append \div
+                    ..style \height ~>
+                        "#{@percentageInvertedScale it.absence_normalized}px"
 
     appendPiechart: (row) ->
         radius = list_barchart_height / 2

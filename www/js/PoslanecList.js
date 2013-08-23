@@ -99,11 +99,13 @@
         return it.onSelect();
       });
       this.appendBarchart(row);
-      return this.appendPiechart(row);
+      if (Modernizr.svg) {
+        return this.appendPiechart(row);
+      }
     };
     prototype.appendBarchart = function(row){
-      var x$, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, this$ = this;
-      x$ = row.append('div');
+      var x$, barchart, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, this$ = this;
+      x$ = barchart = row.append('div');
       x$.attr('class', 'barchart');
       y$ = x$.append('div');
       y$.attr('class', "interpelace bar");
@@ -124,24 +126,26 @@
         return this$.zakonyScale(it.zakony_predkladatel_count) + "px";
       });
       z3$ = x$.append('div');
-      z3$.attr('class', "absence bar");
+      z3$.attr('class', "vystoupeni bar");
       z3$.attr('data-tooltip', function(it){
-        return "Byl(a) u <strong>" + Math.round((1 - it.absence_normalized) * 100) + "%</strong> hlasování (" + it.absence_count + " z " + it.possible_votes_count + ")";
+        return "Přednesl(a) projev <strong>" + it.vystoupeni_count + "x</strong>";
       });
       z4$ = z3$.append('div');
       z4$.style('height', function(it){
-        return this$.percentageInvertedScale(it.absence_normalized) + "px";
-      });
-      z5$ = x$.append('div');
-      z5$.attr('class', "vystoupeni bar");
-      z5$.attr('data-tooltip', function(it){
-        return "Přednesl(a) projev <strong>" + it.vystoupeni_count + "x</strong>";
-      });
-      z6$ = z5$.append('div');
-      z6$.style('height', function(it){
         return this$.vystoupeniScale(it.vystoupeni_count) + "px";
       });
-      return x$;
+      if (!Modernizr.svg) {
+        z5$ = barchart.append('div');
+        z5$.attr('class', "absence bar");
+        z5$.attr('data-tooltip', function(it){
+          return "Byl(a) u <strong>" + Math.round((1 - it.absence_normalized) * 100) + "%</strong> hlasování (" + it.absence_count + " z " + it.possible_votes_count + ")";
+        });
+        z6$ = z5$.append('div');
+        z6$.style('height', function(it){
+          return this$.percentageInvertedScale(it.absence_normalized) + "px";
+        });
+        return z5$;
+      }
     };
     prototype.appendPiechart = function(row){
       var radius, colors, x$, y$, this$ = this;

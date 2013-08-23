@@ -136,22 +136,16 @@ body #wrap .poslanecList li .barchart .bar div {
   bottom: 0px;
 }
 body #wrap .poslanecList li .barchart .bar.interpelace {
-  left: 0px;
+  left: 15px;
 }
 body #wrap .poslanecList li .barchart .bar.interpelace div {
   background: #7fc97f;
 }
 body #wrap .poslanecList li .barchart .bar.zakony {
-  left: 15px;
+  left: 30px;
 }
 body #wrap .poslanecList li .barchart .bar.zakony div {
   background: #beaed4;
-}
-body #wrap .poslanecList li .barchart .bar.absence {
-  left: 30px;
-}
-body #wrap .poslanecList li .barchart .bar.absence div {
-  background: #fdc086;
 }
 body #wrap .poslanecList li .barchart .bar.vystoupeni {
   left: 45px;
@@ -159,10 +153,16 @@ body #wrap .poslanecList li .barchart .bar.vystoupeni {
 body #wrap .poslanecList li .barchart .bar.vystoupeni div {
   background: #bf5b17;
 }
+body #wrap .poslanecList li .barchart .bar.absence {
+  left: 0px;
+}
+body #wrap .poslanecList li .barchart .bar.absence div {
+  background: #fdc086;
+}
 body #wrap .poslanecList li svg {
   position: absolute;
   top: 5px;
-  right: 95px;
+  right: 80px;
   width: 60px;
   height: 60px;
 }
