@@ -70,6 +70,7 @@
         @appendBarchart row
         if Modernizr.svg
             @appendPiechart row
+        row
 
     appendBarchart: (row) ->
         barchart = row.append \div

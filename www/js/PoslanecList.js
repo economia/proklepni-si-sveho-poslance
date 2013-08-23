@@ -100,8 +100,9 @@
       });
       this.appendBarchart(row);
       if (Modernizr.svg) {
-        return this.appendPiechart(row);
+        this.appendPiechart(row);
       }
+      return row;
     };
     prototype.appendBarchart = function(row){
       var x$, barchart, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, this$ = this;
