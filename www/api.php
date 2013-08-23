@@ -36,12 +36,26 @@ function generate_jsons() {
 }
 function generate_ordering() {
     mysql_query("UPDATE poslanci SET activity_index=0");
-    $fields = array('interpelace_source_count', 'zakony_predkladatel_count', '(1 - absence_count / possible_votes_count)', 'vystoupeni_count');
+    $fields = array('(1 - absence_count / possible_votes_count)');
     foreach($fields as $field) {
         $result = mysql_query("SELECT id FROM poslanci WHERE poslanec_2010=1 ORDER BY $field DESC");
         $i = 0;
         while($row = mysql_fetch_assoc($result)) {
             mysql_query("UPDATE poslanci SET activity_index=activity_index + $i WHERE id={$row['id']} LIMIT 1");
+            $i++;
+        }
+    }
+    $fields = array(
+        'interpelace_source_count',
+        'zakony_predkladatel_count',
+        'vystoupeni_count'
+    );
+    foreach($fields as $field) {
+        $result = mysql_query("SELECT DISTINCT $field FROM poslanci WHERE poslanec_2010=1 ORDER BY $field DESC");
+        $i = 0;
+        while($row = mysql_fetch_row($result)) {
+            $value = $row[0];
+            mysql_query("UPDATE poslanci SET activity_index=activity_index + $i WHERE ($field)={$value}");
             $i++;
         }
     }
