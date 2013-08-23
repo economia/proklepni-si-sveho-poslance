@@ -65,7 +65,7 @@
         $header.append(this$.displayContentButtons());
         z$ = this$.$contentElement = $("<div class='content'></div>");
         z$.appendTo(this$.$element);
-        return z$;
+        return _gaq.push(['_trackEvent', 'proklepni-poslance', 'poslanec', this$.prijmeni + ""]);
       });
     };
     prototype.loadData = function(cb){
@@ -86,33 +86,37 @@
       x$.append("Vystoupení");
       x$.appendTo($container);
       x$.on('click', function(){
-        return this$.displayContent({
+        this$.displayContent({
           vystoupeni: vystoupeni
         });
+        return _gaq.push(['_trackEvent', 'proklepni-poslance', 'poslanec-allEvents', "vystoupeni"]);
       });
       y$ = $("<button class='interpelace'></button>");
       y$.append("Interpelace");
       y$.appendTo($container);
       y$.on('click', function(){
-        return this$.displayContent({
+        this$.displayContent({
           interpelace: interpelace
         });
+        return _gaq.push(['_trackEvent', 'proklepni-poslance', 'poslanec-allEvents', "interpelace"]);
       });
       z$ = $("<button class='zakony'></button>");
       z$.append("Zákony");
       z$.appendTo($container);
       z$.on('click', function(){
-        return this$.displayContent({
+        this$.displayContent({
           zakony: zakony
         });
+        return _gaq.push(['_trackEvent', 'proklepni-poslance', 'poslanec-allEvents', "zakony"]);
       });
       z1$ = $("<button class='hlasovani'></button>");
       z1$.append("Hlasování");
       z1$.appendTo($container);
       z1$.on('click', function(){
-        return this$.displayContent({
+        this$.displayContent({
           hlasovani: hlasovani
         });
+        return _gaq.push(['_trackEvent', 'proklepni-poslance', 'poslanec-allEvents', "hlasovani"]);
       });
       return $container;
     };
@@ -304,7 +308,10 @@
         return "rgb(" + finalColor.join(',') + ")";
       });
       x$.on('click', function(it){
-        return typeof this$.onMonthSelected === 'function' ? this$.onMonthSelected(it) : void 8;
+        if (typeof this$.onMonthSelected === 'function') {
+          this$.onMonthSelected(it);
+        }
+        return _gaq.push(['_trackEvent', 'proklepni-poslance', 'poslanec-month']);
       });
     }
     prototype.createLegend = function(){

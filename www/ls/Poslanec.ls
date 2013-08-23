@@ -59,6 +59,7 @@ window.Poslanec = class Poslanec
         $header.append @displayContentButtons!
         @$contentElement = $ "<div class='content'></div>"
             ..appendTo @$element
+        _gaq.push ['_trackEvent' 'proklepni-poslance' 'poslanec' "#{@prijmeni}"]
 
     loadData: (cb) ->
         (err, data) <~ d3.json "../data/json/#{@id}.json"
@@ -73,19 +74,27 @@ window.Poslanec = class Poslanec
         $ "<button class='vystoupeni'></button>"
             ..append "Vystoupení"
             ..appendTo $container
-            ..on \click ~> @displayContent {vystoupeni}
+            ..on \click ~>
+                @displayContent {vystoupeni}
+                _gaq.push ['_trackEvent' 'proklepni-poslance' 'poslanec-allEvents' "vystoupeni"]
         $ "<button class='interpelace'></button>"
             ..append "Interpelace"
             ..appendTo $container
-            ..on \click ~> @displayContent {interpelace}
+            ..on \click ~>
+                @displayContent {interpelace}
+                _gaq.push ['_trackEvent' 'proklepni-poslance' 'poslanec-allEvents' "interpelace"]
         $ "<button class='zakony'></button>"
             ..append "Zákony"
             ..appendTo $container
-            ..on \click ~> @displayContent {zakony}
+            ..on \click ~>
+                @displayContent {zakony}
+                _gaq.push ['_trackEvent' 'proklepni-poslance' 'poslanec-allEvents' "zakony"]
         $ "<button class='hlasovani'></button>"
             ..append "Hlasování"
             ..appendTo $container
-            ..on \click ~> @displayContent {hlasovani}
+            ..on \click ~>
+                @displayContent {hlasovani}
+                _gaq.push ['_trackEvent' 'proklepni-poslance' 'poslanec-allEvents' "hlasovani"]
 
         $container
 
@@ -255,6 +264,7 @@ class Calendar
                         "rgb(#{finalColor.join ','})"
                 ..on \click ~>
                     @onMonthSelected? it
+                    _gaq.push ['_trackEvent' 'proklepni-poslance' 'poslanec-month']
     createLegend: ->
         [@firstYear, @lastYear].forEach (year, index) ~>
             @$element.append "<div class='yearLegend y-#index'>#year</div>"
