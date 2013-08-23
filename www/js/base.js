@@ -48,6 +48,9 @@
       return poslanciAssoc[it.id] = poslanec = new Poslanec(it, $wrap, $rightPart);
     });
     poslanci.sort(sorterFilter.sortFunction);
+    poslanci.forEach(function(poslanec, index){
+      return poslanec.index = index;
+    });
     return poslanecList = new PoslanecList('.leftPart', poslanci, sorterFilter);
   });
 }).call(this);

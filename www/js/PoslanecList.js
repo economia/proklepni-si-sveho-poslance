@@ -98,7 +98,7 @@
       z2$ = x$.append('span');
       z2$.attr('class', 'order');
       z2$.html(function(poslanec, index){
-        return (index + 1) + ".";
+        return (poslanec.index + 1) + ".";
       });
       x$.on('click', function(it){
         return it.onSelect();

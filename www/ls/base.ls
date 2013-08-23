@@ -22,6 +22,7 @@ poslanci = data.poslanci.map ->
     it.strana = strany[it.strana_id]
     poslanciAssoc[it.id] = poslanec = new Poslanec it, $wrap, $rightPart
 poslanci.sort sorterFilter.sortFunction
+poslanci.forEach (poslanec, index) -> poslanec.index = index
 poslanecList = new PoslanecList do
     \.leftPart
     poslanci
