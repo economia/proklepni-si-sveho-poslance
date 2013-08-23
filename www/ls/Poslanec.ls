@@ -137,7 +137,7 @@ window.Poslanec = class Poslanec
             date = new Date interpelaca.datum*1000
             targetPoslanec = poslanciAssoc[interpelaca.ministr_id]?.getName!
             if not targetPoslanec then targetPoslanec = "(neznámý)"
-            dateString = "#{date.getDate!} #{date.getMonth! + 1} #{date.getFullYear!}"
+            dateString = "#{date.getDate!}. #{date.getMonth! + 1}. #{date.getFullYear!}"
             $ "<li></li>"
                 ..html "<span class='date'>#dateString, </span>
                     <span class='target'>#targetPoslanec: </span>

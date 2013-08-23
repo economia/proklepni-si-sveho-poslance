@@ -173,7 +173,7 @@
         if (!targetPoslanec) {
           targetPoslanec = "(neznámý)";
         }
-        dateString = date.getDate() + " " + (date.getMonth() + 1) + " " + date.getFullYear();
+        dateString = date.getDate() + ". " + (date.getMonth() + 1) + ". " + date.getFullYear();
         x$ = $("<li></li>");
         x$.html("<span class='date'>" + dateString + ", </span><span class='target'>" + targetPoslanec + ": </span><span class='vec'>" + interpelaca.vec + "</span>");
         x$.appendTo($list);
