@@ -72,8 +72,8 @@
       return z2$;
     };
     prototype.decorateRows = function(enterSelection){
-      var x$, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, z7$, z8$, z9$, z10$, this$ = this;
-      x$ = enterSelection.append('li');
+      var x$, row, y$, z$, z1$;
+      x$ = row = enterSelection.append('li');
       x$.attr('class', function(it){
         return "poslanec " + it.strana.zkratka;
       });
@@ -95,46 +95,50 @@
       z1$.attr('src', function(it){
         return "./img/poslanci_thumb/" + it.id + ".png";
       });
-      z2$ = x$.append('div');
-      z2$.attr('class', 'barchart');
-      z3$ = z2$.append('div');
-      z3$.attr('class', "interpelace bar");
-      z3$.attr('data-tooltip', function(it){
+      x$.on('click', function(it){
+        return it.onSelect();
+      });
+      return this.appendBarchart(row);
+    };
+    prototype.appendBarchart = function(row){
+      var x$, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, this$ = this;
+      x$ = row.append('div');
+      x$.attr('class', 'barchart');
+      y$ = x$.append('div');
+      y$.attr('class', "interpelace bar");
+      y$.attr('data-tooltip', function(it){
         return escape("Interpeloval(a) <strong>" + it.interpelace_sum + "</strong>x");
+      });
+      z$ = y$.append('div');
+      z$.style('height', function(it){
+        return this$.interpelaceScale(it.interpelace_source_count) + "px";
+      });
+      z1$ = x$.append('div');
+      z1$.attr('class', "zakony bar");
+      z1$.attr('data-tooltip', function(it){
+        return escape("Předložil(a) <strong>" + it.zakony_predkladatel_count + "</strong> zákonů");
+      });
+      z2$ = z1$.append('div');
+      z2$.style('height', function(it){
+        return this$.zakonyScale(it.zakony_predkladatel_count) + "px";
+      });
+      z3$ = x$.append('div');
+      z3$.attr('class', "absence bar");
+      z3$.attr('data-tooltip', function(it){
+        return "Byl(a) u <strong>" + Math.round((1 - it.absence_normalized) * 100) + "%</strong> hlasování (" + it.absence_count + " z " + it.possible_votes_count + ")";
       });
       z4$ = z3$.append('div');
       z4$.style('height', function(it){
-        return this$.interpelaceScale(it.interpelace_source_count) + "px";
+        return this$.percentageInvertedScale(it.absence_normalized) + "px";
       });
-      z5$ = z2$.append('div');
-      z5$.attr('class', "zakony bar");
+      z5$ = x$.append('div');
+      z5$.attr('class', "vystoupeni bar");
       z5$.attr('data-tooltip', function(it){
-        return escape("Předložil(a) <strong>" + it.zakony_predkladatel_count + "</strong> zákonů");
+        return "Přednesl(a) projev <strong>" + it.vystoupeni_count + "x</strong>";
       });
       z6$ = z5$.append('div');
       z6$.style('height', function(it){
-        return this$.zakonyScale(it.zakony_predkladatel_count) + "px";
-      });
-      z7$ = z2$.append('div');
-      z7$.attr('class', "absence bar");
-      z7$.attr('data-tooltip', function(it){
-        return "Byl(a) u <strong>" + Math.round((1 - it.absence_normalized) * 100) + "%</strong> hlasování (" + it.absence_count + " z " + it.possible_votes_count + ")";
-      });
-      z8$ = z7$.append('div');
-      z8$.style('height', function(it){
-        return this$.percentageInvertedScale(it.absence_normalized) + "px";
-      });
-      z9$ = z2$.append('div');
-      z9$.attr('class', "vystoupeni bar");
-      z9$.attr('data-tooltip', function(it){
-        return "Přednesl(a) projev <strong>" + it.vystoupeni_count + "x</strong>";
-      });
-      z10$ = z9$.append('div');
-      z10$.style('height', function(it){
         return this$.vystoupeniScale(it.vystoupeni_count) + "px";
-      });
-      x$.on('click', function(it){
-        return it.onSelect();
       });
       return x$;
     };
