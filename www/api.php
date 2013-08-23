@@ -62,6 +62,8 @@ function get_poslanci_list() {
         $row['possible_votes_count']      = (int)$row['possible_votes_count'];
         $row['kraj_id']                   = (int)$row['kraj_id'];
         $row['strana_id']                 = (int)$row['strana_id'];
+        $row['from_date']                 = (int)$row['from_date'];
+        $row['to_date']                   = (int)$row['to_date'];
         $r[] = $row;
     }
     return $r;
