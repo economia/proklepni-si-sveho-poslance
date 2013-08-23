@@ -187,7 +187,8 @@ body #wrap.poslanecSelected .leftPart {
   -webkit-transform: translate(-630px, 0px);
   overflow: hidden;
 }
-body #wrap.poslanecSelected .leftPart .poslanecList .barchart {
+body #wrap.poslanecSelected .leftPart .poslanecList .barchart,
+body #wrap.poslanecSelected .leftPart .poslanecList svg {
   display: none;
 }
 body #wrap.poslanecSelected .rightPart {
