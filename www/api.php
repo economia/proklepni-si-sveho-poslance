@@ -1,6 +1,6 @@
 <?php
 $config = require('./config.php');
-$allowed_methods = array('poslanci');
+$allowed_methods = array('poslanci', 'generate_jsons');
 $request = array();
 mysql_connect($config['db_host'], $config['db_user'], $config['db_pass']);
 mysql_select_db($config['db_name']);
@@ -8,14 +8,6 @@ mysql_query("SET CHARACTER SET utf8");
 
 if(isset($_GET['get'])) {
     $request = explode('/', $_GET['get']);
-} else {
-    $result = mysql_query("SELECT id FROM poslanci WHERE poslanec_2010=1");
-    while($row = mysql_fetch_assoc($result)) {
-        $id = $row['id'];
-        file_put_contents("../data/json/$id.json", file_get_contents("http://127.0.0.1/proklepni-si-poslance/www/api.php?get=poslanci/$id"));
-    }
-    file_put_contents("../data/json/list.json", file_get_contents("http://127.0.0.1/proklepni-si-poslance/www/api.php?get=poslanci"));
-    die();
 }
 if(in_array($request[0], $allowed_methods)) {
     $method = array_shift($request);
@@ -33,6 +25,14 @@ function poslanci($params) {
     } else {
         return get_poslanec(array_shift($params), $params);
     }
+}
+function generate_jsons() {
+    $result = mysql_query("SELECT id FROM poslanci WHERE poslanec_2010=1");
+    while($row = mysql_fetch_assoc($result)) {
+        $id = $row['id'];
+        file_put_contents("../data/json/$id.json", file_get_contents("http://127.0.0.1/proklepni-si-poslance/www/api.php?get=poslanci/$id"));
+    }
+    file_put_contents("../data/json/list.json", file_get_contents("http://127.0.0.1/proklepni-si-poslance/www/api.php?get=poslanci"));
 }
 function get_strany_list() {
     $result = mysql_query("SELECT * FROM strany");
