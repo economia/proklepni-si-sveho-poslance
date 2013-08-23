@@ -28,7 +28,7 @@
       x$ = this.getRowElements().sort(this.sorterFilter.sortFunction).transition();
       x$.duration(800);
       x$.style('top', function(item, index){
-        return index * list_item_height + "px";
+        return (index * list_item_height + list_item_offset) + "px";
       });
       return x$;
     };
@@ -42,7 +42,7 @@
       y$.delay(600);
       y$.duration(800);
       y$.style('top', function(item, index){
-        return index * list_item_height + "px";
+        return (index * list_item_height + list_item_offset) + "px";
       });
       z$ = x$.exit();
       z$.classed('poslanec', false);
@@ -78,7 +78,7 @@
         return "poslanec " + it.strana.zkratka;
       });
       x$.style('top', function(item, index){
-        return index * list_item_height + "px";
+        return (index * list_item_height + list_item_offset) + "px";
       });
       x$.style('left', "0%");
       y$ = x$.append('span');

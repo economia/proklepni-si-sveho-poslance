@@ -23,14 +23,14 @@ body #wrap .leftPart,
 body #wrap .rightPart {
   height: 500px;
   position: absolute;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 body #wrap .filter {
   position: absolute;
   top: 0px;
   left: 0px;
   width: 630px;
+  background: #fff;
+  z-index: 2;
 }
 body #wrap .filter div.party {
   float: left;
@@ -45,8 +45,12 @@ body #wrap .filter div.sort {
 }
 body #wrap .poslanecList {
   position: absolute;
+  z-index: 1;
   left: 0px;
-  top: 35px;
+  top: 0px;
+  height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
   width: 650px;
 }
 body #wrap .poslanecList {

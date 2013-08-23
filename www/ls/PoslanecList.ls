@@ -20,14 +20,14 @@
             .sort @sorterFilter.sortFunction
             .transition!
                 ..duration 800
-                ..style \top (item, index) -> "#{index * list_item_height}px"
+                ..style \top (item, index) -> "#{index * list_item_height + list_item_offset}px"
     reFilter: ->
         @currentData = @poslanci.filter @sorterFilter.filterFunction
         sel = @getRowElements! .data @currentData, (.id)
             ..transition!
                 ..delay 600
                 ..duration 800
-                ..style \top (item, index) -> "#{index * list_item_height}px"
+                ..style \top (item, index) -> "#{index * list_item_height + list_item_offset}px"
             ..exit!
                 ..classed \poslanec false
                 ..transition!
@@ -55,7 +55,7 @@
     decorateRows: (enterSelection) ->
         row = enterSelection.append \li
             ..attr \class -> "poslanec #{it.strana.zkratka}"
-            ..style \top (item, index) -> "#{index * list_item_height}px"
+            ..style \top (item, index) -> "#{index * list_item_height + list_item_offset}px"
             ..style \left "0%"
             ..append \span
                 ..attr \class \name

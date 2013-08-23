@@ -1,4 +1,5 @@
 window.list_item_height     = 62
+window.list_item_offset     = 35
 window.list_barchart_height = 50
 window.tooltip              = new Tooltip!watchElements!
 window.poslanciAssoc        = {}
