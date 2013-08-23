@@ -237,7 +237,7 @@ body #wrap .poslanecDetail .header {
 }
 body #wrap .poslanecDetail .header img.foto {
   float: right;
-  margin-top: 15px;
+  margin-top: 11px;
 }
 body #wrap .poslanecDetail .header a.backButton {
   position: absolute;
@@ -287,6 +287,7 @@ body #wrap .poslanecDetail .header h4.supplemental {
 }
 body #wrap .poslanecDetail .header em.calendarLegend {
   font-size: 0.9em;
+  line-height: 1.1em;
   width: 380px;
   display: block;
 }
