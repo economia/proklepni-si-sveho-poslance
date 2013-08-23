@@ -61,7 +61,7 @@ window.Poslanec = class Poslanec
             ..appendTo @$element
 
     loadData: (cb) ->
-        (err, data) <~ d3.json "./api.php?get=poslanci/#{@id}"
+        (err, data) <~ d3.json "../data/json/#{@id}.json"
         data.zakony.map ->
             it.nazev = unescape it.nazev
             it

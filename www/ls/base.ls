@@ -10,7 +10,7 @@ window.Kraj = class Kraj
     ({@id, @nazev, @plny}) ->
 
 
-(err, data) <~ d3.json "./api.php?get=poslanci"
+(err, data) <~ d3.json "../data/json/list.json"
 kraje  = data.kraje.map  -> if it then new Kraj it   else null
 strany = data.strany.map -> if it then new Strana it else null
 $wrap = $ \#wrap

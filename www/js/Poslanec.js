@@ -70,7 +70,7 @@
     };
     prototype.loadData = function(cb){
       var this$ = this;
-      return d3.json("./api.php?get=poslanci/" + this.id, function(err, data){
+      return d3.json("../data/json/" + this.id + ".json", function(err, data){
         data.zakony.map(function(it){
           it.nazev = unescape(it.nazev);
           return it;

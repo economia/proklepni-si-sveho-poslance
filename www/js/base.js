@@ -21,7 +21,7 @@
     }
     return Kraj;
   }());
-  d3.json("./api.php?get=poslanci", function(err, data){
+  d3.json("../data/json/list.json", function(err, data){
     var kraje, strany, $wrap, $rightPart, x$, sorterFilter, poslanci, poslanecList;
     kraje = data.kraje.map(function(it){
       if (it) {
