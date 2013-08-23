@@ -24,6 +24,10 @@ body #wrap .rightPart {
   height: 500px;
   position: absolute;
 }
+body #wrap .rightPart {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 body #wrap .filter {
   position: absolute;
   top: 0px;
@@ -189,6 +193,8 @@ body #wrap.poslanecSelected .leftPart {
   -ms-transform: translate(-630px, 0px);
   -moz-transform: translate(-630px, 0px);
   -webkit-transform: translate(-630px, 0px);
+}
+body #wrap.poslanecSelected .leftPart .poslanecList {
   overflow: hidden;
 }
 body #wrap.poslanecSelected .leftPart .poslanecList .barchart,

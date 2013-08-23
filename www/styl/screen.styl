@@ -20,6 +20,9 @@ body
         .rightPart
             height 500px
             position absolute
+        .rightPart
+            overflow-y auto
+            overflow-x hidden
 
         .filter
             position absolute
@@ -58,8 +61,8 @@ body
         &.poslanecSelected
             .leftPart
                 transform translate(-630px, 0px)
-                overflow hidden
                 .poslanecList
+                    overflow hidden
                     .barchart
                     svg
                         display none
