@@ -98,7 +98,8 @@
       x$.on('click', function(it){
         return it.onSelect();
       });
-      return this.appendBarchart(row);
+      this.appendBarchart(row);
+      return this.appendPiechart(row);
     };
     prototype.appendBarchart = function(row){
       var x$, y$, z$, z1$, z2$, z3$, z4$, z5$, z6$, this$ = this;
@@ -142,8 +143,22 @@
       });
       return x$;
     };
+    prototype.appendPiechart = function(row){
+      var radius, colors, x$, y$, this$ = this;
+      radius = list_barchart_height / 2;
+      colors = ['#FC8D59', '#91CF60'];
+      x$ = row.append('svg').append('g').attr('transform', "translate(" + radius + ", " + radius + ")").selectAll('path').data(function(it){
+        return this$.pie([it.absence_count, it.possible_votes_count - it.absence_count]);
+      }).enter();
+      y$ = x$.append('path');
+      y$.attr('fill', function(d, i){
+        return colors[i];
+      });
+      y$.attr('d', this.pieArc);
+      return x$;
+    };
     prototype.getScales = function(){
-      var interpelaceMaximum, x$, zakonyMaximum, y$, vystoupeniMaximum, z$, z1$, z2$;
+      var interpelaceMaximum, x$, zakonyMaximum, y$, vystoupeniMaximum, z$, z1$, z2$, z3$, z4$;
       interpelaceMaximum = Math.max.apply(Math, this.poslanci.map(function(it){
         return it.interpelace_source_count;
       }));
@@ -168,7 +183,13 @@
       z2$ = this.percentageInvertedScale = d3.scale.linear();
       z2$.domain([1, 0]);
       z2$.range([1, list_barchart_height]);
-      return z2$;
+      z3$ = this.pie = d3.layout.pie();
+      z3$.sort(function(){
+        return null;
+      });
+      z4$ = this.pieArc = d3.svg.arc();
+      z4$.outerRadius(list_barchart_height / 2);
+      return z4$;
     };
     prototype.getRowElements = function(){
       return this.container.selectAll("li.poslanec");

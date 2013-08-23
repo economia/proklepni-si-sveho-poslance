@@ -159,6 +159,13 @@ body #wrap .poslanecList li .barchart .bar.vystoupeni {
 body #wrap .poslanecList li .barchart .bar.vystoupeni div {
   background: #bf5b17;
 }
+body #wrap .poslanecList li svg {
+  position: absolute;
+  top: 5px;
+  right: 95px;
+  width: 60px;
+  height: 60px;
+}
 body #wrap .rightPart {
   background: #fff;
   width: 620px;

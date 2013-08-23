@@ -68,6 +68,7 @@
             ..on \click ->
                 it.onSelect!
         @appendBarchart row
+        @appendPiechart row
 
     appendBarchart: (row) ->
         row.append \div
@@ -101,6 +102,22 @@
                     ..style \height ~>
                         "#{@vystoupeniScale it.vystoupeni_count}px"
 
+    appendPiechart: (row) ->
+        radius = list_barchart_height / 2
+        colors = <[ #FC8D59 #91CF60 ]>
+        row.append \svg
+            .append \g
+                .attr \transform "translate(#radius, #radius)"
+                .selectAll \path
+                .data ~> @pie [it.absence_count, it.possible_votes_count - it.absence_count]
+                .enter!
+                    ..append \path
+                        ..attr \fill (d, i) ->
+                            colors[i]
+                        ..attr \d @pieArc
+
+
+
     getScales: ->
         interpelaceMaximum = Math.max ...@poslanci.map (.interpelace_source_count)
         @interpelaceScale = d3.scale.linear!
@@ -125,6 +142,10 @@
         @percentageInvertedScale = d3.scale.linear!
             ..domain [1 0]
             ..range [1 list_barchart_height]
+        @pie = d3.layout.pie!
+            ..sort -> null
+        @pieArc = d3.svg.arc!
+            ..outerRadius list_barchart_height / 2
 
     getRowElements: ->
         @container.selectAll "li.poslanec"
