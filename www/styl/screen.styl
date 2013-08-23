@@ -59,6 +59,20 @@ body
             transform translate(650px, 0px)
             transition 0.4s
             visibility hidden
+        #foot
+            position absolute
+            top 501px
+            left 0px
+            width 640px
+            .copy
+                float left
+                font-size 0.8em
+                margin-top 7px
+                a
+                    color HNLink
+            .legend
+                position absolute
+                right 0px
         &.poslanecSelected
             .leftPart
                 transform translate(-630px, 0px)
@@ -72,6 +86,8 @@ body
                 transform translate(20px, 0px)
                 .backButton
                     transform rotate(0)
+            #foot .legend
+                display none
         .poslanecDetail
             .backButton
                 transition 0.5s

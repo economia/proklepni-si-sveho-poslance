@@ -175,6 +175,24 @@ body #wrap .rightPart {
   transition: 0.4s;
   visibility: hidden;
 }
+body #wrap #foot {
+  position: absolute;
+  top: 501px;
+  left: 0px;
+  width: 640px;
+}
+body #wrap #foot .copy {
+  float: left;
+  font-size: 0.8em;
+  margin-top: 7px;
+}
+body #wrap #foot .copy a {
+  color: #174f82;
+}
+body #wrap #foot .legend {
+  position: absolute;
+  right: 0px;
+}
 body #wrap.poslanecSelected .leftPart {
   transform: translate(-630px, 0px);
   -o-transform: translate(-630px, 0px);
@@ -203,6 +221,9 @@ body #wrap.poslanecSelected .rightPart .backButton {
   -ms-transform: rotate(0);
   -moz-transform: rotate(0);
   -webkit-transform: rotate(0);
+}
+body #wrap.poslanecSelected #foot .legend {
+  display: none;
 }
 body #wrap .poslanecDetail .backButton {
   transition: 0.5s;
