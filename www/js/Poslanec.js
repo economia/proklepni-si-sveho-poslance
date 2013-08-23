@@ -39,7 +39,7 @@
         supplemental.push((function(){
           switch (false) {
           case !(this.notActiveFromStart && this.to_date):
-            return "V parlamentu od " + date_from.getDate() + ". " + (date_from.getMonth() + 1) + ". " + date_from.getFullYear() + " do " + date_togetDate + "!}. " + (date_to.getMonth() + 1) + ". " + date_to.getFullYear();
+            return "V parlamentu od " + date_from.getDate() + ". " + (date_from.getMonth() + 1) + ". " + date_from.getFullYear() + " do " + date_to + ".getDate!}. " + (date_to.getMonth() + 1) + ". " + date_to.getFullYear();
           case !this.notActiveFromStart:
             return "V parlamentu od " + date_from.getDate() + ". " + (date_from.getMonth() + 1) + ". " + date_from.getFullYear();
           default:

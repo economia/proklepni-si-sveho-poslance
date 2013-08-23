@@ -30,7 +30,7 @@ window.Poslanec = class Poslanec
             date_to = new Date @to_date * 1000
             supplemental.push switch
             | @notActiveFromStart and @to_date
-                 "V parlamentu od #{date_from.getDate!}. #{date_from.getMonth! + 1}. #{date_from.getFullYear!} do #date_togetDate!}. #{date_to.getMonth! + 1}. #{date_to.getFullYear!}"
+                 "V parlamentu od #{date_from.getDate!}. #{date_from.getMonth! + 1}. #{date_from.getFullYear!} do #date_to.getDate!}. #{date_to.getMonth! + 1}. #{date_to.getFullYear!}"
             | @notActiveFromStart
                 "V parlamentu od #{date_from.getDate!}. #{date_from.getMonth! + 1}. #{date_from.getFullYear!}"
             | otherwise
