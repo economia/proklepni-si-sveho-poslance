@@ -47,7 +47,7 @@
       if (this.novacek) {
         supplemental.push("Nově zvolený poslanec");
       }
-      this.$parent.html("<div class='poslanecDetail party-" + this.strana.zkratka + "'><div class='header'><h2>" + this.titul_pred + " " + this.jmeno + " " + this.prijmeni + " " + this.titul_za + "</h2><h3 class='party'>" + this.strana.plny + " / " + this.kraj.plny + "</h3><h4 class='supplemental'>" + supplemental.join(', ') + "</h4><img class='foto' src='img/poslanci/" + this.id + ".jpg' /><span class='loading'>Prosím strpení, načíají se data...</span></div></div>");
+      this.$parent.html("<div class='poslanecDetail party-" + this.strana.zkratka + "'><div class='header'><h2>" + this.titul_pred + " " + this.jmeno + " " + this.prijmeni + " " + this.titul_za + "</h2><h3 class='party'>" + this.strana.plny + " / " + this.kraj.plny + "</h3><h4 class='supplemental'>" + supplemental.join(', ') + "</h4><img class='foto' src='img/poslanci/" + this.id + ".jpg' /><span class='loading'>Prosím strpení, načítají se data...</span></div></div>");
       this.$element = this.$parent.find(".poslanecDetail");
       $header = this.$element.find(".header");
       $backButton.prependTo($header);

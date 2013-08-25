@@ -38,7 +38,7 @@ window.Poslanec = class Poslanec
                     <h3 class='party'>#{@strana.plny} / #{@kraj.plny}</h3>
                     <h4 class='supplemental'>#{supplemental.join ', '}</h4>
                     <img class='foto' src='img/poslanci/#{@id}.jpg' />
-                    <span class='loading'>Prosím strpení, načíají se data...</span>
+                    <span class='loading'>Prosím strpení, načítají se data...</span>
                 </div>
             </div>
         "
