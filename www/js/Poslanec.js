@@ -286,7 +286,7 @@
         return (it.year - this$.firstYear) * monthHeight + "px";
       });
       x$.attr('data-tooltip', function(it){
-        return escape("<strong>" + it.humanName + " " + it.year + "</strong><br />Zákony:      <strong>" + it.zakony.length + "</strong><br />Interpelace: <strong>" + it.interpelace.length + "</strong><br />Vystoupení:  <strong>" + it.vystoupeni.length + "</strong><br />Hlasování:  <strong>" + it.hlasovani.length + "</strong>");
+        return escape("<strong>" + it.humanName + " " + it.year + "</strong><br />Zákony:      <strong>" + it.zakony.length + "</strong><br />Interpelace: <strong>" + it.interpelace.length + "</strong><br />Vystoupení:  <strong>" + it.vystoupeni.length + "</strong><br />Hlasování:  <strong>" + it.hlasovani_platne.length + "</strong>");
       });
       y$ = x$.append('div');
       y$.style('background', function(it){
@@ -294,7 +294,7 @@
         zakonyScore = it.zakony.length / this$.zakonyMax * it.zakony.length / it.totalEvents;
         vystoupeniScore = it.vystoupeni.length / this$.vystoupeniMax * it.vystoupeni.length / it.totalEvents;
         interpelaceScore = it.interpelace.length / this$.interpelaceMax * it.interpelace.length / it.totalEvents;
-        hlasovaniScore = it.hlasovani.length / this$.hlasovaniMax * it.hlasovani.length / it.totalEvents;
+        hlasovaniScore = it.hlasovani_platne.length / this$.hlasovaniMax * it.hlasovani_platne.length / it.totalEvents;
         totalScore = zakonyScore + vystoupeniScore + interpelaceScore;
         finalColor = backgroundColor.map(function(defaultLight, index){
           var color;
@@ -393,15 +393,20 @@
     prototype.populateHlasovani = function(){
       var this$ = this;
       return this.hlasovani.forEach(function(hlas){
-        var date, id, len, ref$;
+        var date, id, ref$, len;
         date = new Date(hlas.datum * 1000);
         id = date.getFullYear() + "-" + date.getMonth();
-        len = (ref$ = this$.monthsAssoc[id]) != null ? ref$.hlasovani.push(hlas) : void 8;
         if ((ref$ = this$.monthsAssoc[id]) != null) {
-          ref$.totalEvents++;
+          ref$.hlasovani.push(hlas);
         }
-        if (len > this$.hlasovaniMax) {
-          return this$.hlasovaniMax = len;
+        if ((ref$ = hlas.vysledek) != '@' && ref$ != 'M') {
+          len = (ref$ = this$.monthsAssoc[id]) != null ? ref$.hlasovani_platne.push(hlas) : void 8;
+          if ((ref$ = this$.monthsAssoc[id]) != null) {
+            ref$.totalEvents++;
+          }
+          if (len > this$.hlasovaniMax) {
+            return this$.hlasovaniMax = len;
+          }
         }
       });
     };
@@ -420,6 +425,7 @@
       this.interpelace = [];
       this.vystoupeni = [];
       this.hlasovani = [];
+      this.hlasovani_platne = [];
       this.totalEvents = 1;
     }
     return Month;

@@ -245,14 +245,14 @@ class Calendar
                         Zákony:      <strong>#{it.zakony.length}</strong><br />
                         Interpelace: <strong>#{it.interpelace.length}</strong><br />
                         Vystoupení:  <strong>#{it.vystoupeni.length}</strong><br />
-                        Hlasování:  <strong>#{it.hlasovani.length}</strong>
+                        Hlasování:  <strong>#{it.hlasovani_platne.length}</strong>
                     "
                 ..append \div
                     ..style \background ~>
                         zakonyScore      = it.zakony.length      / @zakonyMax      * it.zakony.length      / it.totalEvents
                         vystoupeniScore  = it.vystoupeni.length  / @vystoupeniMax  * it.vystoupeni.length  / it.totalEvents
                         interpelaceScore = it.interpelace.length / @interpelaceMax * it.interpelace.length / it.totalEvents
-                        hlasovaniScore   = it.hlasovani.length   / @hlasovaniMax   * it.hlasovani.length   / it.totalEvents
+                        hlasovaniScore   = it.hlasovani_platne.length   / @hlasovaniMax   * it.hlasovani_platne.length   / it.totalEvents
                         totalScore = zakonyScore + vystoupeniScore + interpelaceScore
                         finalColor = backgroundColor.map (defaultLight, index) ->
                             color = defaultLight
@@ -315,9 +315,11 @@ class Calendar
         @hlasovani.forEach (hlas) ~>
             date = new Date hlas.datum * 1000
             id = "#{date.getFullYear!}-#{date.getMonth!}"
-            len = @monthsAssoc[id]?hlasovani.push hlas
-            @monthsAssoc[id]?totalEvents++
-            if len > @hlasovaniMax then @hlasovaniMax = len
+            @monthsAssoc[id]?hlasovani.push hlas
+            if hlas.vysledek not in [\@ \M]
+                len = @monthsAssoc[id]?hlasovani_platne.push hlas
+                @monthsAssoc[id]?totalEvents++
+                if len > @hlasovaniMax then @hlasovaniMax = len
 
 
 class Month
@@ -329,4 +331,5 @@ class Month
         @interpelace = []
         @vystoupeni = []
         @hlasovani = []
+        @hlasovani_platne = []
         @totalEvents = 1
