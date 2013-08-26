@@ -3,9 +3,9 @@
 [Datablog](http://ihned.cz/data/) portálu [IHNED.cz](http://ihned.cz/) vydavatelství [e.conomia](http://economia.ihned.cz/) 
 ve spolupráci s oddělením vývoje redakčních technologií [IHNED.cz](http://ihned.cz/)
 
-Programová prohlášení vlád od roku 1918 do současnosti
+Jak aktivní byl váš poslanec
 --------------
-http://zpravy.ihned.cz/politika/c1-60478930-snemovna-drobil-poslanci-statistika
+http://data.blog.ihned.cz/c1-60478660-jak-aktivni-byl-vas-poslanec
 
 S dotazy a přípomínkami se obracejte na e-mail petr.koci@economia.cz.
 
