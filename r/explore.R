@@ -1,5 +1,5 @@
 poslanci  <- read.csv("poslanci/poslanci.csv")
-hlasovani  <- read.csv("poslanci/hlasovani.csv")
+hlasovani  <- read.csv("hlasovani.csv")
 
 #nově zvolení poslanci
 novi  <- c(poslanci[poslanci$poslanec_2010==1 & poslanci$strana_id==6, 1], #veckari
@@ -69,5 +69,22 @@ novi  <- c(poslanci[poslanci$poslanec_2010==1 & poslanci$strana_id==6, 1], #veck
 preferencni  <- as.integer(c(5433,386,5924,4,5937,5910,5921,5915,356,5274,211,5475,5928,5520,5970,5991,5925,5899,5920,5911,5941,5909,5949,5984,5975,5968,261,5953,6120,5912,5938,5926,5964,5900,5931,5945,5902,5296,5891,5959,5990,5297,5940,5918,5972,5445,5461,5916))
 
 # ve sněmovně po celé volební období
+odzacatku <- as.Date.POSIXct(poslanci[poslanci$poslanec_2010==1,15])=="2010-05-28"
+dokonce  <- poslanci[poslanci$poslanec_2010==1,16]==0
+celoudobu  <- poslanci[poslanci$poslanec_2010==1,][odzacatku & dokonce,]
+rm("odzacatku", "dokonce")
 
-as.Date.POSIXct(poslanci[poslanci$poslanec_2010==1,15])
+# poslanci, kteří jsou ve sněmovně celou dobu a zároveň byli zvoleni preferenčními hlasy
+celoudobu.preferencni  <- as.integer(celoudobu[celoudobu$X.id %in% preferencni,][,1])
+
+# poslanci, kteří jsou ve sněmovně celou dobu a zároveň jsou v ní noví
+celoudobu.novi  <- as.integer(celoudobu[celoudobu$X.id %in% novi,][,1])
+
+# poslanci, kteří jsou ve sněmovně celou dobu, a zároveň nejsou ani noví ani preferenční
+celoudobu.matadori  <- as.integer((celoudobu[!celoudobu$X.id %in% novi & !celoudobu$X.id %in% preferencni,][,1]))
+
+hlasovani.poslanec  <- read.csv("hlasovani_poslanec.csv")
+poslanec.pseudoid  <- read.csv("poslanci_hlas_pseudoid.csv")
+
+
+

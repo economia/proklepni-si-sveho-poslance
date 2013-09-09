@@ -2,3 +2,4 @@
 /www/config.php
 /srv/config.ls
 /*.sublime-workspace
+.Rproj.user

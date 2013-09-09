@@ -1,0 +1,1 @@
+100/sum(summary(hlasovani.poslanec$vysledek)) * (summary(hlasovani.poslanec$vysledek)[2] + summary(hlasovani.poslanec$vysledek)[3] + summary(hlasovani.poslanec$vysledek)[4])
